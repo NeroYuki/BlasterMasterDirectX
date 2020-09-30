@@ -1,0 +1,20 @@
+animation reference
+worm
+move left: id:
+move right: id:
+floater
+move left: id:
+move right: id:
+move up/down (dont care)
+dome
+move left:
+move right:
+move up:
+move down:
+jumper
+move left:
+move right:
+insect
+move left:
+move right:
+move up/down (dont care)
