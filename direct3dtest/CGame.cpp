@@ -5,7 +5,6 @@
 #include "gameObject/Worm.h"
 #include "gameObject/Floater.h"
 #include "gameObject/Dome.h"
-#include "Debug.h"
 
 CGame* CGame::__instance = NULL;
 

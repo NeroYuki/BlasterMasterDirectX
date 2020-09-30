@@ -1,6 +1,8 @@
 animation reference
 worm
-move left: id:
+move left: id: 101
+10001, 412, 172, 422, 190
+10002, 412, 191, 422, 212
 move right: id:
 floater
 move left: id:

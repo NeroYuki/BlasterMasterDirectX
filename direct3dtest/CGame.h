@@ -4,6 +4,7 @@
 #include "d3d9.h"
 #include "d3dx9.h"
 #include "gameObject/GameObject.h"
+#include "Debug.h"
 
 class CGame
 {
@@ -42,5 +43,7 @@ public:
 	void Loop();
 	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right);
 	LPDIRECT3DTEXTURE9 loadTexture(LPCSTR texturePath);
+
+	HWND getHWnd() { return _hWnd; }
 };
 

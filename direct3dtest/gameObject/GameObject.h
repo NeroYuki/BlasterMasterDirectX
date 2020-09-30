@@ -6,6 +6,10 @@
 class GameObject {
 protected:
 	float x, y;		//position, should be a new class (CPoint?)
+	float vx, vy;
+	int state;
+	std::vector<LPANIMATION> ani;
+
 public:
 	//constructor
 	GameObject(float x, float y);

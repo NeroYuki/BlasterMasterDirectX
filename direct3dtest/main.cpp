@@ -1,8 +1,39 @@
 #include "CGame.h"
+#include "InputHandler.h"
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 #define FRAME_RATE 30
+
+
+//uh, put it somewhere else?
+class SampleKeyHandler : public KeyEventHandler
+{
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
+};
+
+SampleKeyHandler* keyHandler;
+
+void SampleKeyHandler::OnKeyDown(int KeyCode)
+{
+	DebugOut("[INFO] KeyDown: %d\n", KeyCode);
+}
+
+void SampleKeyHandler::OnKeyUp(int KeyCode)
+{
+	DebugOut("[INFO] KeyUp: %d\n", KeyCode);
+}
+
+
+void SampleKeyHandler::KeyState(BYTE* states)
+{
+	if (InputHandler::getInstance()->isKeyDown(DIK_RIGHT)) {}
+		//mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	if (InputHandler::getInstance()->isKeyDown(DIK_LEFT)) {}
+		//mario->SetState(MARIO_STATE_WALKING_LEFT);
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 	MSG msg;
@@ -14,6 +45,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CGame::getInstance()->InitWindow();
 	CGame::getInstance()->loadResource();
 	CGame::getInstance()->initGame();
+	keyHandler = new SampleKeyHandler();
+
+	InputHandler::getInstance()->InitKeyboard(keyHandler);
 
 	ZeroMemory(&msg, sizeof(msg));
 
@@ -36,6 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			{
 				frameStart = now;
 				CGame::getInstance()->Loop();
+				InputHandler::getInstance()->processKeyboard();
 			}
 			else
 				Sleep(tickPerFrame - dt);
