@@ -4,19 +4,113 @@ move left: id: 101
 10001, 412, 172, 422, 190
 10002, 412, 191, 422, 212
 move right: id:
-floater
-move left: id:
+~
+~
+floater no1 :
+move left: id:201
+20011, 145, 44, 165,64
+20012, 145, 65, 165,85
 move right: id:
+~
+~
 move up/down (dont care)
-dome
-move left:
-move right:
+floater no2 : 
+move left: id:211
+20021, 145, 86,165,106
+20022, 145,105,165,125
+move right: id:
+~
+~
+dome  
+move walk left: 301
+30011, 424 , 68, 442, 86 
+30012, 424, 88, 442, 106
+move hang left:
+30021, 480, 68, 498, 86 
+30022, 480, 88, 498, 106
+move walk right:
+~
+~
+move walk right:
+~
+~
 move up:
+- right wall:
+30041, 442,188,460,206
+30042, 462, 188,480,206
+- left wall:
+~
+~
 move down:
-jumper
-move left:
+- right  wall:
+30031, 442, 106, 460, 124 
+30032, 462, 106, 480, 124
+- left wall:
+~
+~
+jumper no1
+move left: 401
+40011, 2,90,28,108
+40012, 2,107,28,125
 move right:
+~
+~
+jumper no2
+move left: 411
+40021, 500,68,526,86
+40022, 500,86,526,104
+40023, 500,105,526,123
+
+move right:
+~
+~
+
+
 insect
-move left:
+move left: 501
+50001,530,84,550,104
+50002, 530,104,550,124
 move right:
+~~
+~~
 move up/down (dont care)
+
+
+cannon id: 601
+move left:
+60001, 604, 97,630,123
+60002, 604, 69,630,95
+move dơwn:
+60003, 42,606,68,632
+
+Eyeball ID: 701
+move left - right
+70001, 551, 103,607,119
+70002, 551,137,607,153
+eye close
+70003, 551,120,667,136
+
+Mine
+
+Orb no1:
+Look left:
+90001,388,119,405,137
+90002, 388,99,405,117
+90003, 388,79,405,97
+
+Orb no2:
+Look left:
+90011,760,87,777,105
+90012,760,67,777,85
+90013,760,48,777,66
+
+
+Skull:
+left: 1101
+11001,528,63,549,81
+11002,531,43,549,61
+
+Teleporter 
+TELEPORT:1201
+12001, 569,72,601,96
+12002, 569,99,601,123
