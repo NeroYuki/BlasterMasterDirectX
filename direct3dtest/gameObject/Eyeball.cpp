@@ -1,6 +1,4 @@
 #include "Eyeball.h"
-#define EYEBALL_MOVE_LEFT 701
-
 
 Eyeball::Eyeball(float x, float y, int hp) : Enemy(x, y, hp)
 {

@@ -69,8 +69,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (dt >= tickPerFrame)
 			{
 				frameStart = now;
-				CGame::getInstance()->Loop();
 				InputHandler::getInstance()->processKeyboard();
+				CGame::getInstance()->Loop();
 			}
 			else
 				Sleep(tickPerFrame - dt);

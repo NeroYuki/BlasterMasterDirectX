@@ -1,5 +1,4 @@
 #include "Worm.h"
-#define WORM_MOVE_LEFT 101
 
 Worm::Worm(float x, float y, int hp) : Enemy(x, y, hp)
 {

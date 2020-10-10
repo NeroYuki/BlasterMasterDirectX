@@ -1,6 +1,4 @@
 #include "Insect.h"
-#define INSECT_MOVE_LEFT 501
-
 
 Insect::Insect(float x, float y, int hp) : Enemy(x, y, hp)
 {

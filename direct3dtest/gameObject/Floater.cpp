@@ -1,5 +1,4 @@
 #include "Floater.h"
-#define FLOATER_MOVE_LEFT 301
 
 Floater::Floater(float x, float y, int hp) : Enemy(x, y, hp)
 {

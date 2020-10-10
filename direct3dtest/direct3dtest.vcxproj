@@ -164,6 +164,7 @@
     <ClCompile Include="gameObject\Worm.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene\DebugScene.cpp" />
     <ClCompile Include="scene\EndScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\Intro.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="AnimationManger.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="gameObject\AllObject.h" />
     <ClInclude Include="gameObject\Boss.h" />
     <ClInclude Include="gameObject\Cannon.h" />
     <ClInclude Include="gameObject\Dome.h" />
@@ -191,15 +193,19 @@
     <ClInclude Include="gameObject\Teleporter.h" />
     <ClInclude Include="gameObject\Worm.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="scene\DebugScene.h" />
     <ClInclude Include="scene\EndScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\Intro.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="StateDictionary.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png" />
+    <Image Include="resource\Player.png" />
+    <Image Include="resource\Player_add.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />

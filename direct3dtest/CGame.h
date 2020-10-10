@@ -3,7 +3,7 @@
 #include <vector>
 #include "d3d9.h"
 #include "d3dx9.h"
-#include "gameObject/GameObject.h"
+#include "scene/Scene.h"
 #include "Debug.h"
 
 class CGame
@@ -18,10 +18,9 @@ private:
 	int _scrHeight;
 	int _frameRate;
 
-	//TEMPORARY OBJECT POOL, ONLY FOR DEMOING
-	std::vector<GameObject*> objectPool;
+	//Scene pool
+	std::vector<Scene*> scenePool;
 
-	//TODO: Direct3D initializing
 	LPDIRECT3D9 d3d = NULL;
 	LPDIRECT3DDEVICE9 d3ddev = NULL;
 

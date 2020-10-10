@@ -2,9 +2,7 @@
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "AnimationManger.h"
-#include "gameObject/Worm.h"
-#include "gameObject/Floater.h"
-#include "gameObject/Dome.h"
+#include "scene/DebugScene.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -138,18 +136,13 @@ void CGame::loadResource()
 
 void CGame::initGame()
 {
-	objectPool.push_back(new Floater(240, 100, 1));
-	objectPool.push_back(new Worm(20, 30, 1));
-	objectPool.push_back(new Worm(50, 40, 1));
-	objectPool.push_back(new Worm(30, 70, 1));
-	objectPool.push_back(new Worm(40, 100, 1));
-	objectPool.push_back(new Dome(170, 180, 1));
+	scenePool.push_back(new DebugScene());
 	
 }
 
 bool CGame::Release()
 {
-	MessageBox(_hWnd, "Program is about to end", "Info", MB_OK);
+	DebugOut("Program is about to end");
 	if (spriteHandler != NULL) spriteHandler->Release();
 	if (backBuffer != NULL) backBuffer->Release();
 	if (d3ddev != NULL) d3ddev->Release();
@@ -167,9 +160,8 @@ void CGame::Loop()
 	if (d3ddev->BeginScene()) {
 		d3ddev->ColorFill(backBuffer, NULL, D3DCOLOR_XRGB(255, 255, 255));
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		for (std::vector<GameObject*>::iterator it = objectPool.begin(); it != objectPool.end(); ++it) {
-			(*it)->render();
-		}
+		//rendering the first most scene
+		scenePool[0]->render();
 		spriteHandler->End();
 		d3ddev->EndScene();
 	}

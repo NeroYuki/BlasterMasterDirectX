@@ -1,5 +1,4 @@
 #include "Mine.h"
-#define MINE_FLICK 1
 
 Mine::Mine(float x, float y, int hp) : Enemy(x, y, hp)
 {

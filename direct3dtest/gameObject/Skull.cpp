@@ -1,5 +1,4 @@
 #include "Skull.h"
-#define SKULL_MOVE_LEFT 1101
 
 Skull::Skull(float x, float y, int hp) : Enemy(x, y, hp)
 {

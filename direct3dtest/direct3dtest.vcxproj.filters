@@ -93,6 +93,9 @@
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="scene\DebugScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -170,9 +173,24 @@
     <ClInclude Include="Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StateDictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\DebugScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\AllObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\Player_add.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\Player.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
