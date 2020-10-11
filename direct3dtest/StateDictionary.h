@@ -8,7 +8,9 @@
 #define PLAYER_CLIMB 10004
 
 //Enenmy State
+#define WORM_IDLE 100
 #define WORM_MOVE_LEFT 101
+#define WORM_MOVE_RIGHT 102
 
 #define FLOATER_MOVE_LEFT 201	//changed from 301 (same as DOME_MOVE_LEFT)
 

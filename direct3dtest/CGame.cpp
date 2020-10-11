@@ -2,7 +2,6 @@
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "AnimationManger.h"
-#include "scene/DebugScene.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -104,45 +103,49 @@ void CGame::loadResource()
 
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	LPDIRECT3DTEXTURE9 enemySpriteSheet = TextureManager::getInstance()->get(1);
-
-	//worm move to the right
+	
 	sprManager->add(10001, 412, 172, 422, 190, enemySpriteSheet);
 	sprManager->add(10002, 412, 191, 422, 212, enemySpriteSheet);
+	sprManager->add(10003, 412, 212, 422, 191, enemySpriteSheet);
+	sprManager->add(10004, 412, 190, 422, 172, enemySpriteSheet);
 	sprManager->add(20001, 423, 149, 441, 167, enemySpriteSheet);
 	sprManager->add(20002, 423, 169, 441, 187, enemySpriteSheet);
 	sprManager->add(30001, 145, 131, 163, 149, enemySpriteSheet);
 	sprManager->add(30002, 145, 150, 163, 168, enemySpriteSheet);
-	
 
 	AnimationManager* aniManager = AnimationManager::getInstance();
-	LPANIMATION ani;
-	ani = new Animation(100);
-	ani->add(10001);
-	ani->add(10002);
-	LPANIMATION ani2;
-	ani2 = new Animation(100);
-	ani2->add(20001);
-	ani2->add(20002);
-	LPANIMATION ani3;
-	ani3 = new Animation(100);
-	ani3->add(30001);
-	ani3->add(30002);
+	LPANIMATION WormMoveLeft = new Animation(100);
+	WormMoveLeft->add(10001);
+	WormMoveLeft->add(10002);
+	LPANIMATION WormMoveRight = new Animation(100);
+	WormMoveRight->add(10003);
+	WormMoveRight->add(10004);
+	LPANIMATION WormIdle = new Animation(100);
+	WormIdle->add(10001);
+	LPANIMATION FloaterMoveLeft = new Animation(100);
+	FloaterMoveLeft->add(20001);
+	FloaterMoveLeft->add(20002);
+	LPANIMATION DomeMoveLeft = new Animation(100);
+	DomeMoveLeft->add(30001);
+	DomeMoveLeft->add(30002);
 
-	aniManager->add(101, ani);
-	aniManager->add(201, ani2);
-	aniManager->add(301, ani3);
+	aniManager->add(WORM_MOVE_LEFT, WormMoveLeft);
+	aniManager->add(WORM_MOVE_RIGHT, WormMoveRight);
+	aniManager->add(WORM_IDLE, WormIdle);
+	aniManager->add(FLOATER_MOVE_LEFT, FloaterMoveLeft);
+	aniManager->add(DOME_MOVE_LEFT, DomeMoveLeft);
 	DebugOut("[INFO] All resource sprite loaded\n");
 }
 
 void CGame::initGame()
 {
-	scenePool.push_back(new DebugScene());
-	
+	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
+	sceneStateMachine->switchToScene(DebugSceneId);
 }
 
 bool CGame::Release()
 {
-	DebugOut("Program is about to end");
+	DebugOut("[INFO] Program is about to end\n");
 	if (spriteHandler != NULL) spriteHandler->Release();
 	if (backBuffer != NULL) backBuffer->Release();
 	if (d3ddev != NULL) d3ddev->Release();
@@ -150,18 +153,19 @@ bool CGame::Release()
 	return true;
 }
 
-void CGame::Loop()
+void CGame::Loop(DWORD dt)
 {
 	if (d3ddev == NULL) {
 		return;
 	}
 	//d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	sceneStateMachine->handlingInput();
+	sceneStateMachine->update(dt);
 
 	if (d3ddev->BeginScene()) {
 		d3ddev->ColorFill(backBuffer, NULL, D3DCOLOR_XRGB(255, 255, 255));
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		//rendering the first most scene
-		scenePool[0]->render();
+		sceneStateMachine->render();
 		spriteHandler->End();
 		d3ddev->EndScene();
 	}
@@ -171,6 +175,11 @@ void CGame::Loop()
 
 void CGame::draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right)
 {
+	//D3DXMATRIX scaleMat;
+	//D3DXMatrixScaling(&scaleMat, 2.0, 1.0, 1.0);
+	//
+	//spriteHandler->SetTransform(&scaleMat);
+
 	D3DXVECTOR3 p(x, y, 0);
 	RECT r;
 	r.left = left;
@@ -221,6 +230,7 @@ CGame::CGame(HINSTANCE hInstance, int screenWidth, int screenHeight, bool someth
 	_scrWidth = screenWidth;
 	_scrHeight = screenHeight;
 	_frameRate = frameRate;
+	sceneStateMachine = new SceneStateMachine();
 }
 
 CGame::~CGame()

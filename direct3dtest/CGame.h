@@ -3,8 +3,9 @@
 #include <vector>
 #include "d3d9.h"
 #include "d3dx9.h"
-#include "scene/Scene.h"
 #include "Debug.h"
+#include "SceneStateMachine.h"
+#include "scene/DebugScene.h"
 
 class CGame
 {
@@ -18,8 +19,7 @@ private:
 	int _scrHeight;
 	int _frameRate;
 
-	//Scene pool
-	std::vector<Scene*> scenePool;
+	SceneStateMachine* sceneStateMachine;
 
 	LPDIRECT3D9 d3d = NULL;
 	LPDIRECT3DDEVICE9 d3ddev = NULL;
@@ -39,8 +39,9 @@ public:
 	void loadResource();
 	void initGame();
 	bool Release();
-	void Loop();
+	void Loop(DWORD dt);
 	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right);
+
 	LPDIRECT3DTEXTURE9 loadTexture(LPCSTR texturePath);
 
 	HWND getHWnd() { return _hWnd; }
