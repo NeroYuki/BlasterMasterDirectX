@@ -1,9 +1,6 @@
 #include "CGame.h"
+#include "GlobalConstant.h"
 #include "InputHandler.h"
-
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
-#define FRAME_RATE 30
 
 
 //uh, put it somewhere else?

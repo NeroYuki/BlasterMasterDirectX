@@ -193,6 +193,7 @@
     <ClInclude Include="gameObject\Skull.h" />
     <ClInclude Include="gameObject\Teleporter.h" />
     <ClInclude Include="gameObject\Worm.h" />
+    <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="SceneStateMachine.h" />
     <ClInclude Include="scene\DebugScene.h" />
@@ -211,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\spriteResource.grc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

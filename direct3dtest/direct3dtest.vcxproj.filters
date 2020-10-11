@@ -188,6 +188,9 @@
     <ClInclude Include="SceneStateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalConstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -202,5 +205,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\spriteResource.grc" />
   </ItemGroup>
 </Project>

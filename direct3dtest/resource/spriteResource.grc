@@ -1,0 +1,11 @@
+# just a text file lol (the game should be able to read this file)
+# this is a comment, ignore this
+
++ Sprite mapper
+# id top left bottom right
+10001 412 45 422 63
+10002 412 64 422 82
+#
++ Animation mapper
+# id s_count s_id1 s_id2 ...
+101 2 10001 10002

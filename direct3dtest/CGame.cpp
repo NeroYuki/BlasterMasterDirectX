@@ -34,14 +34,18 @@ bool CGame::InitWindow()
 		return false;
 	}
 
+	RECT wr = { 0, 0, _scrWidth, _scrHeight };    // set the size, but not the position
+	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
+
+
 	_hWnd = CreateWindow(
 		"CGame",
-		"Begin 3D",
+		"Master Blaster Test",
 		WS_OVERLAPPEDWINDOW,
 		100,
 		100,
-		_scrWidth,
-		_scrHeight,
+		wr.right - wr.left,
+		wr.bottom - wr.top,
 		NULL,
 		NULL,
 		_hInstance,
@@ -98,41 +102,61 @@ bool CGame::InitWindow()
 
 void CGame::loadResource()
 {
-	//TODO: attach resources to enemy classes
+	//TODO: EVERYTHING INTO RESOURCE FILE
 	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	LPDIRECT3DTEXTURE9 enemySpriteSheet = TextureManager::getInstance()->get(1);
 	
-	sprManager->add(10001, 412, 172, 422, 190, enemySpriteSheet);
-	sprManager->add(10002, 412, 191, 422, 212, enemySpriteSheet);
-	sprManager->add(10003, 412, 212, 422, 191, enemySpriteSheet);
-	sprManager->add(10004, 412, 190, 422, 172, enemySpriteSheet);
-	sprManager->add(20001, 423, 149, 441, 167, enemySpriteSheet);
-	sprManager->add(20002, 423, 169, 441, 187, enemySpriteSheet);
+	sprManager->add(10001, 412, 45, 422, 63, enemySpriteSheet);
+	sprManager->add(10002, 412, 64, 422, 82, enemySpriteSheet);
+	sprManager->add(10003, 412, 191, 422, 212, enemySpriteSheet);
+	sprManager->add(10004, 412, 172, 422, 190, enemySpriteSheet);
+	sprManager->add(20001, 145, 44, 165, 64, enemySpriteSheet);
+	sprManager->add(20002, 145, 65, 165, 85, enemySpriteSheet);
+	sprManager->add(20003, 145, 172, 165, 190, enemySpriteSheet);
+	sprManager->add(20004, 145, 193, 165, 211, enemySpriteSheet);
 	sprManager->add(30001, 145, 131, 163, 149, enemySpriteSheet);
 	sprManager->add(30002, 145, 150, 163, 168, enemySpriteSheet);
 
 	AnimationManager* aniManager = AnimationManager::getInstance();
+
 	LPANIMATION WormMoveLeft = new Animation(100);
 	WormMoveLeft->add(10001);
 	WormMoveLeft->add(10002);
 	LPANIMATION WormMoveRight = new Animation(100);
 	WormMoveRight->add(10003);
 	WormMoveRight->add(10004);
-	LPANIMATION WormIdle = new Animation(100);
-	WormIdle->add(10001);
+	LPANIMATION WormIdleLeft = new Animation(100);
+	WormIdleLeft->add(10001);
+	LPANIMATION WormIdleRight = new Animation(100);
+	WormIdleRight->add(10003);
+	
 	LPANIMATION FloaterMoveLeft = new Animation(100);
 	FloaterMoveLeft->add(20001);
 	FloaterMoveLeft->add(20002);
+	LPANIMATION FloaterMoveRight = new Animation(100);
+	FloaterMoveRight->add(20003);
+	FloaterMoveRight->add(20004);
+	LPANIMATION FloaterIdleLeft = new Animation(100);
+	FloaterIdleLeft->add(20001);
+	FloaterIdleLeft->add(20002);
+	LPANIMATION FloaterIdleRight = new Animation(100);
+	FloaterIdleRight->add(20003);
+	FloaterIdleRight->add(20004);
+
 	LPANIMATION DomeMoveLeft = new Animation(100);
 	DomeMoveLeft->add(30001);
 	DomeMoveLeft->add(30002);
 
 	aniManager->add(WORM_MOVE_LEFT, WormMoveLeft);
 	aniManager->add(WORM_MOVE_RIGHT, WormMoveRight);
-	aniManager->add(WORM_IDLE, WormIdle);
+	aniManager->add(WORM_IDLE_LEFT, WormIdleLeft);
+	aniManager->add(WORM_IDLE_RIGHT, WormIdleRight);
 	aniManager->add(FLOATER_MOVE_LEFT, FloaterMoveLeft);
+	aniManager->add(FLOATER_MOVE_RIGHT, FloaterMoveRight);
+	aniManager->add(FLOATER_IDLE_LEFT, FloaterIdleLeft);
+	aniManager->add(FLOATER_IDLE_RIGHT, FloaterIdleRight);
 	aniManager->add(DOME_MOVE_LEFT, DomeMoveLeft);
 	DebugOut("[INFO] All resource sprite loaded\n");
 }

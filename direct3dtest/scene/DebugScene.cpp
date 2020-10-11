@@ -8,6 +8,7 @@ DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(scen
 void DebugScene::initScene()
 {
 	this->addObject(new Worm(30, 30, 1));
+	this->addObject(new Floater(200, 30, 1));
 }
 
 void DebugScene::handlingInput()

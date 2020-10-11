@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include "../AnimationManger.h"
 #include "../StateDictionary.h"
+#include "../GlobalConstant.h"
 
 class GameObject {
 protected:
