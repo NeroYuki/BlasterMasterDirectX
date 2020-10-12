@@ -120,18 +120,18 @@ void CGame::loadResource()
 	sprManager->add(20004, 145, 193, 165, 211, enemySpriteSheet);
 	sprManager->add(30001, 145, 131, 163, 149, enemySpriteSheet);
 	sprManager->add(30002, 145, 150, 163, 168, enemySpriteSheet);
-	sprManager->add(100001, 4, 209, 36, 233, playerSpriteSheet);
-	sprManager->add(100002, 4, 234, 36, 258, playerSpriteSheet);
-	sprManager->add(100003, 4, 259, 36, 283, playerSpriteSheet);
-	sprManager->add(100011, 37, 209, 69, 233, playerSpriteSheet);
-	sprManager->add(100012, 37, 234, 69, 258, playerSpriteSheet);
-	sprManager->add(100013, 37, 259, 69, 283, playerSpriteSheet);
-	sprManager->add(100021, 70, 209, 102, 233, playerSpriteSheet);
-	sprManager->add(100022, 70, 234, 102, 258, playerSpriteSheet);
-	sprManager->add(100023, 70, 259, 102, 283, playerSpriteSheet);
-	sprManager->add(100031, 70, 284, 102, 308, playerSpriteSheet);
-	sprManager->add(100032, 70, 309, 102, 333, playerSpriteSheet);
-	sprManager->add(100033, 70, 334, 102, 358, playerSpriteSheet);
+	sprManager->add(100001, 3, 208, 35, 232, playerSpriteSheet);
+	sprManager->add(100002, 3, 233, 35, 257, playerSpriteSheet);
+	sprManager->add(100003, 3, 258, 35, 282, playerSpriteSheet);
+	sprManager->add(100011, 36, 208, 68, 232, playerSpriteSheet);
+	sprManager->add(100012, 36, 233, 68, 257, playerSpriteSheet);
+	sprManager->add(100013, 36, 258, 68, 282, playerSpriteSheet);
+	sprManager->add(100021, 69, 208, 101, 232, playerSpriteSheet);
+	sprManager->add(100022, 69, 233, 101, 257, playerSpriteSheet);
+	sprManager->add(100023, 69, 258, 101, 282, playerSpriteSheet);
+	sprManager->add(100031, 69, 283, 101, 307, playerSpriteSheet);
+	sprManager->add(100032, 69, 308, 101, 332, playerSpriteSheet);
+	sprManager->add(100033, 69, 333, 101, 357, playerSpriteSheet);
 
 	AnimationManager* aniManager = AnimationManager::getInstance();
 
