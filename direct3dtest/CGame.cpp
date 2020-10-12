@@ -104,9 +104,11 @@ void CGame::loadResource()
 {
 	//TODO: EVERYTHING INTO RESOURCE FILE
 	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(2, "resource\\Player.png", D3DCOLOR_XRGB(0, 57, 115));
 
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	LPDIRECT3DTEXTURE9 enemySpriteSheet = TextureManager::getInstance()->get(1);
+	LPDIRECT3DTEXTURE9 playerSpriteSheet = TextureManager::getInstance()->get(2);
 	
 	sprManager->add(10001, 412, 45, 422, 63, enemySpriteSheet);
 	sprManager->add(10002, 412, 64, 422, 82, enemySpriteSheet);
@@ -118,6 +120,18 @@ void CGame::loadResource()
 	sprManager->add(20004, 145, 193, 165, 211, enemySpriteSheet);
 	sprManager->add(30001, 145, 131, 163, 149, enemySpriteSheet);
 	sprManager->add(30002, 145, 150, 163, 168, enemySpriteSheet);
+	sprManager->add(100001, 4, 209, 36, 233, playerSpriteSheet);
+	sprManager->add(100002, 4, 234, 36, 258, playerSpriteSheet);
+	sprManager->add(100003, 4, 259, 36, 283, playerSpriteSheet);
+	sprManager->add(100011, 37, 209, 69, 233, playerSpriteSheet);
+	sprManager->add(100012, 37, 234, 69, 258, playerSpriteSheet);
+	sprManager->add(100013, 37, 259, 69, 283, playerSpriteSheet);
+	sprManager->add(100021, 70, 209, 102, 233, playerSpriteSheet);
+	sprManager->add(100022, 70, 234, 102, 258, playerSpriteSheet);
+	sprManager->add(100023, 70, 259, 102, 283, playerSpriteSheet);
+	sprManager->add(100031, 70, 284, 102, 308, playerSpriteSheet);
+	sprManager->add(100032, 70, 309, 102, 333, playerSpriteSheet);
+	sprManager->add(100033, 70, 334, 102, 358, playerSpriteSheet);
 
 	AnimationManager* aniManager = AnimationManager::getInstance();
 
@@ -149,6 +163,31 @@ void CGame::loadResource()
 	DomeMoveLeft->add(30001);
 	DomeMoveLeft->add(30002);
 
+	LPANIMATION TopJasonMoveDown = new Animation(100);
+	TopJasonMoveDown->add(100001);
+	TopJasonMoveDown->add(100002);
+	TopJasonMoveDown->add(100003);
+	LPANIMATION TopJasonMoveUp = new Animation(100);
+	TopJasonMoveUp->add(100011);
+	TopJasonMoveUp->add(100012);
+	TopJasonMoveUp->add(100013);
+	LPANIMATION TopJasonMoveLeft = new Animation(100);
+	TopJasonMoveLeft->add(100021);
+	TopJasonMoveLeft->add(100022);
+	TopJasonMoveLeft->add(100023);
+	LPANIMATION TopJasonMoveRight = new Animation(100);
+	TopJasonMoveRight->add(100031);
+	TopJasonMoveRight->add(100032);
+	TopJasonMoveRight->add(100033);
+	LPANIMATION TopJasonIdleDown = new Animation(100);
+	TopJasonIdleDown->add(100002);
+	LPANIMATION TopJasonIdleUp = new Animation(100);
+	TopJasonIdleUp->add(100012);
+	LPANIMATION TopJasonIdleLeft = new Animation(100);
+	TopJasonIdleLeft->add(100022);
+	LPANIMATION TopJasonIdleRight = new Animation(100);
+	TopJasonIdleRight->add(100032);
+
 	aniManager->add(WORM_MOVE_LEFT, WormMoveLeft);
 	aniManager->add(WORM_MOVE_RIGHT, WormMoveRight);
 	aniManager->add(WORM_IDLE_LEFT, WormIdleLeft);
@@ -158,6 +197,16 @@ void CGame::loadResource()
 	aniManager->add(FLOATER_IDLE_LEFT, FloaterIdleLeft);
 	aniManager->add(FLOATER_IDLE_RIGHT, FloaterIdleRight);
 	aniManager->add(DOME_MOVE_LEFT, DomeMoveLeft);
+
+	aniManager->add(TOP_JASON_WALK_DOWN, TopJasonMoveDown);
+	aniManager->add(TOP_JASON_WALK_UP, TopJasonMoveUp);
+	aniManager->add(TOP_JASON_WALK_LEFT, TopJasonMoveLeft);
+	aniManager->add(TOP_JASON_WALK_RIGHT, TopJasonMoveRight);
+	aniManager->add(TOP_JASON_IDLE_DOWN, TopJasonIdleDown);
+	aniManager->add(TOP_JASON_IDLE_UP, TopJasonIdleUp);
+	aniManager->add(TOP_JASON_IDLE_LEFT, TopJasonIdleLeft);
+	aniManager->add(TOP_JASON_IDLE_RIGHT, TopJasonIdleRight);
+
 	DebugOut("[INFO] All resource sprite loaded\n");
 }
 

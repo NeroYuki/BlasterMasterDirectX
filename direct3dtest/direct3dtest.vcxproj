@@ -211,6 +211,7 @@
     <Image Include="resource\Player_add.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="resource\p_ref.txt" />
     <Text Include="resource\ref.txt" />
   </ItemGroup>
   <ItemGroup>

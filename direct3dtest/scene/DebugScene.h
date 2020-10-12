@@ -6,6 +6,7 @@
 class DebugScene : public Scene {
 private:
 	SceneStateMachine* sceneState;
+	Player* p;
 public:
 	DebugScene(SceneStateMachine* sceneState);
 	void initScene();
