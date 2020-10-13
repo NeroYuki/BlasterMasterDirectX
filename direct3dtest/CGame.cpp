@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "AnimationManger.h"
+#include "ResourceImporter.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -95,7 +96,7 @@ bool CGame::InitWindow()
 
 	D3DXCreateSprite(d3ddev, &spriteHandler);
 
-	if (!result) return true;
+	if (FAILED(result)) return true;
 
 	return true;
 }
@@ -107,31 +108,8 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(2, "resource\\Player.png", D3DCOLOR_XRGB(0, 57, 115));
 
 	SpriteManager* sprManager = SpriteManager::getInstance();
-	LPDIRECT3DTEXTURE9 enemySpriteSheet = TextureManager::getInstance()->get(1);
-	LPDIRECT3DTEXTURE9 playerSpriteSheet = TextureManager::getInstance()->get(2);
 	
-	sprManager->add(10001, 412, 45, 422, 63, enemySpriteSheet);
-	sprManager->add(10002, 412, 64, 422, 82, enemySpriteSheet);
-	sprManager->add(10003, 412, 191, 422, 212, enemySpriteSheet);
-	sprManager->add(10004, 412, 172, 422, 190, enemySpriteSheet);
-	sprManager->add(20001, 145, 44, 165, 64, enemySpriteSheet);
-	sprManager->add(20002, 145, 65, 165, 85, enemySpriteSheet);
-	sprManager->add(20003, 145, 172, 165, 190, enemySpriteSheet);
-	sprManager->add(20004, 145, 193, 165, 211, enemySpriteSheet);
-	sprManager->add(30001, 145, 131, 163, 149, enemySpriteSheet);
-	sprManager->add(30002, 145, 150, 163, 168, enemySpriteSheet);
-	sprManager->add(100001, 3, 208, 35, 232, playerSpriteSheet);
-	sprManager->add(100002, 3, 233, 35, 257, playerSpriteSheet);
-	sprManager->add(100003, 3, 258, 35, 282, playerSpriteSheet);
-	sprManager->add(100011, 36, 208, 68, 232, playerSpriteSheet);
-	sprManager->add(100012, 36, 233, 68, 257, playerSpriteSheet);
-	sprManager->add(100013, 36, 258, 68, 282, playerSpriteSheet);
-	sprManager->add(100021, 69, 208, 101, 232, playerSpriteSheet);
-	sprManager->add(100022, 69, 233, 101, 257, playerSpriteSheet);
-	sprManager->add(100023, 69, 258, 101, 282, playerSpriteSheet);
-	sprManager->add(100031, 69, 283, 101, 307, playerSpriteSheet);
-	sprManager->add(100032, 69, 308, 101, 332, playerSpriteSheet);
-	sprManager->add(100033, 69, 333, 101, 357, playerSpriteSheet);
+	ResourceImporter::spriteImport("resource\\spriteResource.grc", sprManager);
 
 	AnimationManager* aniManager = AnimationManager::getInstance();
 

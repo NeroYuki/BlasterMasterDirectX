@@ -20,9 +20,10 @@ void Player::update(DWORD dt)
 
 	if (state == TOP_JASON_WALK_DOWN) vy = WALKING_SPEED;
 	else if (state == TOP_JASON_WALK_UP) vy = -WALKING_SPEED;
-	else if (state == TOP_JASON_WALK_LEFT) vx = -WALKING_SPEED;
+	else vy = 0;
+	if (state == TOP_JASON_WALK_LEFT) vx = -WALKING_SPEED;
 	else if (state == TOP_JASON_WALK_RIGHT) vx = WALKING_SPEED;
-	else { vx = 0; vy = 0; }
+	else vx = 0;
 
 }
 

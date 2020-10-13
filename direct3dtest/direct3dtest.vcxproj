@@ -164,6 +164,7 @@
     <ClCompile Include="gameObject\Worm.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ResourceImporter.cpp" />
     <ClCompile Include="SceneStateMachine.cpp" />
     <ClCompile Include="scene\DebugScene.cpp" />
     <ClCompile Include="scene\EndScene.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="gameObject\Worm.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="ResourceImporter.h" />
     <ClInclude Include="SceneStateMachine.h" />
     <ClInclude Include="scene\DebugScene.h" />
     <ClInclude Include="scene\EndScene.h" />
