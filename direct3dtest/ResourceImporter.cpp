@@ -1,6 +1,7 @@
 #include "ResourceImporter.h"
 #define SPRITE_SECTION 1
 #define ANIMATION_SECTION 2
+#define TILESET_SECTION 3
 
 std::vector<std::string> split(std::string line, std::string delimeter)
 {
@@ -27,14 +28,18 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 		
 		//TODO: improve this lmao
 		if (line[0] == '#') continue;
-		std::vector<std::string> component = split(line, " ");
+		
 		if (line == "[SPRITE]") {
 			parseSection = SPRITE_SECTION; continue;
 		}
 		if (line == "[ANIMATION]") {
 			parseSection = ANIMATION_SECTION; continue;
 		}
-		if (line[0] == '=') break;
+		if (line == "[TILESET]") {
+			parseSection = TILESET_SECTION; continue;
+		}
+		/*if (line[0] == '=') break;*/
+		std::vector<std::string> component = split(line, " ");
 		DebugOut((line + "\n").c_str());
 		switch (parseSection) {
 		case SPRITE_SECTION:
@@ -52,6 +57,35 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 		case ANIMATION_SECTION:
 
 			break;
+		case TILESET_SECTION:
+			if (component.size() < 7) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				int texture_id = std::stoi(component[0], nullptr);
+				int row_num = std::stoi(component[1], nullptr);
+				int column_num = std::stoi(component[2], nullptr);
+				int width = std::stoi(component[3], nullptr);
+				int height = std::stoi(component[4], nullptr);
+				int margin = std::stoi(component[5], nullptr);
+				int spacing = std::stoi(component[6], nullptr);
+				int count = texture_id * 1000000;
+				int x = margin; int y = margin;
+				for (int i = 0; i < row_num; i++)
+				{
+					for (int j = 0; j < column_num; j++) {
+						sprManager->add(count, y, x, y+height,x+width, TextureManager::getInstance()->get(texture_id));
+						count++;
+						x=x + width + spacing;
+					}
+					x = spacing;
+					y=y + height + spacing;
+				}
+			}
+			catch(int er){
+				DebugOut("[ERROR] An error occured\n");			}
+			break;
 		default:
 			DebugOut("[WARNING] Unknown section");
 		}
@@ -62,6 +96,12 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 	
 }
 
+
+
 void ResourceImporter::mapDataImport(LPCSTR filename)
+{
+}
+
+void ResourceImporter::tilesetImporter(LPCSTR filename)
 {
 }

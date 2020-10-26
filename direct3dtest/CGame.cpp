@@ -106,7 +106,7 @@ void CGame::loadResource()
 	//TODO: EVERYTHING INTO RESOURCE FILE
 	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(2, "resource\\Player.png", D3DCOLOR_XRGB(0, 57, 115));
-
+	TextureManager::getInstance()->add(3, "resource\\NES - Blaster Master - Area 2.png", D3DCOLOR_XRGB(255, 0, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	ResourceImporter::spriteImport("resource\\spriteResource.grc", sprManager);

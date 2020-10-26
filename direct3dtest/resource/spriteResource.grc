@@ -24,7 +24,10 @@
 100031 69 283 101 307 2
 100032 69 308 101 332 2
 100033 69 333 101 357 2
-
+[TILESET]
+# texture_id row_num column_num width height margin spacing
+3 13 11 16 16 1 4
 [ANIMATION]
 # id s_count s_id1 s_id2 ...
 101 2 10001 10002
+

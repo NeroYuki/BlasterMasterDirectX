@@ -197,6 +197,9 @@
     <ClInclude Include="ResourceImporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -208,6 +211,12 @@
     <Image Include="resource\Player.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\NES - Blaster Master - Area 2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\NES - Blaster Master - Dungeon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
@@ -215,5 +224,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\spriteResource.grc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="direct3dtest.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

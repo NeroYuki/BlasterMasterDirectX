@@ -12,5 +12,6 @@ class ResourceImporter
 public:
 	static void spriteImport(LPCSTR filename, SpriteManager* sprManager);
 	static void mapDataImport(LPCSTR filename);
+	static void tilesetImporter(LPCSTR filename);
 };
 

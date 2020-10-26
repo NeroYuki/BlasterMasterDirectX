@@ -196,6 +196,7 @@
     <ClInclude Include="gameObject\Worm.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceImporter.h" />
     <ClInclude Include="SceneStateMachine.h" />
     <ClInclude Include="scene\DebugScene.h" />
@@ -209,6 +210,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png" />
+    <Image Include="resource\NES - Blaster Master - Area 2.png" />
+    <Image Include="resource\NES - Blaster Master - Dungeon.png" />
     <Image Include="resource\Player.png" />
     <Image Include="resource\Player_add.png" />
   </ItemGroup>
@@ -218,6 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\spriteResource.grc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="direct3dtest.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
