@@ -16,19 +16,25 @@ void DebugScene::initScene()
 
 void DebugScene::handlingInput()
 {
+	int res = 0;
 	if (InputHandler::getInstance()->isKeyDown(DIK_W)) {
 		p->changeState(TOP_JASON_WALK_UP);
+		res += JASON_UP;
 	}
-	else if (InputHandler::getInstance()->isKeyDown(DIK_A)) {
+	if (InputHandler::getInstance()->isKeyDown(DIK_A)) {
 		p->changeState(TOP_JASON_WALK_LEFT);
+		res += JASON_LEFT;
 	}
-	else if (InputHandler::getInstance()->isKeyDown(DIK_S)) {
+	if (InputHandler::getInstance()->isKeyDown(DIK_S)) {
 		p->changeState(TOP_JASON_WALK_DOWN);
+		res += JASON_DOWN;
 	}
-	else if (InputHandler::getInstance()->isKeyDown(DIK_D)) {
+	if (InputHandler::getInstance()->isKeyDown(DIK_D)) {
 		p->changeState(TOP_JASON_WALK_RIGHT);
+		res += JASON_RIGHT;
 	}
-	else {
+	p->setControlState(res);
+	if (res == 0) {
 		p->changeState(COMMON_PLAYER_IDLE);
 	}
 }

@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManger.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
@@ -155,11 +156,14 @@
     <ClCompile Include="gameObject\Floater.cpp" />
     <ClCompile Include="gameObject\GameObject.cpp" />
     <ClCompile Include="gameObject\Insect.cpp" />
+    <ClCompile Include="gameObject\Jason.cpp" />
+    <ClCompile Include="gameObject\JasonTop.cpp" />
     <ClCompile Include="gameObject\Jumper.cpp" />
     <ClCompile Include="gameObject\Mine.cpp" />
     <ClCompile Include="gameObject\Orb.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
     <ClCompile Include="gameObject\Skull.cpp" />
+    <ClCompile Include="gameObject\Sophia.cpp" />
     <ClCompile Include="gameObject\Teleporter.cpp" />
     <ClCompile Include="gameObject\Worm.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -176,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationManger.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="gameObject\AllObject.h" />
@@ -187,11 +192,14 @@
     <ClInclude Include="gameObject\Floater.h" />
     <ClInclude Include="gameObject\GameObject.h" />
     <ClInclude Include="gameObject\Insect.h" />
+    <ClInclude Include="gameObject\Jason.h" />
+    <ClInclude Include="gameObject\JasonTop.h" />
     <ClInclude Include="gameObject\Jumper.h" />
     <ClInclude Include="gameObject\Mine.h" />
     <ClInclude Include="gameObject\Orb.h" />
     <ClInclude Include="gameObject\Player.h" />
     <ClInclude Include="gameObject\Skull.h" />
+    <ClInclude Include="gameObject\Sophia.h" />
     <ClInclude Include="gameObject\Teleporter.h" />
     <ClInclude Include="gameObject\Worm.h" />
     <ClInclude Include="GlobalConstant.h" />

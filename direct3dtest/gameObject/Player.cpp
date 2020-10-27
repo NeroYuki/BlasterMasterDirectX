@@ -18,13 +18,15 @@ void Player::update(DWORD dt)
 	x += vx * dt;
 	y += vy * dt;
 
-	if (state == TOP_JASON_WALK_DOWN) vy = WALKING_SPEED;
-	else if (state == TOP_JASON_WALK_UP) vy = -WALKING_SPEED;
-	else vy = 0;
-	if (state == TOP_JASON_WALK_LEFT) vx = -WALKING_SPEED;
-	else if (state == TOP_JASON_WALK_RIGHT) vx = WALKING_SPEED;
-	else vx = 0;
+	vx = 0; vy = 0;
+	if (controlState & (JASON_DOWN)) vy += WALKING_SPEED;
+	if (controlState & (JASON_UP)) vy -= WALKING_SPEED;
+	if (controlState & (JASON_LEFT)) vx -= WALKING_SPEED;
+	if (controlState & (JASON_RIGHT)) vx += WALKING_SPEED;
 
+	/*if (vx > 0) {
+		state = 
+	}*/
 }
 
 Player::~Player()

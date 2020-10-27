@@ -75,12 +75,12 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 				for (int i = 0; i < row_num; i++)
 				{
 					for (int j = 0; j < column_num; j++) {
-						sprManager->add(count, y, x, y+height,x+width, TextureManager::getInstance()->get(texture_id));
+						sprManager->add(count, y, x, y + height,x + width, TextureManager::getInstance()->get(texture_id));
 						count++;
-						x=x + width + spacing;
+						x = x + width + spacing;
 					}
 					x = spacing;
-					y=y + height + spacing;
+					y = y + height + spacing;
 				}
 			}
 			catch(int er){

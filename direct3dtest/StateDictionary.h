@@ -2,6 +2,7 @@
 //State Dictionary (include references to gameObject's state)
 
 //Player State
+//Animation State
 #define COMMON_PLAYER_IDLE 10000
 #define TOP_JASON_IDLE_LEFT 10001
 #define TOP_JASON_IDLE_RIGHT 10002
@@ -11,6 +12,12 @@
 #define TOP_JASON_WALK_RIGHT 10006
 #define TOP_JASON_WALK_UP 10007
 #define TOP_JASON_WALK_DOWN 10008
+
+//control state (bitmask)
+#define JASON_UP 1
+#define JASON_DOWN 2
+#define JASON_LEFT 4
+#define JASON_RIGHT 8
 
 //Enenmy State
 #define WORM_IDLE_LEFT 100
