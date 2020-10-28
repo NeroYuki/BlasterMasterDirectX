@@ -29,6 +29,10 @@ void Floater::update(DWORD dt)
 	else if (vx < 0) {
 		state = FLOATER_MOVE_LEFT;
 	}
+	else if (vy != 0) {
+		if (state == FLOATER_IDLE_LEFT) state = FLOATER_MOVE_LEFT;
+		else if (state == FLOATER_IDLE_RIGHT) state = FLOATER_MOVE_RIGHT;
+	}
 	else {
 		if (state == FLOATER_MOVE_LEFT) state = FLOATER_IDLE_LEFT;
 		else if (state == FLOATER_MOVE_RIGHT) state = FLOATER_IDLE_RIGHT;

@@ -17,7 +17,7 @@ std::vector<std::string> split(std::string line, std::string delimeter)
 	return tokens;
 }
 
-void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
+void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager, AnimationManager* aniManager)
 {
 	std::fstream fs;
 	fs.open(filename);
@@ -27,7 +27,7 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 		std::string line(res);
 		
 		//TODO: improve this lmao
-		if (line[0] == '#') continue;
+		if (line[0] == '#' || line.size() < 2) continue;
 		
 		if (line == "[SPRITE]") {
 			parseSection = SPRITE_SECTION; continue;
@@ -38,9 +38,9 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 		if (line == "[TILESET]") {
 			parseSection = TILESET_SECTION; continue;
 		}
-		/*if (line[0] == '=') break;*/
+		// if (line[0] == '=') break;
 		std::vector<std::string> component = split(line, " ");
-		DebugOut((line + "\n").c_str());
+		// DebugOut((line + "\n").c_str());
 		switch (parseSection) {
 		case SPRITE_SECTION:
 			if (component.size() < 6) {
@@ -55,7 +55,26 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 			}
 			break;
 		case ANIMATION_SECTION:
-
+			if (component.size() < 2) {
+				DebugOut("[WARNING] Not an animation chain\n");
+				continue;
+			}
+			try {
+				int ani_id = std::stoi(component[0], nullptr);
+				int s_count = std::stoi(component[1], nullptr);
+				if (component.size() < 2 + s_count) {
+					DebugOut("[WARNING] Not enough parameter for this line\n");
+					continue;
+				}
+				LPANIMATION entry = new Animation(100);
+				for (int i = 0; i < s_count; i++) {
+					entry->add(std::stoi(component[2 + i], nullptr));
+				}
+				aniManager->add(ani_id, entry);
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
 			break;
 		case TILESET_SECTION:
 			if (component.size() < 7) {
@@ -83,11 +102,12 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager)
 					y = y + height + spacing;
 				}
 			}
-			catch(int er){
-				DebugOut("[ERROR] An error occured\n");			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");			
+			}
 			break;
 		default:
-			DebugOut("[WARNING] Unknown section");
+			DebugOut("[WARNING] Unknown section\n");
 		}
 		
 	}

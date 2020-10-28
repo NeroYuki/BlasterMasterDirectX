@@ -3,6 +3,7 @@
 Scene::Scene()
 {
 	//this->sceneState = sceneState;
+	cam = new Camera();
 }
 
 void Scene::addObject(GameObject* obj)
@@ -12,6 +13,7 @@ void Scene::addObject(GameObject* obj)
 
 void Scene::update(DWORD dt)
 {
+	cam->update();
 	for (std::vector<GameObject*>::iterator it = objectPool.begin(); it != objectPool.end(); ++it) {
 		(*it)->update(dt);
 	}

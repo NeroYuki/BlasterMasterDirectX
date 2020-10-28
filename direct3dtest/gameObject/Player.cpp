@@ -19,10 +19,10 @@ void Player::update(DWORD dt)
 	y += vy * dt;
 
 	vx = 0; vy = 0;
-	if (controlState & (JASON_DOWN)) vy += WALKING_SPEED;
-	if (controlState & (JASON_UP)) vy -= WALKING_SPEED;
-	if (controlState & (JASON_LEFT)) vx -= WALKING_SPEED;
-	if (controlState & (JASON_RIGHT)) vx += WALKING_SPEED;
+	if (controlState & (JASON_DOWN)) vy += PLAYER_WALKING_SPEED;
+	if (controlState & (JASON_UP)) vy -= PLAYER_WALKING_SPEED;
+	if (controlState & (JASON_LEFT)) vx -= PLAYER_WALKING_SPEED;
+	if (controlState & (JASON_RIGHT)) vx += PLAYER_WALKING_SPEED;
 
 	/*if (vx > 0) {
 		state = 

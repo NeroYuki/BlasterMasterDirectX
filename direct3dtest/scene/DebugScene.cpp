@@ -3,6 +3,7 @@
 DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(sceneState)
 {
 	initScene();
+	bgTexture_id = 5;
 }
 
 void DebugScene::initScene()
@@ -11,7 +12,7 @@ void DebugScene::initScene()
 	this->addObject(new Floater(200, 30, 1));
 	p = new Player(30, 180, 1);
 	this->addObject(p);
-	
+	cam->setFollow(p);
 }
 
 void DebugScene::handlingInput()

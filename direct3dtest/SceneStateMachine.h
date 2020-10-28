@@ -11,6 +11,9 @@ private:
 public:
 	SceneStateMachine();
 	void handlingInput();
+	int getBgTextureId();
+	Camera* getActiveCamera();
+
 	void update(DWORD dt);
 	void render();
 

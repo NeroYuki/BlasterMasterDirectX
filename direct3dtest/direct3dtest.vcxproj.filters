@@ -114,6 +114,12 @@
     <ClCompile Include="gameObject\JasonTop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="scene\OverworldScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\DungeonScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -224,6 +230,12 @@
     <ClInclude Include="gameObject\JasonTop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scene\OverworldScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\DugeonScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -239,6 +251,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\NES - Blaster Master - Dungeon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\DungeonMapBg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\OverworldMapBg.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

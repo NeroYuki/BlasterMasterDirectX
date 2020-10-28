@@ -41,6 +41,7 @@ public:
 	bool Release();
 	void Loop(DWORD dt);
 	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right);
+	//void drawWithTransform(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right, float translateX, float translateY);
 
 	LPDIRECT3DTEXTURE9 loadTexture(LPCSTR texturePath);
 

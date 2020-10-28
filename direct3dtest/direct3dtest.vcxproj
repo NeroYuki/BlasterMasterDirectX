@@ -171,9 +171,11 @@
     <ClCompile Include="ResourceImporter.cpp" />
     <ClCompile Include="SceneStateMachine.cpp" />
     <ClCompile Include="scene\DebugScene.cpp" />
+    <ClCompile Include="scene\DungeonScene.cpp" />
     <ClCompile Include="scene\EndScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\Intro.cpp" />
+    <ClCompile Include="scene\OverworldScene.cpp" />
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -208,18 +210,22 @@
     <ClInclude Include="ResourceImporter.h" />
     <ClInclude Include="SceneStateMachine.h" />
     <ClInclude Include="scene\DebugScene.h" />
+    <ClInclude Include="scene\DugeonScene.h" />
     <ClInclude Include="scene\EndScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\Intro.h" />
+    <ClInclude Include="scene\OverworldScene.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StateDictionary.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\DungeonMapBg.png" />
     <Image Include="resource\Enemies.png" />
     <Image Include="resource\NES - Blaster Master - Area 2.png" />
     <Image Include="resource\NES - Blaster Master - Dungeon.png" />
+    <Image Include="resource\OverworldMapBg.png" />
     <Image Include="resource\Player.png" />
     <Image Include="resource\Player_add.png" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
-#include "Enemy.h"
+#include "GameObject.h"
+#define PLAYER_WALKING_SPEED 0.06
 
 class Player : public GameObject {
 private:

@@ -3,6 +3,7 @@
 #include "SpriteManager.h"
 #include "AnimationManger.h"
 #include "ResourceImporter.h"
+#define round(x) ((x)>=0?(int)((x)+0.5):(int)((x)-0.5))
 
 CGame* CGame::__instance = NULL;
 
@@ -104,86 +105,16 @@ bool CGame::InitWindow()
 void CGame::loadResource()
 {
 	//TODO: EVERYTHING INTO RESOURCE FILE
-	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(0, 255, 0));
 	TextureManager::getInstance()->add(2, "resource\\Player.png", D3DCOLOR_XRGB(0, 57, 115));
 	TextureManager::getInstance()->add(3, "resource\\NES - Blaster Master - Area 2.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(5, "resource\\OverworldMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(6, "resource\\DungeonMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
-	ResourceImporter::spriteImport("resource\\spriteResource.grc", sprManager);
-
 	AnimationManager* aniManager = AnimationManager::getInstance();
 
-	LPANIMATION WormMoveLeft = new Animation(100);
-	WormMoveLeft->add(10001);
-	WormMoveLeft->add(10002);
-	LPANIMATION WormMoveRight = new Animation(100);
-	WormMoveRight->add(10003);
-	WormMoveRight->add(10004);
-	LPANIMATION WormIdleLeft = new Animation(100);
-	WormIdleLeft->add(10001);
-	LPANIMATION WormIdleRight = new Animation(100);
-	WormIdleRight->add(10003);
-	
-	LPANIMATION FloaterMoveLeft = new Animation(100);
-	FloaterMoveLeft->add(20001);
-	FloaterMoveLeft->add(20002);
-	LPANIMATION FloaterMoveRight = new Animation(100);
-	FloaterMoveRight->add(20003);
-	FloaterMoveRight->add(20004);
-	LPANIMATION FloaterIdleLeft = new Animation(100);
-	FloaterIdleLeft->add(20001);
-	FloaterIdleLeft->add(20002);
-	LPANIMATION FloaterIdleRight = new Animation(100);
-	FloaterIdleRight->add(20003);
-	FloaterIdleRight->add(20004);
-
-	LPANIMATION DomeMoveLeft = new Animation(100);
-	DomeMoveLeft->add(30001);
-	DomeMoveLeft->add(30002);
-
-	LPANIMATION TopJasonMoveDown = new Animation(100);
-	TopJasonMoveDown->add(100001);
-	TopJasonMoveDown->add(100002);
-	TopJasonMoveDown->add(100003);
-	LPANIMATION TopJasonMoveUp = new Animation(100);
-	TopJasonMoveUp->add(100011);
-	TopJasonMoveUp->add(100012);
-	TopJasonMoveUp->add(100013);
-	LPANIMATION TopJasonMoveLeft = new Animation(100);
-	TopJasonMoveLeft->add(100021);
-	TopJasonMoveLeft->add(100022);
-	TopJasonMoveLeft->add(100023);
-	LPANIMATION TopJasonMoveRight = new Animation(100);
-	TopJasonMoveRight->add(100031);
-	TopJasonMoveRight->add(100032);
-	TopJasonMoveRight->add(100033);
-	LPANIMATION TopJasonIdleDown = new Animation(100);
-	TopJasonIdleDown->add(100002);
-	LPANIMATION TopJasonIdleUp = new Animation(100);
-	TopJasonIdleUp->add(100012);
-	LPANIMATION TopJasonIdleLeft = new Animation(100);
-	TopJasonIdleLeft->add(100022);
-	LPANIMATION TopJasonIdleRight = new Animation(100);
-	TopJasonIdleRight->add(100032);
-
-	aniManager->add(WORM_MOVE_LEFT, WormMoveLeft);
-	aniManager->add(WORM_MOVE_RIGHT, WormMoveRight);
-	aniManager->add(WORM_IDLE_LEFT, WormIdleLeft);
-	aniManager->add(WORM_IDLE_RIGHT, WormIdleRight);
-	aniManager->add(FLOATER_MOVE_LEFT, FloaterMoveLeft);
-	aniManager->add(FLOATER_MOVE_RIGHT, FloaterMoveRight);
-	aniManager->add(FLOATER_IDLE_LEFT, FloaterIdleLeft);
-	aniManager->add(FLOATER_IDLE_RIGHT, FloaterIdleRight);
-	aniManager->add(DOME_MOVE_LEFT, DomeMoveLeft);
-
-	aniManager->add(TOP_JASON_WALK_DOWN, TopJasonMoveDown);
-	aniManager->add(TOP_JASON_WALK_UP, TopJasonMoveUp);
-	aniManager->add(TOP_JASON_WALK_LEFT, TopJasonMoveLeft);
-	aniManager->add(TOP_JASON_WALK_RIGHT, TopJasonMoveRight);
-	aniManager->add(TOP_JASON_IDLE_DOWN, TopJasonIdleDown);
-	aniManager->add(TOP_JASON_IDLE_UP, TopJasonIdleUp);
-	aniManager->add(TOP_JASON_IDLE_LEFT, TopJasonIdleLeft);
-	aniManager->add(TOP_JASON_IDLE_RIGHT, TopJasonIdleRight);
+	ResourceImporter::spriteImport("resource\\spriteResource.grc", sprManager, aniManager);
 
 	DebugOut("[INFO] All resource sprite loaded\n");
 }
@@ -213,10 +144,29 @@ void CGame::Loop(DWORD dt)
 	sceneStateMachine->handlingInput();
 	sceneStateMachine->update(dt);
 
-	if (d3ddev->BeginScene()) {
-		d3ddev->ColorFill(backBuffer, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	if (d3ddev->BeginScene() == D3D_OK) {
+		int bgTexture_id = sceneStateMachine->getBgTextureId();
+		Camera* activeCamera = sceneStateMachine->getActiveCamera();
+		float transX = activeCamera->getX();
+		float transY = activeCamera->getY();
+
+		int transXrounded = round(transX);
+		int transYrounded = round(transY);
+		
+		d3ddev->ColorFill(backBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		D3DXMATRIX translationMat;
+		D3DXMatrixTranslation(&translationMat, -transX, -transY, 0);
+		spriteHandler->SetTransform(&translationMat);
+		if (bgTexture_id != 0) {
+			LPDIRECT3DTEXTURE9 tex = TextureManager::getInstance()->get(bgTexture_id);
+			D3DSURFACE_DESC x;
+			tex->GetLevelDesc(0, &x);
+			draw(transX, transY, tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
+		}
+		
 		sceneStateMachine->render();
+
 		spriteHandler->End();
 		d3ddev->EndScene();
 	}
@@ -237,7 +187,7 @@ void CGame::draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_RGBA(255, 255, 255, 255));
 }
 
 LPDIRECT3DTEXTURE9 CGame::loadTexture(LPCSTR texturePath)
@@ -262,7 +212,7 @@ LPDIRECT3DTEXTURE9 CGame::loadTexture(LPCSTR texturePath)
 		D3DPOOL_DEFAULT,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		D3DCOLOR_XRGB(255, 255, 255),			// Transparent color
+		D3DCOLOR_XRGB(255, 0, 255),			// Transparent color
 		&info,
 		NULL,
 		&texture);								// Created texture pointer

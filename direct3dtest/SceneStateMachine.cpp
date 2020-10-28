@@ -11,6 +11,18 @@ void SceneStateMachine::handlingInput()
 	curScene->handlingInput();
 }
 
+int SceneStateMachine::getBgTextureId()
+{
+	if (curScene == NULL) return 0;
+	return curScene->getBgTexture_id();
+}
+
+Camera* SceneStateMachine::getActiveCamera()
+{
+	if (curScene == NULL) return NULL;
+	return curScene->getCamera();
+}
+
 void SceneStateMachine::update(DWORD dt)
 {
 	if (curScene == NULL) return;
