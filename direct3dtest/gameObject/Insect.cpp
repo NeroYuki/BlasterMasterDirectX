@@ -17,6 +17,14 @@ void Insect::update(DWORD dt)
 {
 }
 
+void Insect::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_INSECT_HEIGHT;
+	right = left + BBOX_INSECT_WIDTH;
+}
+
 Insect::~Insect()
 {
 }

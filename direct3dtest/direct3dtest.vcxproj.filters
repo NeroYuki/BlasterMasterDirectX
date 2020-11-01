@@ -120,6 +120,15 @@
     <ClCompile Include="scene\DungeonScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\Block.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\Portal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -236,6 +245,15 @@
     <ClInclude Include="scene\DugeonScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\Block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\Portal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -247,22 +265,23 @@
     <Image Include="resource\Player.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="resource\NES - Blaster Master - Area 2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resource\NES - Blaster Master - Dungeon.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resource\DungeonMapBg.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\OverworldMapBg.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\DungeonTileset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\OverworldTileset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
     <Text Include="resource\p_ref.txt" />
+    <Text Include="resource\map_data\overworld_entityData.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\spriteResource.grc" />

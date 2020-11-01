@@ -34,6 +34,14 @@ void Worm::update(DWORD dt)
 	}
 }
 
+void Worm::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_WORM_HEIGHT;
+	right = left + BBOX_WORM_WIDTH;
+}
+
 Worm::~Worm()
 {
 }

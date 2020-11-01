@@ -14,3 +14,8 @@
 #include "Skull.h"
 #include "Teleporter.h"
 #include "Worm.h"
+#include "Jason.h"
+#include "JasonTop.h"
+#include "Sophia.h"
+#include "Block.h"
+#include "Portal.h"

@@ -50,3 +50,12 @@ void Player::changeState(int stateId)
 		state = stateId;
 	}
 }
+
+//NOTE: Turn to pure virtual ASAP after inheiritance is completed
+void Player::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_PLAYER_HEIGHT;
+	right = left + BBOX_PLAYER_WIDTH;
+}

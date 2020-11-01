@@ -16,6 +16,14 @@ void Skull::update(DWORD dt)
 {
 }
 
+void Skull::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_SKULL_HEIGHT;
+	right = left + BBOX_SKULL_WIDTH;
+}
+
 Skull::~Skull()
 {
 }

@@ -16,6 +16,14 @@ void Jumper::update(DWORD dt)
 {
 }
 
+void Jumper::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_JUMPER_HEIGHT;
+	right = left + BBOX_JUMPER_WIDTH;
+}
+
 Jumper::~Jumper()
 {
 }

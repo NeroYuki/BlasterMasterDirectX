@@ -16,6 +16,14 @@ void Orb::update(DWORD dt)
 {
 }
 
+void Orb::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_ORB_HEIGHT;
+	right = left + BBOX_ORB_WIDTH;
+}
+
 Orb::~Orb()
 {
 }

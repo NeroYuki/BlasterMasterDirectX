@@ -122,6 +122,10 @@ void ResourceImporter::mapDataImport(LPCSTR filename)
 {
 }
 
+void ResourceImporter::mapObjImport(LPCSTR filename)
+{
+}
+
 void ResourceImporter::tilesetImporter(LPCSTR filename)
 {
 }

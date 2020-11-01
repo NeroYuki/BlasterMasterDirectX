@@ -3,7 +3,7 @@
 DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(sceneState)
 {
 	initScene();
-	bgTexture_id = 5;
+	bgTexture_id = 6;
 }
 
 void DebugScene::initScene()

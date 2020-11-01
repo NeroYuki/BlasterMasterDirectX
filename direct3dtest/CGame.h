@@ -6,6 +6,10 @@
 #include "Debug.h"
 #include "SceneStateMachine.h"
 #include "scene/DebugScene.h"
+#include "TextureManager.h"
+#include "SpriteManager.h"
+#include "AnimationManger.h"
+#include "ResourceImporter.h"
 
 class CGame
 {
@@ -42,6 +46,7 @@ public:
 	void Loop(DWORD dt);
 	void draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right);
 	//void drawWithTransform(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right, float translateX, float translateY);
+	
 
 	LPDIRECT3DTEXTURE9 loadTexture(LPCSTR texturePath);
 

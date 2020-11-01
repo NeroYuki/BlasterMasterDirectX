@@ -16,6 +16,14 @@ void Boss::update(DWORD dt)
 {
 }
 
+void Boss::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_BOSS_HEIGHT;
+	right = left + BBOX_BOSS_WIDTH;
+}
+
 Boss::~Boss()
 {
 }

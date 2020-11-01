@@ -16,6 +16,14 @@ void Cannon::update(DWORD dt)
 {
 }
 
+void Cannon::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_CANNON_HEIGHT;
+	right = left + BBOX_CANNON_WIDTH;
+}
+
 Cannon::~Cannon()
 {
 }

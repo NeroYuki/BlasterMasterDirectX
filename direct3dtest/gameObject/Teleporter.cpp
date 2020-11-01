@@ -16,6 +16,14 @@ void Teleporter::update(DWORD dt)
 {
 }
 
+void Teleporter::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_TELEPORTER_HEIGHT;
+	right = left + BBOX_TELEPORTER_WIDTH;
+}
+
 Teleporter::~Teleporter()
 {
 }

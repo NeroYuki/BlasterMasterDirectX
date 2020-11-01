@@ -147,7 +147,9 @@
     <ClCompile Include="AnimationManger.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="gameObject\Block.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
     <ClCompile Include="gameObject\Cannon.cpp" />
     <ClCompile Include="gameObject\Dome.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="gameObject\Mine.cpp" />
     <ClCompile Include="gameObject\Orb.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
+    <ClCompile Include="gameObject\Portal.cpp" />
     <ClCompile Include="gameObject\Skull.cpp" />
     <ClCompile Include="gameObject\Sophia.cpp" />
     <ClCompile Include="gameObject\Teleporter.cpp" />
@@ -184,8 +187,10 @@
     <ClInclude Include="AnimationManger.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGame.h" />
+    <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="gameObject\AllObject.h" />
+    <ClInclude Include="gameObject\Block.h" />
     <ClInclude Include="gameObject\Boss.h" />
     <ClInclude Include="gameObject\Cannon.h" />
     <ClInclude Include="gameObject\Dome.h" />
@@ -200,6 +205,7 @@
     <ClInclude Include="gameObject\Mine.h" />
     <ClInclude Include="gameObject\Orb.h" />
     <ClInclude Include="gameObject\Player.h" />
+    <ClInclude Include="gameObject\Portal.h" />
     <ClInclude Include="gameObject\Skull.h" />
     <ClInclude Include="gameObject\Sophia.h" />
     <ClInclude Include="gameObject\Teleporter.h" />
@@ -223,13 +229,14 @@
   <ItemGroup>
     <Image Include="resource\DungeonMapBg.png" />
     <Image Include="resource\Enemies.png" />
-    <Image Include="resource\NES - Blaster Master - Area 2.png" />
-    <Image Include="resource\NES - Blaster Master - Dungeon.png" />
+    <Image Include="resource\OverworldTileset.png" />
+    <Image Include="resource\DungeonTileset.png" />
     <Image Include="resource\OverworldMapBg.png" />
     <Image Include="resource\Player.png" />
     <Image Include="resource\Player_add.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="resource\map_data\overworld_entityData.txt" />
     <Text Include="resource\p_ref.txt" />
     <Text Include="resource\ref.txt" />
   </ItemGroup>

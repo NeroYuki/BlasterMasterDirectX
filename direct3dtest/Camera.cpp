@@ -5,8 +5,10 @@ void Camera::update()
 	if (followingObj == NULL) {
 		return;
 	}
-	if (!lockX) { this->x = followingObj->getX() - (this->w / 2); }
-	if (!lockY) { this->y = followingObj->getY() - (this->h / 2); }
+	float obj_x; float obj_y;
+	followingObj->getPos(obj_x, obj_y);
+	if (!lockX) { this->x = obj_x - (this->w / 2); }
+	if (!lockY) { this->y = obj_y - (this->h / 2); }
 }
 
 void Camera::setFollow(GameObject* obj)

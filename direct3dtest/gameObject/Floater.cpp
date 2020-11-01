@@ -39,6 +39,14 @@ void Floater::update(DWORD dt)
 	}
 }
 
+void Floater::GetBoundingBox(float& top, float& left, float& bottom, float& right)
+{
+	top = this->x;
+	left = this->y;
+	bottom = top + BBOX_FLOATER_HEIGHT;
+	right = left + BBOX_FLOATER_WIDTH;
+}
+
 Floater::~Floater()
 {
 }

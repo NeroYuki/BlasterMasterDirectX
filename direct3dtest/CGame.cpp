@@ -1,8 +1,4 @@
 #include "CGame.h"
-#include "TextureManager.h"
-#include "SpriteManager.h"
-#include "AnimationManger.h"
-#include "ResourceImporter.h"
 #define round(x) ((x)>=0?(int)((x)+0.5):(int)((x)-0.5))
 
 CGame* CGame::__instance = NULL;
@@ -107,7 +103,8 @@ void CGame::loadResource()
 	//TODO: EVERYTHING INTO RESOURCE FILE
 	TextureManager::getInstance()->add(1, "resource\\Enemies.png", D3DCOLOR_XRGB(0, 255, 0));
 	TextureManager::getInstance()->add(2, "resource\\Player.png", D3DCOLOR_XRGB(0, 57, 115));
-	TextureManager::getInstance()->add(3, "resource\\NES - Blaster Master - Area 2.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(3, "resource\\OverworldTileset.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(4, "resource\\DungeonTileset.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(5, "resource\\OverworldMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(6, "resource\\DungeonMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
@@ -254,3 +251,5 @@ CGame* CGame::getInstance() {
 	}
 	return __instance;
 }
+
+
