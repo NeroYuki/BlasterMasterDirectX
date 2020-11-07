@@ -12,7 +12,7 @@ void Jumper::render()
 	ani->render(x, y);
 }
 
-void Jumper::update(DWORD dt)
+void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

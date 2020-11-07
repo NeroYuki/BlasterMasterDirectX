@@ -13,7 +13,7 @@ void Insect::render()
 	ani->render(x, y);
 }
 
-void Insect::update(DWORD dt)
+void Insect::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

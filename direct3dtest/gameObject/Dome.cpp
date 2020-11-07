@@ -12,7 +12,7 @@ void Dome::render()
 	ani->render(x, y);
 }
 
-void Dome::update(DWORD dt)
+void Dome::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

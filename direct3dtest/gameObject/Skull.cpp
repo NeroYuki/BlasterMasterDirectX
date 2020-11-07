@@ -12,7 +12,7 @@ void Skull::render()
 	ani->render(x, y);
 }
 
-void Skull::update(DWORD dt)
+void Skull::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

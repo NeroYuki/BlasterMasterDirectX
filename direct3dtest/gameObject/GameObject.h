@@ -40,6 +40,7 @@ protected:
 	float x, y;		//position, should be a new class (CPoint?)
 	float vx = 0.0, vy = 0.0;
 	float dx = 0.0, dy = 0.0;
+	int nx = 0, ny = 0;
 	DWORD dt;
 	int state = 0;
 
@@ -68,7 +69,7 @@ public:
 		float& rdy);
 
 	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right) = 0;
-	virtual void update(DWORD dt);
+	virtual void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects = NULL);
 	virtual void render() = 0;
 	virtual void changeState(int stateId) { this->state = stateId; }
 };

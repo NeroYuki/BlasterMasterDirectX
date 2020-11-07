@@ -12,7 +12,7 @@ void Mine::render()
 	ani->render(x, y);
 }
 
-void Mine::update(DWORD dt)
+void Mine::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

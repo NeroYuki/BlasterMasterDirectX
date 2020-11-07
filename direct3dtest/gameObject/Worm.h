@@ -8,7 +8,7 @@ class Worm : public Enemy {
 public:
 	Worm(float x, float y, int hp);
 	void render();
-	void update(DWORD dt);
+	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
 	~Worm();
 };

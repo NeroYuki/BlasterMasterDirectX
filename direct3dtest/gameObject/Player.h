@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "../Debug.h"
 #define PLAYER_WALKING_SPEED 0.06
 
 #define BBOX_PLAYER_WIDTH 20
@@ -11,7 +12,7 @@ private:
 public:
 	Player(float x, float y, int hp);
 	void render();
-	void update(DWORD dt);
+	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	~Player();
 	void changeState(int stateId);
 	int getControlState() { return controlState; }

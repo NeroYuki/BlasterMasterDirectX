@@ -14,7 +14,7 @@ void Floater::render()
 	ani->render(x, y);
 }
 
-void Floater::update(DWORD dt)
+void Floater::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	x += vx * dt;
 	y += vy * dt;

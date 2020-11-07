@@ -3,6 +3,9 @@
 #include "../SceneStateMachine.h"
 #include "../InputHandler.h"
 
+#define SCENE_WIDTH 3200
+#define SCENE_HEIGHT 1600
+
 class DebugScene : public Scene {
 private:
 	SceneStateMachine* sceneState;

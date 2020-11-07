@@ -12,7 +12,7 @@ void Boss::render()
 	ani->render(x, y);
 }
 
-void Boss::update(DWORD dt)
+void Boss::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

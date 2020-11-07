@@ -12,7 +12,7 @@ void Cannon::render()
 	ani->render(x, y);
 }
 
-void Cannon::update(DWORD dt)
+void Cannon::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

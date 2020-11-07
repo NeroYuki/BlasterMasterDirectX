@@ -4,6 +4,14 @@ DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(scen
 {
 	initScene();
 	bgTexture_id = 6;
+
+	int grid_h = SCENE_HEIGHT / SCREEN_HEIGHT + 1;
+	int grid_w = SCENE_WIDTH / SCREEN_WIDTH + 1;
+
+	objectGridMap = new std::vector<GameObject*>*[grid_h];
+	for (int i = 0; i < grid_h; i++) {
+		objectGridMap[i] = new std::vector<GameObject*>[grid_w];
+	}
 }
 
 void DebugScene::initScene()
@@ -11,6 +19,9 @@ void DebugScene::initScene()
 	this->addObject(new Worm(30, 30, 1));
 	this->addObject(new Floater(200, 30, 1));
 	p = new Player(30, 180, 1);
+
+	//initially put every object into its respective grid
+
 	this->addObject(p);
 	cam->setFollow(p);
 }

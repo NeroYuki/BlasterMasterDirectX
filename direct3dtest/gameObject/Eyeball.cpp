@@ -13,7 +13,7 @@ void Eyeball::render()
 	ani->render(x, y);
 }
 
-void Eyeball::update(DWORD dt)
+void Eyeball::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

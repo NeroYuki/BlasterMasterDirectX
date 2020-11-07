@@ -14,8 +14,15 @@ void Scene::addObject(GameObject* obj)
 void Scene::update(DWORD dt)
 {
 	cam->update();
+	std::vector<LPGAMEOBJECT> coObjects;
+	//todo: use grid algo to reduce the size of coObject
+	for (std::vector<GameObject*>::iterator it = objectPool.begin(); it != objectPool.end(); ++it)
+	{
+		coObjects.push_back(*it);
+	}
+
 	for (std::vector<GameObject*>::iterator it = objectPool.begin(); it != objectPool.end(); ++it) {
-		(*it)->update(dt);
+		(*it)->update(dt, &coObjects);
 	}
 }
 

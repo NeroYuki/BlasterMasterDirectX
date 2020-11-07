@@ -13,7 +13,7 @@ void Worm::render()
 	ani->render(x, y);
 }
 
-void Worm::update(DWORD dt)
+void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	x += vx * dt;
 	y += vy * dt;

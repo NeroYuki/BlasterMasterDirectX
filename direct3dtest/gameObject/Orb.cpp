@@ -12,7 +12,7 @@ void Orb::render()
 	ani->render(x, y);
 }
 
-void Orb::update(DWORD dt)
+void Orb::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

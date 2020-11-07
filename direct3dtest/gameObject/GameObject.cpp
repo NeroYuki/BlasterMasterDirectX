@@ -4,7 +4,7 @@ GameObject::GameObject(float x, float y) {
 	this->setPos(x, y);
 }
 
-void GameObject::update(DWORD dt) //add , std::vector<LPGAMEOBJECT>* coObjects later
+void GameObject::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;

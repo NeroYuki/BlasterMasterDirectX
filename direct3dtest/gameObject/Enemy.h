@@ -8,7 +8,7 @@ protected:
 public:
 	Enemy(float x, float y, int hp);
 	virtual void render() = 0;
-	virtual void update(DWORD dt) = 0;
+	virtual void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects) = 0;
 	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right) = 0;
 	~Enemy();
 };

@@ -1,2 +1,8 @@
 [ENTITY LIST]
 # reference_id
+
+[PORTAL LIST]
+
+[SECTION LIST]
+# must be used for camera locking
+#section_id top left bottom right

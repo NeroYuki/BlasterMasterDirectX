@@ -3,11 +3,12 @@
 #include "../gameObject/AllObject.h"
 #include "../Camera.h"
 
-
 class Scene {
 private:
 	std::vector<GameObject*> objectPool;
+	
 protected:
+	std::vector<GameObject*>** objectGridMap;
 	int bgTexture_id = 0;
 	Camera* cam;
 public:

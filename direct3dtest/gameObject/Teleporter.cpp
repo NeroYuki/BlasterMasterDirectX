@@ -12,7 +12,7 @@ void Teleporter::render()
 	ani->render(x, y);
 }
 
-void Teleporter::update(DWORD dt)
+void Teleporter::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 }
 
