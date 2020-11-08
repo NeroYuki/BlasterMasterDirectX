@@ -16,8 +16,8 @@ void Block::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void Block::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->x;
-	left = this->y;
+	top = this->y;
+	left = this->x;
 	bottom = top + this->h;
 	right = left + this->w;
 }

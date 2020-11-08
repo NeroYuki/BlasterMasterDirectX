@@ -18,8 +18,8 @@ void Orb::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void Orb::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->x;
-	left = this->y;
+	top = this->y;
+	left = this->x;
 	bottom = top + BBOX_ORB_HEIGHT;
 	right = left + BBOX_ORB_WIDTH;
 }

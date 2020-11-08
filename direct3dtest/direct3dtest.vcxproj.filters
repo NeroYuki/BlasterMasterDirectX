@@ -277,14 +277,19 @@
     <Image Include="resource\OverworldTileset.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\DungeonMapFg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
     <Text Include="resource\p_ref.txt" />
     <Text Include="resource\map_data\overworld_entityData.txt" />
+    <Text Include="resource\map_data\dungeon_entityData.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\spriteResource.grc" />
+    <None Include="resource\map_data\dungeon_layoutData.csv" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="direct3dtest.rc">

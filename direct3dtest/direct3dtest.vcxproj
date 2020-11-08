@@ -228,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\DungeonMapBg.png" />
+    <Image Include="resource\DungeonMapFg.png" />
     <Image Include="resource\Enemies.png" />
     <Image Include="resource\OverworldTileset.png" />
     <Image Include="resource\DungeonTileset.png" />
@@ -236,11 +237,13 @@
     <Image Include="resource\Player_add.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="resource\map_data\dungeon_entityData.txt" />
     <Text Include="resource\map_data\overworld_entityData.txt" />
     <Text Include="resource\p_ref.txt" />
     <Text Include="resource\ref.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resource\map_data\dungeon_layoutData.csv" />
     <None Include="resource\spriteResource.grc" />
   </ItemGroup>
   <ItemGroup>

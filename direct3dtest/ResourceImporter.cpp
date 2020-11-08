@@ -112,14 +112,51 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager, 
 		
 	}
 	fs.close();
-	DebugOut("[INFO] Importing\n");
+	DebugOut("[INFO] Resourced Imported\n");
 	
 }
 
 
 
-void ResourceImporter::mapDataImport(LPCSTR filename)
+void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 {
+	std::fstream fs;
+	fs.open(filename);
+	char res[2048];
+	int row = 0;
+	while (fs.getline(res, 2048)) {
+		std::string line(res);
+		std::vector<std::string> component = split(line, ",");
+		if (component.size() >= 1) {
+			DebugOut(component[0].c_str());
+			int startBlockXCoord = -1;
+			int endBlockXCoord = -1;
+			for (int i = 0; i < component.size(); i++) {
+				int entry = std::stoi(component[i], nullptr);
+				if (entry == 120) {
+					if (startBlockXCoord == -1)
+						startBlockXCoord = i * 16;
+					else
+						endBlockXCoord = i * 16;
+				}
+				else if (startBlockXCoord != -1) {
+					applyingScene->addObject(new Block(startBlockXCoord, row * 16, endBlockXCoord - startBlockXCoord, 16));
+					startBlockXCoord = -1;
+					endBlockXCoord = -1;
+				}
+				if (entry == -1) continue;
+			}
+			if (startBlockXCoord != -1) {
+				applyingScene->addObject(new Block(startBlockXCoord, row * 16, endBlockXCoord - startBlockXCoord, 16));
+			}
+		}
+		else {
+			DebugOut("[WARNING] This row does not contain any entry\n");
+		}
+		row++;
+	}
+	fs.close();
+	DebugOut("[INFO] Map Layout Imported\n");
 }
 
 void ResourceImporter::mapObjImport(LPCSTR filename)

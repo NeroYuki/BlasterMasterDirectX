@@ -19,8 +19,8 @@ void Eyeball::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void Eyeball::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->x;
-	left = this->y;
+	top = this->y;
+	left = this->x;
 	bottom = top + BBOX_EYEBALL_HEIGHT;
 	right = left + BBOX_EYEBALL_WIDTH;
 }

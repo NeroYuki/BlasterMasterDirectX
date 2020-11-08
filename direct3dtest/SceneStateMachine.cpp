@@ -17,6 +17,12 @@ int SceneStateMachine::getBgTextureId()
 	return curScene->getBgTexture_id();
 }
 
+int SceneStateMachine::getFgTextureId()
+{
+	if (curScene == NULL) return 0;
+	return curScene->getFgTexture_id();
+}
+
 Camera* SceneStateMachine::getActiveCamera()
 {
 	if (curScene == NULL) return NULL;
@@ -71,4 +77,10 @@ void SceneStateMachine::removeScene(int id)
 		delete findResult->second;
 		sceneMap.erase(id);
 	}
+}
+
+Scene* SceneStateMachine::getSceneById(int id)
+{
+	if (sceneMap[id] == nullptr) return NULL;
+	return sceneMap[id];
 }

@@ -18,8 +18,8 @@ void Boss::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void Boss::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->x;
-	left = this->y;
+	top = this->y;
+	left = this->x;
 	bottom = top + BBOX_BOSS_HEIGHT;
 	right = left + BBOX_BOSS_WIDTH;
 }

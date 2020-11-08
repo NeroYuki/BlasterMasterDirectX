@@ -107,6 +107,7 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(4, "resource\\DungeonTileset.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(5, "resource\\OverworldMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(6, "resource\\DungeonMapBg.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(8, "resource\\DungeonMapFg.png", D3DCOLOR_XRGB(255, 0, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();
@@ -119,6 +120,7 @@ void CGame::loadResource()
 void CGame::initGame()
 {
 	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
+	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
 	sceneStateMachine->switchToScene(DebugSceneId);
 }
 
@@ -143,6 +145,7 @@ void CGame::Loop(DWORD dt)
 
 	if (d3ddev->BeginScene() == D3D_OK) {
 		int bgTexture_id = sceneStateMachine->getBgTextureId();
+		int fgTexture_id = sceneStateMachine->getFgTextureId();
 		Camera* activeCamera = sceneStateMachine->getActiveCamera();
 		float transX = activeCamera->getX();
 		float transY = activeCamera->getY();
@@ -156,13 +159,15 @@ void CGame::Loop(DWORD dt)
 		D3DXMatrixTranslation(&translationMat, -transX, -transY, 0);
 		spriteHandler->SetTransform(&translationMat);
 		if (bgTexture_id != 0) {
-			LPDIRECT3DTEXTURE9 tex = TextureManager::getInstance()->get(bgTexture_id);
-			D3DSURFACE_DESC x;
-			tex->GetLevelDesc(0, &x);
-			draw(transX, transY, tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
+			LPDIRECT3DTEXTURE9 bg_tex = TextureManager::getInstance()->get(bgTexture_id);
+			draw(transX, transY, bg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
 		}
 		
 		sceneStateMachine->render();
+		if (fgTexture_id != 0) {
+			LPDIRECT3DTEXTURE9 fg_tex = TextureManager::getInstance()->get(fgTexture_id);
+			draw(transX, transY, fg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
+		}
 
 		spriteHandler->End();
 		d3ddev->EndScene();

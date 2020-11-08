@@ -12,6 +12,7 @@ public:
 	SceneStateMachine();
 	void handlingInput();
 	int getBgTextureId();
+	int getFgTextureId();
 	Camera* getActiveCamera();
 
 	void update(DWORD dt);
@@ -20,5 +21,6 @@ public:
 	int addScene(Scene* scene);
 	void switchToScene(int id);
 	void removeScene(int id);
+	Scene* getSceneById(int id);
 };
 

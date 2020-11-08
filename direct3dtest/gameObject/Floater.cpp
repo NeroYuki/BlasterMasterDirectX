@@ -41,8 +41,8 @@ void Floater::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void Floater::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->x;
-	left = this->y;
+	top = this->y;
+	left = this->x;
 	bottom = top + BBOX_FLOATER_HEIGHT;
 	right = left + BBOX_FLOATER_WIDTH;
 }
