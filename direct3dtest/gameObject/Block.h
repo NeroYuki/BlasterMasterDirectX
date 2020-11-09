@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "../TextureManager.h"
 
 class Block : public GameObject {
 private:
@@ -9,4 +10,5 @@ public:
 	void render();
 	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
+	void renderBoundingBox();
 };

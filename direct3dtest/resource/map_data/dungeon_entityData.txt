@@ -1,0 +1,12 @@
+[ENTITY LIST]
+#class_id x y hp
+[SECTION LIST]
+#section_id top left bottom right
+1 
+2
+3
+4
+5
+6
+[PORTAL LIST]
+#x y w h sectionStart sectionEnd

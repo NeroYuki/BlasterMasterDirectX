@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <string>
 
 Player::Player(float x, float y, int hp) : GameObject(x,y)
 {
@@ -15,19 +16,14 @@ void Player::render()
 
 void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	GameObject::update(dt);
-	dx = vx * dt;
-	dy = vy * dt;
-
 	vx = 0; vy = 0;
 	if (controlState & (JASON_DOWN)) vy += PLAYER_WALKING_SPEED;
 	if (controlState & (JASON_UP)) vy -= PLAYER_WALKING_SPEED;
 	if (controlState & (JASON_LEFT)) vx -= PLAYER_WALKING_SPEED;
 	if (controlState & (JASON_RIGHT)) vx += PLAYER_WALKING_SPEED;
 
-	/*if (vx > 0) {
-		state = 
-	}*/
+	GameObject::update(dt);
+
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -42,7 +38,7 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	}
 	else {
 		//DebugOut("Collision occured\n");
-		float min_tx, min_ty, nx = 0, ny;
+		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
 		float rdy = 0;
 
@@ -56,6 +52,14 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
+		//float t, l, b, r;
+		//coEvents[0]->obj->GetBoundingBox(t, l, b, r);
+		//std::string s1 = std::to_string(t);
+		//std::string s2 = std::to_string(l);
+		//DebugOut(s1.c_str());
+		//DebugOut("\n");
+		//DebugOut(s2.c_str());
+		//DebugOut("\n\n");
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -87,7 +91,7 @@ void Player::changeState(int stateId)
 //NOTE: Turn to pure virtual ASAP after inheiritance is completed
 void Player::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->y;
+	top = this->y + 18;
 	left = this->x;
 	bottom = top + BBOX_PLAYER_HEIGHT;
 	right = left + BBOX_PLAYER_WIDTH;

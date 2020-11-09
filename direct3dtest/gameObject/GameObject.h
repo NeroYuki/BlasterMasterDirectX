@@ -54,7 +54,7 @@ public:
 	void getVelocity(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	int getState() { return state; }
 
-	void renderBoundingBox();
+	virtual void renderBoundingBox();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(std::vector<LPGAMEOBJECT>* coObjects, std::vector<LPCOLLISIONEVENT>& coEvents);

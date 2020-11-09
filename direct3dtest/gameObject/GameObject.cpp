@@ -13,7 +13,7 @@ void GameObject::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 void GameObject::renderBoundingBox()
 {
-	//TODO: implement
+	
 }
 
 LPCOLLISIONEVENT GameObject::SweptAABBEx(LPGAMEOBJECT coO)
@@ -22,7 +22,7 @@ LPCOLLISIONEVENT GameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float ml, mt, mr, mb;		// moving object bbox
 	float t, nx, ny;
 
-	coO->GetBoundingBox(sl, st, sr, sb);
+	coO->GetBoundingBox(st, sl, sb, sr);
 
 	// deal with moving object: m speed = original m speed - collide object speed
 	float svx, svy;
@@ -35,7 +35,7 @@ LPCOLLISIONEVENT GameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float rdx = this->dx - sdx;
 	float rdy = this->dy - sdy;
 
-	GetBoundingBox(ml, mt, mr, mb);
+	GetBoundingBox(mt, ml, mb, mr);
 
 	CollisionHelper::sweptAABB(
 		ml, mt, mr, mb,

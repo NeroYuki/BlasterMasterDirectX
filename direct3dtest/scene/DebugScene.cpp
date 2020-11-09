@@ -11,7 +11,7 @@ void DebugScene::initScene()
 {
 	this->addObject(new Worm(30, 30, 1));
 	this->addObject(new Floater(200, 30, 1));
-	p = new Player(30, 180, 1);
+	p = new Player(90, 1440, 1);
 
 	//initially put every object into its respective grid
 

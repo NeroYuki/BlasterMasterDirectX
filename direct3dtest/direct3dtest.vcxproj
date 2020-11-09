@@ -227,8 +227,10 @@
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\bbox.png" />
     <Image Include="resource\DungeonMapBg.png" />
     <Image Include="resource\DungeonMapFg.png" />
+    <Image Include="resource\DungeonMapLayoutFg.png" />
     <Image Include="resource\Enemies.png" />
     <Image Include="resource\OverworldTileset.png" />
     <Image Include="resource\DungeonTileset.png" />

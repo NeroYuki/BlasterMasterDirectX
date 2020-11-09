@@ -3,8 +3,8 @@
 #include "../Debug.h"
 #define PLAYER_WALKING_SPEED 0.06
 
-#define BBOX_PLAYER_WIDTH 20
-#define BBOX_PLAYER_HEIGHT 20
+#define BBOX_PLAYER_WIDTH 24
+#define BBOX_PLAYER_HEIGHT 18
 
 class Player : public GameObject {
 private:

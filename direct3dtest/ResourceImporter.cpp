@@ -128,7 +128,7 @@ void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 		std::string line(res);
 		std::vector<std::string> component = split(line, ",");
 		if (component.size() >= 1) {
-			DebugOut(component[0].c_str());
+			//DebugOut(component[0].c_str());
 			int startBlockXCoord = -1;
 			int endBlockXCoord = -1;
 			for (int i = 0; i < component.size(); i++) {
@@ -136,8 +136,7 @@ void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 				if (entry == 120) {
 					if (startBlockXCoord == -1)
 						startBlockXCoord = i * 16;
-					else
-						endBlockXCoord = i * 16;
+					endBlockXCoord = i * 16 + 16;
 				}
 				else if (startBlockXCoord != -1) {
 					applyingScene->addObject(new Block(startBlockXCoord, row * 16, endBlockXCoord - startBlockXCoord, 16));
