@@ -180,6 +180,7 @@
     <ClCompile Include="scene\Intro.cpp" />
     <ClCompile Include="scene\OverworldScene.cpp" />
     <ClCompile Include="scene\Scene.cpp" />
+    <ClCompile Include="scene\SceneSection.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
@@ -222,6 +223,7 @@
     <ClInclude Include="scene\Intro.h" />
     <ClInclude Include="scene\OverworldScene.h" />
     <ClInclude Include="scene\Scene.h" />
+    <ClInclude Include="scene\SceneSection.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StateDictionary.h" />
     <ClInclude Include="TextureManager.h" />

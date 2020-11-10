@@ -123,6 +123,7 @@ void CGame::initGame()
 {
 	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
 	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
+	ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
 	sceneStateMachine->switchToScene(DebugSceneId);
 }
 

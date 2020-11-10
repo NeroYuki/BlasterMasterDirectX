@@ -5,6 +5,7 @@ DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(scen
 	initScene();
 	bgTexture_id = 6;
 	fgTexture_id = 8;
+	activeSection = 0;
 }
 
 void DebugScene::initScene()

@@ -1,6 +1,7 @@
 #pragma once
 #include "GlobalConstant.h"
 #include "gameObject/GameObject.h"
+#include "scene/SceneSection.h"
 
 class Camera
 {
@@ -10,7 +11,7 @@ private:
 	GameObject* followingObj = NULL;
 	bool lockX = false; bool lockY = false;
 public:
-	void update();
+	void update(SceneSection* section);
 	void setFollow(GameObject* obj);
 	void unfollow();
 	void setAxisLock(bool lockX, bool lockY);

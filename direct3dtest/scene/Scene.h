@@ -34,13 +34,16 @@ class Scene {
 private:
 	std::vector<ObjectGrid*> objectGridMap;
 	std::vector<LPGAMEOBJECT> coObjects;
+	std::vector<SceneSection*> sectionList;
 protected:
 	int bgTexture_id = 0;
 	int fgTexture_id = 0;
 	Camera* cam;
+	int activeSection = -1;
 public:
 	Scene();
 	void addObject(GameObject* obj);
+	void addSection(SceneSection* section);
 	virtual void initScene() = 0;
 	virtual void handlingInput() = 0;
 	virtual void update(DWORD dt);

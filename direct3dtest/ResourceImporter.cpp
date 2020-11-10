@@ -2,6 +2,9 @@
 #define SPRITE_SECTION 1
 #define ANIMATION_SECTION 2
 #define TILESET_SECTION 3
+#define ENTITY_LIST 4
+#define PORTAL_LIST 5
+#define SECTION_LIST 6
 
 std::vector<std::string> split(std::string line, std::string delimeter)
 {
@@ -158,8 +161,78 @@ void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 	DebugOut("[INFO] Map Layout Imported\n");
 }
 
-void ResourceImporter::mapObjImport(LPCSTR filename)
+void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 {
+	std::fstream fs;
+	fs.open(filename);
+	char res[2048];
+	int parseSection = 0;
+	while (fs.getline(res, 2048)) {
+		std::string line(res);
+		std::vector<std::string> component = split(line, " ");
+
+		if (line[0] == '#' || line.size() < 2) continue;
+
+		if (line == "[ENTITY]") {
+			parseSection = ENTITY_LIST; continue;
+		}
+		if (line == "[PORTAL]") {
+			parseSection = PORTAL_LIST; continue;
+		}
+		if (line == "[SECTION]") {
+			parseSection = SECTION_LIST; continue;
+		}
+		switch (parseSection) {
+		case ENTITY_LIST:
+			if (component.size() < 4) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				//TODO: implement
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+			break;
+		case PORTAL_LIST:
+			if (component.size() < 6) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				float x = std::stof(component[0], nullptr);
+				float y = std::stof(component[1], nullptr);
+				int w = std::stoi(component[2], nullptr);
+				int h = std::stoi(component[3], nullptr);
+				int sectionStart = std::stoi(component[4], nullptr);
+				int sectionEnd = std::stoi(component[5], nullptr);
+				applyingScene->addObject(new Portal(x, y, w, h, sectionStart, sectionEnd));
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+			break;
+		case SECTION_LIST:
+			if (component.size() < 4) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				int t = std::stoi(component[0], nullptr);
+				int l = std::stoi(component[1], nullptr);
+				int b = std::stoi(component[2], nullptr);
+				int r = std::stoi(component[3], nullptr);
+				applyingScene->addSection(new SceneSection(t, l, b, r));
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+			break;
+		default:
+			DebugOut("[WARNING] Unknown section\n");
+		}
+	}
 }
 
 void ResourceImporter::tilesetImporter(LPCSTR filename)
