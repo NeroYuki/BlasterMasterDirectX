@@ -9,7 +9,9 @@
 class DebugScene : public Scene {
 private:
 	SceneStateMachine* sceneState;
-	Player* p;
+	JasonTop* jsTop;
+	Jason* js;
+	Sophia* sophia;
 public:
 	DebugScene(SceneStateMachine* sceneState);
 	void initScene();
