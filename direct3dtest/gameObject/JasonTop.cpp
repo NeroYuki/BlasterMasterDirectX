@@ -15,13 +15,32 @@ void JasonTop::render()
 void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	vx = 0; vy = 0;
-	if (controlState & (DOWN)) vy += PLAYER_WALKING_SPEED;
-	if (controlState & (UP)) vy -= PLAYER_WALKING_SPEED;
-	if (controlState & (LEFT)) vx -= PLAYER_WALKING_SPEED;
-	if (controlState & (RIGHT)) vx += PLAYER_WALKING_SPEED;
+	if (controlState & (DOWN)) {
+		vy += PLAYER_WALKING_SPEED;
+		this->changeState(TOP_JASON_WALK_DOWN);
+	}
+	if (controlState & (UP)) {
+		vy -= PLAYER_WALKING_SPEED;
+		this->changeState(TOP_JASON_WALK_UP);
+	}
+	if (controlState & (LEFT)) {
+		vx -= PLAYER_WALKING_SPEED;
+		this->changeState(TOP_JASON_WALK_LEFT);
+	}
+	if (controlState & (RIGHT)) {
+		vx += PLAYER_WALKING_SPEED;
+		this->changeState(TOP_JASON_WALK_RIGHT);
+	}
+
+	if (controlState == IDLE) {
+		this->changeState(COMMON_PLAYER_IDLE);
+	}
+
+	//Change animation state logic here
 
 	GameObject::update(dt);
 
+	//
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -86,7 +105,6 @@ void JasonTop::changeState(int stateId)
 	}
 }
 
-//NOTE: Turn to pure virtual ASAP after inheiritance is completed
 void JasonTop::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y + 18;

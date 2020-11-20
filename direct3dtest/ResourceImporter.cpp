@@ -205,9 +205,10 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				float y = std::stof(component[1], nullptr);
 				int w = std::stoi(component[2], nullptr);
 				int h = std::stoi(component[3], nullptr);
-				int sectionStart = std::stoi(component[4], nullptr);
-				int sectionEnd = std::stoi(component[5], nullptr);
-				applyingScene->addObject(new Portal(x, y, w, h, sectionStart, sectionEnd));
+				float lx = std::stof(component[4], nullptr);
+				float ly = std::stof(component[5], nullptr);
+				int sectionEnd = std::stoi(component[6], nullptr);
+				applyingScene->addObject(new Portal(x, y, w, h, lx, ly, sectionEnd));
 			}
 			catch (int er) {
 				DebugOut("[ERROR] An error occured\n");

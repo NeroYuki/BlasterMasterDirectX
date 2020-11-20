@@ -5,6 +5,7 @@
 #include "../StateDictionary.h"
 #include "../GlobalConstant.h"
 #include "../CollisionHelper.h"
+#include "../GameTimer.h"
 #include <algorithm>
 
 class GameObject;

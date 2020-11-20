@@ -4,7 +4,6 @@
 
 class Jason : public Player {
 private:
-	int controlState = 0;
 	bool is_craw = false;
 public:
 	Jason(float x, float y, int hp);
@@ -14,8 +13,5 @@ public:
 	void setCrawState(bool isCraw) { is_craw = isCraw; }
 	bool getCrawState() { return is_craw; }
 	void changeState(int stateId);
-	int getState() { return state; }
-	int getControlState() { return controlState; }
-	void setControlState(int controlState) { this->controlState = controlState; }
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
 };

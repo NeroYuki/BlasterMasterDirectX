@@ -22,11 +22,11 @@ void Camera::update(SceneSection* section)
 
 	section->getSectionBounding(bt, bl, bb, br);
 
-	if (initX < bl) this->x = bl;
-	else if (initX + this->w > br) this->x = br - this->w;
+	if (initX <= bl) this->x = bl;
+	else if (initX + this->w >= br) this->x = br - this->w;
 	else this->x = initX;
-	if (initY < bt) this->y = bt;
-	else if (initY + this->h > bb) this->y = bb - this->h;
+	if (initY <= bt) this->y = bt;
+	else if (initY + this->h >= bb) this->y = bb - this->h;
 	else this->y = initY;
 }
 

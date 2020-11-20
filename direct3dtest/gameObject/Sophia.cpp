@@ -1,5 +1,6 @@
 
-#include"Sophia.h"
+#include "Sophia.h"
+
 Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 {
 	vx = 0; vy = 0;
@@ -15,14 +16,32 @@ void Sophia::render()
 
 void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	//vy += 0.02;
+	
 	vx = 0;
 	//if (controlState & (DOWN)) vy += PLAYER_WALKING_SPEED;
 	//if (controlState & (UP)) vy -= PLAYER_WALKING_SPEED;
-	if (controlState & (LEFT)) vx -= PLAYER_WALKING_SPEED;
-	if (controlState & (RIGHT)) vx += PLAYER_WALKING_SPEED;
-	if (controlState & (JUMP)) vy -= SOPHIA_JUMP_SPEED;
+
+	//TODO: redo this
+	if (controlState & (LEFT)) {
+		vx -= PLAYER_WALKING_SPEED;
+		this->changeState(SOPHIA_MOVE_LEFT);
+	}
+	if (controlState & (RIGHT)) {
+		vx += PLAYER_WALKING_SPEED;
+		this->changeState(SOPHIA_MOVE_RIGHT);
+	}
+	if (controlState & (PRIMARY)) {
+		vy -= SOPHIA_JUMP_SPEED;
+		if (vx > 0.00001) this->changeState(SOPHIA_JUMP_RIGHT);
+		if (vx < -0.00001) this->changeState(SOPHIA_JUMP_LEFT);
+	}
+
+	if (vx == 0 && vy == 0) {
+		this->changeState(COMMON_SOPHIA_IDLE);
+	}
 	GameObject::update(dt);
+	//uncomment for gravity
+	vy += 0.02;
 
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
@@ -52,6 +71,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
+
 		//float t, l, b, r;
 		//coEvents[0]->obj->GetBoundingBox(t, l, b, r);
 		//std::string s1 = std::to_string(t);
@@ -89,8 +109,8 @@ void Sophia::changeState(int stateId)
 //NOTE: Turn to pure virtual ASAP after inheiritance is completed
 void Sophia::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->y + 18;
+	top = this->y;
 	left = this->x;
-	bottom = top + BBOX_PLAYER_HEIGHT;
-	right = left + BBOX_PLAYER_WIDTH;
+	bottom = top + BBOX_SOPHIA_HEIGHT;
+	right = left + BBOX_SOPHIA_WIDTH;
 }

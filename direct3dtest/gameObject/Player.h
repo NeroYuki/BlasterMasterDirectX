@@ -7,15 +7,18 @@
 #define BBOX_PLAYER_HEIGHT 18
 
 class Player : public GameObject {
-private:
+protected:
 	int controlState = 0;
+	bool switchingSection = false;
+	GameTimer* sectionSwitchingTimer;
 public:
 	Player(float x, float y, int hp);
 	void render();
-	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
+	virtual void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	~Player();
 	virtual void changeState(int stateId);
+	int getState() { return state; }
 	int getControlState() { return controlState; }
 	void setControlState(int controlState) { this->controlState = controlState; }
-	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right);
+	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right) = 0;
 };

@@ -19,7 +19,8 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	//if (controlState & (DOWN)) vy += PLAYER_WALKING_SPEED;
 	if (controlState & (LEFT)) vx -= PLAYER_WALKING_SPEED;
 	if (controlState & (RIGHT)) vx += PLAYER_WALKING_SPEED;
-	if (controlState & (JUMP)) vy -= JASON_JUMP_SPEED;
+	if (controlState & (PRIMARY)) vy -= JASON_JUMP_SPEED;
+
 	GameObject::update(dt);
 
 

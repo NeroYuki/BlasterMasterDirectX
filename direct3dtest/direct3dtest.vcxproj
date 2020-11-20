@@ -231,6 +231,7 @@
     <ClCompile Include="gameObject\Sophia.cpp" />
     <ClCompile Include="gameObject\Teleporter.cpp" />
     <ClCompile Include="gameObject\Worm.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceImporter.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="gameObject\Sophia.h" />
     <ClInclude Include="gameObject\Teleporter.h" />
     <ClInclude Include="gameObject\Worm.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="resource.h" />
@@ -310,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\map_data\dungeon_layoutData.csv" />
+    <None Include="resource\map_data\overworld_layoutData.csv" />
     <None Include="resource\spriteResource.grc" />
   </ItemGroup>
   <ItemGroup>

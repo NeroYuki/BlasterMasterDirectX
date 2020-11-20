@@ -4,6 +4,7 @@
 Player::Player(float x, float y, int hp) : GameObject(x,y)
 {
 	vx = 0; vy = 0;
+	sectionSwitchingTimer = new GameTimer(3000);
 }
 
 void Player::render()
@@ -24,10 +25,5 @@ Player::~Player()
 
 void Player::changeState(int stateId)
 {
-}
-
-//NOTE: Turn to pure virtual ASAP after inheiritance is completed
-void Player::GetBoundingBox(float& top, float& left, float& bottom, float& right)
-{
-
+	this->state = stateId;
 }
