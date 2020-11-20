@@ -14,7 +14,7 @@ public:
 	void render();
 	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	~Player();
-	void changeState(int stateId);
+	virtual void changeState(int stateId);
 	int getControlState() { return controlState; }
 	void setControlState(int controlState) { this->controlState = controlState; }
 	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right);

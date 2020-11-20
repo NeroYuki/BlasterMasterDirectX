@@ -110,6 +110,7 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(8, "resource\\DungeonMapFg.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(9, "resource\\DungeonMapLayoutFg.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(10, "resource\\bbox.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(11, "resource\\Player_add.png", D3DCOLOR_XRGB(0, 57, 115));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();

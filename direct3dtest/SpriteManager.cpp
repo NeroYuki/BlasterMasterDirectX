@@ -38,5 +38,5 @@ Sprite::Sprite(int id, int top, int left, int bottom, int right, LPDIRECT3DTEXTU
 
 void Sprite::draw(float x, float y)
 {
-	CGame::getInstance()->draw(x, y, this->texture, this->top, this->left, this->bottom, this->right);
+		CGame::getInstance()->draw(x, y, this->texture, this->top, this->left, this->bottom, this->right);
 }
