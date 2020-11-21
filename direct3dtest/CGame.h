@@ -6,6 +6,7 @@
 #include "Debug.h"
 #include "SceneStateMachine.h"
 #include "scene/DebugScene.h"
+#include "scene/OverworldScene.h"
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "AnimationManger.h"

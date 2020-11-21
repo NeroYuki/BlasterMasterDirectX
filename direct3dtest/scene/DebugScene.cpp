@@ -10,41 +10,161 @@ DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(scen
 
 void DebugScene::initScene()
 {
+	p_stack = new std::stack<Player*>();
 	this->addObject(new Worm(30, 30, 1));
 	this->addObject(new Floater(200, 30, 1));
-	p = new Player(90, 1440, 1);
-
+	//Sophia* s = new Sophia(90, 1420, 1);
+	JasonTop* s = new JasonTop(90, 1420, 1);
+	p_stack->push(s);
 	//initially put every object into its respective grid
-
-	this->addObject(p);
-	cam->setFollow(p);
+	//this->addObject(sophia);
+	this->addObject(s);
+	cam->setFollow(p_stack->top());
 }
 
 void DebugScene::handlingInput()
 {
-	int res = 0;
-	if (InputHandler::getInstance()->isKeyDown(DIK_W)) {
-		p->changeState(TOP_JASON_WALK_UP);
-		res += JASON_UP;
+	int control_state = 0;
+	if (InputHandler::getInstance()->isKeyDown(DIK_DOWN)) {
+		control_state += DOWN;
 	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_A)) {
-		p->changeState(TOP_JASON_WALK_LEFT);
-		res += JASON_LEFT;
+	if (InputHandler::getInstance()->isKeyDown(DIK_UP)) {
+		control_state += UP;
 	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_S)) {
-		p->changeState(TOP_JASON_WALK_DOWN);
-		res += JASON_DOWN;
+	if (InputHandler::getInstance()->isKeyDown(DIK_LEFT)) {
+		control_state += LEFT;
 	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_D)) {
-		p->changeState(TOP_JASON_WALK_RIGHT);
-		res += JASON_RIGHT;
+	if (InputHandler::getInstance()->isKeyDown(DIK_RIGHT)) {
+		control_state += RIGHT;
 	}
-	p->setControlState(res);
-	if (res == 0) {
-		p->changeState(COMMON_PLAYER_IDLE);
+	if (InputHandler::getInstance()->isKeyDown(DIK_Z)) {
+		control_state += PRIMARY;
 	}
+	if (InputHandler::getInstance()->isKeyDown(DIK_X)) {
+		control_state += SECONDARY;
+	}
+	if (InputHandler::getInstance()->isKeyDown(DIK_LSHIFT)) {
+		//spawn a small jason and switch 
+	}
+	p_stack->top()->setControlState(control_state);
 }
 
 void DebugScene::update() {
+	
+}
 
+DebugScene::~DebugScene() {
+	//deallocate player control stack and object pool
+}
+
+
+void abandoned() {
+	//int res_jsTop = 0;
+	//int res_js = 0;
+	//int res_sophia = 0;
+	//if (InputHandler::getInstance()->isKeyDown(DIK_W)) {
+	//	jsTop->changeState(TOP_JASON_WALK_UP);
+	//	res_jsTop += UP;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_A)) {
+	//	jsTop->changeState(TOP_JASON_WALK_LEFT);
+	//	res_jsTop += LEFT;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_S)) {
+	//	jsTop->changeState(TOP_JASON_WALK_DOWN);
+	//	res_jsTop += DOWN;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_D)) {
+	//	jsTop->changeState(TOP_JASON_WALK_RIGHT);
+	//	res_jsTop += RIGHT;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_RIGHT)) {
+	//	if (js->getState() == JASON_CRAW_LEFT || js->getState() == JASON_CRAW_RIGHT || js->getState() == JASON_CRAW_IDLE_LEFT || js->getState() == JASON_CRAW_IDLE_RIGHT)
+	//	{
+	//		js->changeState(JASON_CRAW_RIGHT);
+	//	}
+	//	else //if (js->getState() == JASON_IDLE_LEFT || js->getState() == JASON_WALK_LEFT || js->getState() == JASON_IDLE_RIGHT)
+	//	{
+	//		js->changeState(JASON_WALK_RIGHT);
+	//	}
+	//	if (sophia->getState() == SOPHIA_IDLE_LEFT || sophia->getState() == SOPHIA_MOVE_LEFT)
+	//	{
+	//		sophia->changeState(SOPHIA_TURN_RIGHT);
+	//		res_sophia -= RIGHT;
+	//	}
+	//	else
+	//	{
+	//		sophia->changeState(SOPHIA_MOVE_RIGHT);
+	//	}
+	//	res_js += RIGHT;
+	//	res_sophia += RIGHT;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_LEFT)) {
+	//	if (js->getState() == JASON_CRAW_RIGHT || js->getState() == JASON_CRAW_LEFT || js->getState() == JASON_CRAW_IDLE_LEFT || js->getState() == JASON_CRAW_IDLE_RIGHT)
+	//	{
+	//		js->changeState(JASON_CRAW_LEFT);
+	//	}
+	//	else //if (js->getState() == JASON_IDLE_LEFT || js->getState() == JASON_WALK_LEFT || js->getState() == JASON_IDLE_RIGHT)
+	//	{
+	//		js->changeState(JASON_WALK_LEFT);
+	//	}
+	//	if (sophia->getState() == SOPHIA_IDLE_RIGHT || sophia->getState() == SOPHIA_MOVE_RIGHT)
+	//	{
+	//		sophia->changeState(SOPHIA_TURN_LEFT);
+	//		res_sophia -= LEFT;
+	//	}
+	//	else
+	//	{
+	//		sophia->changeState(SOPHIA_MOVE_LEFT);
+	//	}
+	//	res_sophia += LEFT;
+	//	res_js += LEFT;
+	//}
+	//if (InputHandler::getInstance()->isKeyDown(DIK_DOWN)) {
+	//	js->changeState(COMMON_JASON_CRAW_IDLE);
+	//	js->setCrawState(true);
+	//}
+
+	//if (InputHandler::getInstance()->isKeyDown(DIK_UP)) {
+	//	if (js->getState() == js->getState() == JASON_CRAW_RIGHT || js->getState() == JASON_CRAW_LEFT || js->getState() == JASON_CRAW_IDLE_LEFT || js->getState() == JASON_CRAW_IDLE_RIGHT)
+	//		js->changeState(COMMON_JASON_IDLE);
+	//	js->setCrawState(false);
+	//}
+
+	//if (InputHandler::getInstance()->isKeyDown(DIK_X)) {
+	//	if (!js->getCrawState())
+	//	{
+	//		if (js->getState() == JASON_IDLE_LEFT || js->getState() == JASON_WALK_LEFT)
+	//		{
+	//			js->changeState(JASON_JUMP_LEFT);
+	//		}
+	//		else if (js->getState() == JASON_IDLE_RIGHT || js->getState() == JASON_WALK_RIGHT)
+	//		{
+	//			js->changeState(JASON_JUMP_RIGHT);
+	//		}
+	//		res_js += JUMP;
+	//	}
+	//	if (sophia->getState() == SOPHIA_MOVE_RIGHT || sophia->getState() == SOPHIA_IDLE_RIGHT) {
+	//		sophia->changeState(SOPHIA_JUMP_RIGHT);
+	//	}
+	//	else if (sophia->getState() == SOPHIA_MOVE_LEFT || sophia->getState() == SOPHIA_MOVE_LEFT) {
+	//		sophia->changeState(SOPHIA_JUMP_LEFT);
+	//	}
+	//	res_sophia += JUMP;
+	//}
+	//jsTop->setControlState(res_jsTop);
+	//js->setControlState(res_js);
+	//sophia->setControlState(res_sophia);
+	//if (res_js == 0) {
+	//	if (js->getState() == JASON_CRAW_LEFT || js->getState() == JASON_CRAW_RIGHT || js->getState() == JASON_CRAW_IDLE_LEFT || js->getState() == JASON_CRAW_IDLE_RIGHT)
+	//		js->changeState(COMMON_JASON_CRAW_IDLE);
+	//	else
+	//		js->changeState(COMMON_JASON_IDLE);
+	//}
+	//if (res_jsTop == 0) {
+	//	jsTop->changeState(COMMON_PLAYER_IDLE);
+	//}
+	//if (res_sophia == 0) {
+	//	sophia->changeState(COMMON_SOPHIA_IDLE);
+	//}
 }

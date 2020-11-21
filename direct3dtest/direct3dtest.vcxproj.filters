@@ -132,6 +132,9 @@
     <ClCompile Include="scene\SceneSection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -260,6 +263,9 @@
     <ClInclude Include="scene\SceneSection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -302,6 +308,7 @@
   <ItemGroup>
     <None Include="resource\spriteResource.grc" />
     <None Include="resource\map_data\dungeon_layoutData.csv" />
+    <None Include="resource\map_data\overworld_layoutData.csv" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="direct3dtest.rc">

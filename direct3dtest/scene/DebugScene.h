@@ -2,17 +2,19 @@
 #include "Scene.h"
 #include "../SceneStateMachine.h"
 #include "../InputHandler.h"
+#include <stack>
 
-#define SCENE_WIDTH 3200
-#define SCENE_HEIGHT 1600
+#define DEBUG_SCENE_WIDTH 3200
+#define DEBUG_SCENE_HEIGHT 1600
 
 class DebugScene : public Scene {
 private:
 	SceneStateMachine* sceneState;
-	Player* p;
+	std::stack<Player*>* p_stack;
 public:
 	DebugScene(SceneStateMachine* sceneState);
 	void initScene();
 	void handlingInput();
 	void update();
+	~DebugScene();
 };
