@@ -1,4 +1,5 @@
-#include"JasonTop.h"
+#include "JasonTop.h"
+
 JasonTop::JasonTop(float x, float y, int hp) : Player(x, y, hp)
 {
 	vx = 0; vy = 0;
@@ -15,6 +16,10 @@ void JasonTop::render()
 void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	vx = 0; vy = 0;
+
+	if (forceControlState != IDLE) { 
+		controlState = forceControlState; 
+	}
 	if (controlState & (DOWN)) {
 		vy += PLAYER_WALKING_SPEED;
 		this->changeState(TOP_JASON_WALK_DOWN);
@@ -40,7 +45,12 @@ void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	GameObject::update(dt);
 
-	//
+	//Handling collision
+	if (this->ignoreCollision) {
+		x += dx;
+		y += dy;
+		return;
+	}
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -69,14 +79,18 @@ void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-		//float t, l, b, r;
-		//coEvents[0]->obj->GetBoundingBox(t, l, b, r);
-		//std::string s1 = std::to_string(t);
-		//std::string s2 = std::to_string(l);
-		//DebugOut(s1.c_str());
-		//DebugOut("\n");
-		//DebugOut(s2.c_str());
-		//DebugOut("\n\n");
+		
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<Portal*>(e->obj))
+			{
+				Portal* p = dynamic_cast<Portal*>(e->obj);
+				this->activeSection = p->getSectionEnd();
+			}
+		}
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;

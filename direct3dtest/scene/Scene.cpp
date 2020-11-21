@@ -13,13 +13,19 @@ void Scene::addObject(GameObject* obj)
 
 void Scene::addSection(SceneSection* section)
 {
-	sectionList.push_back(section);
+	sectionGraph.addSection(section);
+}
+
+void Scene::addPortal(Portal* p)
+{
+	addObject(p);
+	sectionGraph.addPortal(p);
 }
 
 void Scene::update(DWORD dt)
 {
 	if (activeSection != -1)
-		cam->update(sectionList.at(activeSection));
+		cam->update(sectionGraph.getSection(activeSection));
 	else {
 		cam->update(nullptr);
 	}

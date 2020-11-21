@@ -196,7 +196,7 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 			}
 			break;
 		case PORTAL_LIST:
-			if (component.size() < 6) {
+			if (component.size() < 8) {
 				DebugOut("[WARNING] Not enough parameter for this line\n");
 				continue;
 			}
@@ -207,8 +207,9 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				int h = std::stoi(component[3], nullptr);
 				float lx = std::stof(component[4], nullptr);
 				float ly = std::stof(component[5], nullptr);
-				int sectionEnd = std::stoi(component[6], nullptr);
-				applyingScene->addObject(new Portal(x, y, w, h, lx, ly, sectionEnd));
+				int sectionStart = std::stoi(component[6], nullptr);
+				int sectionEnd = std::stoi(component[7], nullptr);
+				applyingScene->addPortal(new Portal(x, y, w, h, lx, ly, sectionStart, sectionEnd));
 			}
 			catch (int er) {
 				DebugOut("[ERROR] An error occured\n");

@@ -27,13 +27,19 @@ void GameTimer::pause()
 	this->isStart = false;
 }
 
-bool GameTimer::update(long dt)
+//state 0 = inactive, 1 = started, 2 = active, 3 = ended
+short GameTimer::update(long dt)
 {
-	if (!isStart) return false;
+	if (!isStart) return TIMER_INACTIVE;
 	current += dt;
-	if (current >= interval) {
-		current = 0;
-		return true;
+	if (current == dt) {
+		return TIMER_STARTED;
 	}
-	return false;
+	if (current < interval) {
+		return TIMER_ACTIVE;
+	}
+	else {
+		this->stop();
+		return TIMER_ENDED;
+	}
 }

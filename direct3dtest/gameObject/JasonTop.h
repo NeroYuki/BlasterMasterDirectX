@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Portal.h"
 
 class JasonTop : public Player {
 private:

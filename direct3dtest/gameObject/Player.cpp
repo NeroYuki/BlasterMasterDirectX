@@ -4,7 +4,6 @@
 Player::Player(float x, float y, int hp) : GameObject(x,y)
 {
 	vx = 0; vy = 0;
-	sectionSwitchingTimer = new GameTimer(3000);
 }
 
 void Player::render()

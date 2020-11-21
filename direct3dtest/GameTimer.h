@@ -1,5 +1,10 @@
 #pragma once
 
+#define TIMER_INACTIVE 0
+#define TIMER_STARTED 1
+#define TIMER_ACTIVE 2
+#define TIMER_ENDED 3
+
 class GameTimer {
 private:
 	bool isStart = false;
@@ -11,7 +16,8 @@ public:
 	void restart();
 	void stop();
 	void pause();
-	bool update(long dt);
+	short update(long dt);
+	bool isStarted() { return isStart; }
 	long getInterval() { return this->interval; }
 	void setInterval(long interval) { this->interval = interval; }
 };

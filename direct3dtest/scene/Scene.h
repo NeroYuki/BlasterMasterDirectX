@@ -30,20 +30,43 @@ public:
 	}
 };
 
+struct SectionGraphEdge {
+	int dst;
+	Portal* p;
+};
+
+class SectionGraph {
+	std::vector < std::pair < SceneSection*, std::vector < SectionGraphEdge >* > > adjList;
+public:
+	void addSection(SceneSection* section) {
+		adjList.push_back({ section, new std::vector<SectionGraphEdge> });
+	}
+	void addPortal(Portal* p) {
+		adjList.at(p->getSectionStart()).second->push_back({p->getSectionEnd(), p});
+	}
+	SceneSection* getSection(int index) {
+		return adjList.at(index).first;
+	}
+	std::vector<SectionGraphEdge>* getLinkedPortalList(int index) {
+		return adjList.at(index).second;
+	}
+};
+
 class Scene {
 private:
 	std::vector<ObjectGrid*> objectGridMap;
 	std::vector<LPGAMEOBJECT> coObjects;
-	std::vector<SceneSection*> sectionList;
 protected:
 	int bgTexture_id = 0;
 	int fgTexture_id = 0;
 	Camera* cam;
 	int activeSection = -1;
+	SectionGraph sectionGraph;
 public:
 	Scene();
 	void addObject(GameObject* obj);
 	void addSection(SceneSection* section);
+	void addPortal(Portal* p);
 	virtual void initScene() = 0;
 	virtual void handlingInput() = 0;
 	virtual void update(DWORD dt);
