@@ -56,9 +56,6 @@ void DebugScene::update(DWORD dt) {
 	if (p_stack->top()->getActiveSection() != activeSection) {
 		if (!sectionSwitchTimer->isStarted())
 			sectionSwitchTimer->start();
-		//FIXME: move this to on timer end event instead
-		
-		//
 	}
 
 	short timerState = sectionSwitchTimer->update(dt);
@@ -67,7 +64,7 @@ void DebugScene::update(DWORD dt) {
 		//find the corresponded portal
 		std::vector<SectionGraphEdge>* portalList = sectionGraph.getLinkedPortalList(activeSection);
 		for (int i = 0; i < portalList->size(); i++) {
-			if (portalList->at(i).dst = p_stack->top()->getActiveSection()) {
+			if (portalList->at(i).dst == p_stack->top()->getActiveSection()) {
 				Portal* checking_portal = portalList->at(i).p;
 
 				float lx = checking_portal->getLx();
@@ -82,13 +79,26 @@ void DebugScene::update(DWORD dt) {
 
 				long interval = max(abs(lx) / PLAYER_WALKING_SPEED, abs(ly) / PLAYER_WALKING_SPEED) + 500;
 				sectionSwitchTimer->setInterval(interval);
+
+				float lcx = 0, lcy = 0;
+				if (lx > 0) { lcx = cam->getW(); }
+				if (lx < 0) { lcx = -cam->getW(); }
+				if (ly > 0) { lcy = cam->getH(); }
+				if (ly < 0) { lcy = -cam->getH(); }
+
+				cam->setForceVeloc(lcx / interval, lcy / interval);
+				cam->updateWithForceVeloc(dt);
 			}
 		}
+	}
+	else if (timerState == TIMER_ACTIVE) {
+		cam->updateWithForceVeloc(dt);
 	}
 	else if (timerState == TIMER_ENDED) {
 		p_stack->top()->setForceControlState(IDLE);
 		p_stack->top()->setIgnoreCollision(false);
 		activeSection = p_stack->top()->getActiveSection();
+		cam->setForceVeloc(0, 0);
 	}
 }
 

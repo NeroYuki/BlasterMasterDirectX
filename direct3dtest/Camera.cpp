@@ -2,6 +2,7 @@
 
 void Camera::update(SceneSection* section)
 {
+	if (force_vx != 0 || force_vy != 0) return;
 	if (followingObj == NULL) {
 		return;
 	}
@@ -56,4 +57,16 @@ void Camera::setPos(float x, float y)
 {
 	this->x = x;
 	this->y = y;
+}
+
+void Camera::setForceVeloc(float force_vx, float force_vy)
+{
+	this->force_vx = force_vx;
+	this->force_vy = force_vy;
+}
+
+void Camera::updateWithForceVeloc(DWORD dt)
+{
+	this->x += this->force_vx * dt;
+	this->y += this->force_vy * dt;
 }
