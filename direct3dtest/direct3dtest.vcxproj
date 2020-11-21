@@ -298,6 +298,7 @@
     <Image Include="resource\DungeonMapFg.png" />
     <Image Include="resource\DungeonMapLayoutFg.png" />
     <Image Include="resource\Enemies.png" />
+    <Image Include="resource\OverworldMapFg.png" />
     <Image Include="resource\OverworldTileset.png" />
     <Image Include="resource\DungeonTileset.png" />
     <Image Include="resource\OverworldMapBg.png" />

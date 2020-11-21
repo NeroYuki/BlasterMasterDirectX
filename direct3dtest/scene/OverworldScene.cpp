@@ -4,7 +4,7 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(), sceneSt
 {
 	initScene();
 	bgTexture_id = 5;
-	fgTexture_id = 0;
+	fgTexture_id = 9;
 	activeSection = -1;
 }
 

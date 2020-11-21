@@ -298,6 +298,9 @@
     <Image Include="resource\DungeonMapLayoutFg.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\OverworldMapFg.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />

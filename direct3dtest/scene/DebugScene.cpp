@@ -83,8 +83,8 @@ void DebugScene::update(DWORD dt) {
 				float lcx = 0, lcy = 0;
 				if (lx > 0) { lcx = cam->getW(); }
 				if (lx < 0) { lcx = -cam->getW(); }
-				if (ly > 0) { lcy = cam->getH(); }
-				if (ly < 0) { lcy = -cam->getH(); }
+				if (ly > 0) { lcy = cam->getH() + 32; }
+				if (ly < 0) { lcy = -(cam->getH() + 32); }
 
 				cam->setForceVeloc(lcx / interval, lcy / interval);
 				cam->updateWithForceVeloc(dt);
