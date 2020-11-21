@@ -4,45 +4,81 @@
 Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 {
 	vx = 0; vy = 0;
-	state = SOPHIA_IDLE_RIGHT;
+	nx = 1;
+	state = SOPHIA_BODY_FLAT_IDLE_RIGHT;
+	movingState = SOPHIA_WHEEL_NORMAL_RIGHT_IDLE;
 }
 
 void Sophia::render()
 {
-	LPANIMATION ani;
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+	LPANIMATION body_ani;
+	LPANIMATION wheel_ani;
+	body_ani = AnimationManager::getInstance()->get(state);
+	wheel_ani = AnimationManager::getInstance()->get(movingState);
+	body_ani->render(x - 2, y - 2);
+	wheel_ani->render(x, y + 8);
 }
 
 void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	
-	vx = 0;
-	//if (controlState & (DOWN)) vy += PLAYER_WALKING_SPEED;
-	//if (controlState & (UP)) vy -= PLAYER_WALKING_SPEED;
 
-	//TODO: redo this
-	if (controlState & (LEFT)) {
-		vx -= PLAYER_WALKING_SPEED;
-		this->changeState(SOPHIA_MOVE_LEFT);
+	//
+	if (controlState & (LEFT | RIGHT)) {
+		if ((controlState & (LEFT)) && (!(controlState & (RIGHT)))) {
+			if (vx >= -SOPHIA_MOVE_SPEED_CAP)
+				vx -= SOPHIA_MOVE_ACCEL;
+			else vx == -SOPHIA_MOVE_SPEED_CAP;
+		}
+		else if (controlState & (RIGHT) && (!(controlState & (LEFT)))) {
+			if (vx <= SOPHIA_MOVE_SPEED_CAP)
+				vx += SOPHIA_MOVE_ACCEL;
+			else vx == SOPHIA_MOVE_SPEED_CAP;
+		}
+		else {
+			if (vx > 0.011) vx -= SOPHIA_MOVE_ACCEL;
+			else if (vx < -0.011) vx += SOPHIA_MOVE_ACCEL;
+			else vx = 0;
+		}
 	}
-	if (controlState & (RIGHT)) {
-		vx += PLAYER_WALKING_SPEED;
-		this->changeState(SOPHIA_MOVE_RIGHT);
+	else {
+		if (vx > 0.21) vx -= SOPHIA_MOVE_ACCEL;
+		else if (vx < -0.21) vx += SOPHIA_MOVE_ACCEL;
+		else vx = 0;
 	}
 	if (controlState & (PRIMARY)) {
-		vy -= SOPHIA_JUMP_SPEED;
-		if (vx > 0.00001) this->changeState(SOPHIA_JUMP_RIGHT);
-		if (vx < -0.00001) this->changeState(SOPHIA_JUMP_LEFT);
+		if (!isOnAir) {
+			vy = SOPHIA_JUMP_SPEED;
+			isOnAir = true;
+		}
 	}
-
-	if (vx == 0 && vy == 0) {
-		this->changeState(COMMON_SOPHIA_IDLE);
+	else {
+		if (vy > 0) vy = 0;
 	}
-	GameObject::update(dt);
-	//uncomment for gravity
 	vy += 0.02;
 
+	if (vx > 0.001) {
+		changeState(SOPHIA_BODY_FLAT_MOVE_RIGHT);
+		changeMovingState(SOPHIA_WHEEL_NORMAL_RIGHT);
+	}
+	else if (vx < -0.001) {
+		changeState(SOPHIA_BODY_FLAT_MOVE_LEFT);
+		changeMovingState(SOPHIA_WHEEL_NORMAL_LEFT);
+	}
+	else {
+		changeState(COMMON_SOPHIA_IDLE);
+		changeMovingState(SOPHIA_MOVING_IDLE);
+	}
+
+	//change animation state based on final vx and vy
+	if (controlState & UP) {
+		changeState(SOPHIA_GUN_MOUNT_RAISE);
+	}
+	else {
+		changeState(SOPHIA_GUN_MOUNT_UNRAISE);
+	}
+
+	
+	GameObject::update(dt);
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -68,6 +104,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
 
+		//nx and ny swapped?
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
@@ -83,6 +120,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
+		if (ny > 0) isOnAir = false;
 	}
 }
 
@@ -96,13 +134,42 @@ void Sophia::changeState(int stateId)
 		//case COMMON_PLAYER_IDLE:
 		//	state = stateId;
 		//	break;
+	case SOPHIA_GUN_MOUNT_RAISE:
+		if (state == SOPHIA_BODY_FLAT_IDLE_LEFT || state == SOPHIA_BODY_FLAT_MOVE_LEFT)
+			state = SOPHIA_BODY_SLANT_LEFT;
+		else if (state == SOPHIA_BODY_FLAT_IDLE_RIGHT || state == SOPHIA_BODY_FLAT_MOVE_RIGHT)
+			state = SOPHIA_BODY_SLANT_RIGHT;
+		else if (state == SOPHIA_BODY_SLANT_LEFT)
+			state = SOPHIA_BODY_UP_LEFT;
+		else if (state == SOPHIA_BODY_SLANT_RIGHT)
+			state = SOPHIA_BODY_UP_RIGHT;
+		break;
+	case SOPHIA_GUN_MOUNT_UNRAISE:
+		if (state == SOPHIA_BODY_UP_LEFT)
+			state = SOPHIA_BODY_SLANT_LEFT;
+		else if (state == SOPHIA_BODY_UP_RIGHT)
+			state = SOPHIA_BODY_SLANT_RIGHT;
+		break;
 	case COMMON_SOPHIA_IDLE:
-		if (state == SOPHIA_MOVE_LEFT) state = SOPHIA_IDLE_LEFT;
-		else if (state == SOPHIA_MOVE_RIGHT) state = SOPHIA_IDLE_RIGHT;
-		else break;
+		if (state == SOPHIA_BODY_FLAT_MOVE_LEFT) state = SOPHIA_BODY_FLAT_IDLE_LEFT;
+		else if (state == SOPHIA_BODY_FLAT_MOVE_RIGHT) state = SOPHIA_BODY_FLAT_IDLE_RIGHT;
 		break;
 	default:
 		state = stateId;
+	}
+}
+
+void Sophia::changeMovingState(int stateId)
+{
+	switch (stateId) {
+	case SOPHIA_MOVING_IDLE:
+		if (movingState == SOPHIA_WHEEL_NORMAL_LEFT)
+			movingState = SOPHIA_WHEEL_NORMAL_LEFT_IDLE;
+		if (movingState == SOPHIA_WHEEL_NORMAL_RIGHT)
+			movingState = SOPHIA_WHEEL_NORMAL_RIGHT_IDLE;
+		break;
+	default:
+		movingState = stateId;
 	}
 }
 
