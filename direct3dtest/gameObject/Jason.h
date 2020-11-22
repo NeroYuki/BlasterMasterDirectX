@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #define JASON_JUMP_SPEED 0.05
+#define BBOX_JASON_WIDTH
 
 class Jason : public Player {
 private:

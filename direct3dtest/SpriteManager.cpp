@@ -36,7 +36,10 @@ Sprite::Sprite(int id, int top, int left, int bottom, int right, LPDIRECT3DTEXTU
 	this->texture = texture;
 }
 
-void Sprite::draw(float x, float y)
+void Sprite::draw(float x, float y, D3DCOLOR col)
 {
+	if (col != NULL)
+		CGame::getInstance()->draw(x, y, this->texture, this->top, this->left, this->bottom, this->right, col);
+	else
 		CGame::getInstance()->draw(x, y, this->texture, this->top, this->left, this->bottom, this->right);
 }

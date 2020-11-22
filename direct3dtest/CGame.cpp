@@ -185,7 +185,7 @@ void CGame::Loop(DWORD dt)
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }
 
-void CGame::draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right)
+void CGame::draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left, int bottom, int right, D3DCOLOR col)
 {
 	//D3DXMATRIX scaleMat;
 	//D3DXMatrixScaling(&scaleMat, 2.0, 1.0, 1.0);
@@ -198,7 +198,10 @@ void CGame::draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int top, int left
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_RGBA(255, 255, 255, 255));
+	if (col != NULL)
+		spriteHandler->Draw(texture, &r, NULL, &p, col);
+	else
+		spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_RGBA(255, 255, 255, 255));
 }
 
 LPDIRECT3DTEXTURE9 CGame::loadTexture(LPCSTR texturePath)

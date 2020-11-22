@@ -13,7 +13,7 @@ void Animation::add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
-void Animation::render(float x, float y)
+void Animation::render(float x, float y, D3DCOLOR col)
 {
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
@@ -32,8 +32,10 @@ void Animation::render(float x, float y)
 		}
 
 	}
-
-	frames[currentFrame]->getSprite()->draw(x, y);
+	if (col != NULL) 
+		frames[currentFrame]->getSprite()->draw(x, y, col);
+	else
+		frames[currentFrame]->getSprite()->draw(x, y);
 }
 
 AnimationManager::AnimationManager()

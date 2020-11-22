@@ -24,7 +24,7 @@ private:
 public:
 	Animation(int defaultTime);
 	void add(int spriteId, DWORD time = 0);
-	void render(float x, float y);
+	void render(float x, float y, D3DCOLOR col = NULL);
 };
 
 typedef Animation* LPANIMATION;

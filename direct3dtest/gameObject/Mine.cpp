@@ -23,3 +23,7 @@ void Mine::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 	bottom = top + BBOX_MINE_HEIGHT;
 	right = left + BBOX_MINE_WIDTH;
 }
+
+Mine::~Mine()
+{
+}

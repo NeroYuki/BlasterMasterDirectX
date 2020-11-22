@@ -43,3 +43,15 @@ short GameTimer::update(long dt)
 		return TIMER_ENDED;
 	}
 }
+
+short GameTimer::peekState()
+{
+	if (!isStart) return TIMER_INACTIVE;
+	if (current == 0) return TIMER_STARTED;
+	if (current < interval) {
+		return TIMER_ACTIVE;
+	}
+	else {
+		return TIMER_ENDED;
+	}
+}

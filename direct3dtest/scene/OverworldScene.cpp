@@ -78,7 +78,7 @@ void OverworldScene::update(DWORD dt)
 				sectionSwitchTimer->setInterval(interval);
 
 				float lcx = 0, lcy = 0;
-				if (lx > 0) { lcx = (cam->getW() - 32); }
+				if (lx > 0) { lcx = (cam->getW()); }
 				if (lx < 0) { lcx = -cam->getW(); }
 				if (ly > 0) { lcy = cam->getH(); }
 				if (ly < 0) { lcy = -cam->getH(); }

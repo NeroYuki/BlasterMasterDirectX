@@ -16,7 +16,7 @@ private:
 public:
 	Sprite(int id, int top, int left, int bottom, int right, LPDIRECT3DTEXTURE9 texture);
 
-	void draw(float x, float y);
+	void draw(float x, float y, D3DCOLOR col = NULL);
 	//LPDIRECT3DTEXTURE9 getTexture() { return texture; }
 	//void setTexture(LPDIRECT3DTEXTURE9 tex) { texture = tex; }
 };

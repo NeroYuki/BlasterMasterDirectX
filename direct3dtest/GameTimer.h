@@ -17,6 +17,7 @@ public:
 	void stop();
 	void pause();
 	short update(long dt);
+	short peekState();
 	bool isStarted() { return isStart; }
 	long getInterval() { return this->interval; }
 	void setInterval(long interval) { this->interval = interval; }

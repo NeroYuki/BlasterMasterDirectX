@@ -51,14 +51,8 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-		//float t, l, b, r;
-		//coEvents[0]->obj->GetBoundingBox(t, l, b, r);
-		//std::string s1 = std::to_string(t);
-		//std::string s2 = std::to_string(l);
-		//DebugOut(s1.c_str());
-		//DebugOut("\n");
-		//DebugOut(s2.c_str());
-		//DebugOut("\n\n");
+
+
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -97,6 +91,6 @@ void Jason::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y + 18;
 	left = this->x;
-	bottom = top + BBOX_PLAYER_HEIGHT;
-	right = left + BBOX_PLAYER_WIDTH;
+	bottom = top + BBOX_JASON_HEIGHT;
+	right = left + BBOX_JASON_WIDTH;
 }

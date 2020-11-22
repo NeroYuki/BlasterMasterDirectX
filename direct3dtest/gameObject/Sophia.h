@@ -12,6 +12,8 @@ private:
 	bool isOnAir = false;
 	//movingState for the wheel, inherited state for the body 
 	int movingState = 0;
+	GameTimer* turningTimer;
+	GameTimer* gunRaiseTimer;
 public:
 	Sophia(float x, float y, int hp);
 	void render();
