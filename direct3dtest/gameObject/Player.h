@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "../Debug.h"
+#include "Portal.h"
+
 #define PLAYER_WALKING_SPEED 0.06
 
 #define BBOX_PLAYER_WIDTH 24

@@ -5,17 +5,15 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(), sceneSt
 	initScene();
 	bgTexture_id = 5;
 	fgTexture_id = 9;
-	activeSection = -1;
+	activeSection = 0;
+	sectionSwitchTimer = new GameTimer(3000);
 }
 
 void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
 	Sophia* s = new Sophia(88, 3079, 1);
-	//JasonTop* s = new JasonTop(90, 1420, 1);
 	p_stack->push(s);
-	//initially put every object into its respective grid
-	//this->addObject(sophia);
 	this->addObject(s);
 	cam->setFollow(p_stack->top());
 }
@@ -47,6 +45,56 @@ void OverworldScene::handlingInput()
 	p_stack->top()->setControlState(control_state);
 }
 
-void OverworldScene::update()
+void OverworldScene::update(DWORD dt)
 {
+	Scene::update(dt);
+
+	//attempt section switching logic
+	if (p_stack->top()->getActiveSection() != activeSection) {
+		if (!sectionSwitchTimer->isStarted())
+			sectionSwitchTimer->start();
+	}
+
+	short timerState = sectionSwitchTimer->update(dt);
+	if (timerState == TIMER_STARTED) {
+		p_stack->top()->setIgnoreCollision(true);
+		//find the corresponded portal
+		std::vector<SectionGraphEdge>* portalList = sectionGraph.getLinkedPortalList(activeSection);
+		for (int i = 0; i < portalList->size(); i++) {
+			if (portalList->at(i).dst == p_stack->top()->getActiveSection()) {
+				Portal* checking_portal = portalList->at(i).p;
+
+				float lx = checking_portal->getLx();
+				float ly = checking_portal->getLy();
+				int forceControlState = 0;
+
+				if (lx > 0) forceControlState += RIGHT;
+				if (lx < 0) forceControlState += LEFT;
+				if (ly > 0) forceControlState += DOWN;
+				if (ly < 0) forceControlState += UP;
+				p_stack->top()->setForceControlState(forceControlState);
+
+				long interval = max(abs(lx) / SOPHIA_MOVE_SPEED_CAP, abs(ly) / SOPHIA_MOVE_SPEED_CAP) + 300;
+				sectionSwitchTimer->setInterval(interval);
+
+				float lcx = 0, lcy = 0;
+				if (lx > 0) { lcx = (cam->getW() - 32); }
+				if (lx < 0) { lcx = -cam->getW(); }
+				if (ly > 0) { lcy = cam->getH(); }
+				if (ly < 0) { lcy = -cam->getH(); }
+
+				cam->setForceVeloc(lcx / interval, lcy / interval);
+				cam->updateWithForceVeloc(dt);
+			}
+		}
+	}
+	else if (timerState == TIMER_ACTIVE) {
+		cam->updateWithForceVeloc(dt);
+	}
+	else if (timerState == TIMER_ENDED) {
+		p_stack->top()->setForceControlState(IDLE);
+		p_stack->top()->setIgnoreCollision(false);
+		activeSection = p_stack->top()->getActiveSection();
+		cam->setForceVeloc(0, 0);
+	}
 }

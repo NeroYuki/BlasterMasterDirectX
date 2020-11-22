@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#define SOPHIA_JUMP_SPEED 0.7
+#define SOPHIA_JUMP_SPEED 0.3
 #define SOPHIA_MOVE_ACCEL 0.01
 #define SOPHIA_MOVE_SPEED_CAP 0.12
 

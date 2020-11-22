@@ -11,9 +11,10 @@ class OverworldScene : public Scene {
 private:
 	SceneStateMachine* sceneState;
 	std::stack<Player*>* p_stack;
+	GameTimer* sectionSwitchTimer;
 public:
 	OverworldScene(SceneStateMachine* sceneState);
 	void initScene();
 	void handlingInput();
-	void update();
+	void update(DWORD dt);
 };
