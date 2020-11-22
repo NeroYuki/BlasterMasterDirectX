@@ -14,12 +14,48 @@ void Jason::render()
 
 void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	//vy += 0.02;
-	vx = 0; 
-	//if (controlState & (DOWN)) vy += PLAYER_WALKING_SPEED;
-	if (controlState & (LEFT)) vx -= PLAYER_WALKING_SPEED;
-	if (controlState & (RIGHT)) vx += PLAYER_WALKING_SPEED;
-	if (controlState & (PRIMARY)) vy -= JASON_JUMP_SPEED;
+	if (forceControlState != IDLE) {
+		controlState = forceControlState;
+	}
+	if (controlState & (LEFT | RIGHT)) {
+
+		//NOTE: body state is controlled by input
+		if ((controlState & (LEFT)) && (!(controlState & (RIGHT)))) {
+			if (vx >= -JASON_MOVE_SPEED_CAP)
+				vx -= JASON_MOVE_ACCEL;
+			else vx == -JASON_MOVE_SPEED_CAP;
+			changeState(JASON_WALK_LEFT);
+		}
+		else if (controlState & (RIGHT) && (!(controlState & (LEFT)))) {
+			if (vx <= JASON_MOVE_SPEED_CAP)
+				vx += JASON_MOVE_ACCEL;
+			else vx == JASON_MOVE_SPEED_CAP;
+			changeState(JASON_WALK_RIGHT);
+		}
+		else {
+			if (vx > 0.011) vx -= JASON_MOVE_ACCEL;
+			else if (vx < -0.011) vx += JASON_MOVE_ACCEL;
+			else vx = 0;
+			changeState(COMMON_JASON_IDLE);
+		}
+	}
+	else {
+		if (vx > 0.011) vx -= JASON_MOVE_ACCEL;
+		else if (vx < -0.011) vx += JASON_MOVE_ACCEL;
+		else vx = 0;
+		changeState(COMMON_JASON_IDLE);
+	}
+
+	if (controlState & (PRIMARY)) {
+		if (!isOnAir) {
+			vy -= JASON_JUMP_SPEED;
+			isOnAir = true;
+		}
+	}
+	else {
+		if (vy < 0) vy = 0;
+	}
+	vy += 0.01;
 
 	GameObject::update(dt);
 
@@ -34,6 +70,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (coEvents.size() == 0) {
 		x += dx;
 		y += dy;
+		isOnAir = true;
 	}
 	else {
 		//DebugOut("Collision occured\n");
@@ -49,12 +86,22 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		//	x += nx*abs(rdx); 
 
 		// block every object first!
-		x += min_tx * dx + nx * 0.4f;
+		if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
+		else x += dx;
 		y += min_ty * dy + ny * 0.4f;
 
-
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (dynamic_cast<Portal*>(e->obj))
+			{
+				Portal* p = dynamic_cast<Portal*>(e->obj);
+				if (!ignoreCollision) this->activeSection = p->getSectionEnd();
+			}
+		}
 
 		if (nx != 0) vx = 0;
+		if (ny < 0) { isOnAir = false; }
 		if (ny != 0) vy = 0;
 	}
 }
@@ -89,7 +136,7 @@ void Jason::changeState(int stateId)
 //NOTE: Turn to pure virtual ASAP after inheiritance is completed
 void Jason::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->y + 18;
+	top = this->y;
 	left = this->x;
 	bottom = top + BBOX_JASON_HEIGHT;
 	right = left + BBOX_JASON_WIDTH;

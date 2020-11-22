@@ -148,16 +148,6 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (!ignoreCollision) this->activeSection = p->getSectionEnd();
 			}
 		}
-
-		//float t, l, b, r;
-		//coEvents[0]->obj->GetBoundingBox(t, l, b, r);
-		//std::string s1 = std::to_string(t);
-		//std::string s2 = std::to_string(l);
-		//DebugOut(s1.c_str());
-		//DebugOut("\n");
-		//DebugOut(s2.c_str());
-		//DebugOut("\n\n");
-		
 		
 		if (ny != 0) vy = 0;
 		if (ny < 0) { isOnAir = false; }

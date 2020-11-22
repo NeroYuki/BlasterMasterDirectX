@@ -13,8 +13,11 @@ void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
 	Sophia* s = new Sophia(88, 3079, 1);
+	Jason* js = new Jason(88, 3000, 1);
 	p_stack->push(s);
+	p_stack->push(js);
 	this->addObject(s);
+	this->addObject(js);
 	cam->setFollow(p_stack->top());
 }
 
@@ -75,6 +78,10 @@ void OverworldScene::update(DWORD dt)
 				p_stack->top()->setForceControlState(forceControlState);
 
 				long interval = max(abs(lx) / SOPHIA_MOVE_SPEED_CAP, abs(ly) / SOPHIA_MOVE_SPEED_CAP) + 300;
+				//change scrolling interval if jason is going throught the portal
+				if (dynamic_cast<Jason*>(p_stack->top())) {
+					interval = max(abs(lx) / JASON_MOVE_SPEED_CAP, abs(ly) / JASON_MOVE_SPEED_CAP) + 300;
+				}
 				sectionSwitchTimer->setInterval(interval);
 
 				float lcx = 0, lcy = 0;
