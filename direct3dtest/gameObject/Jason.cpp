@@ -1,8 +1,10 @@
 #include"Jason.h"
-Jason::Jason(float x, float y, int hp) : Player(x,y,hp)
+
+Jason::Jason(float x, float y, int hp, int activeSection) : Player(x,y,hp)
 {
 	vx = 0; vy = 0;
 	state = JASON_IDLE_LEFT;
+	this->activeSection = activeSection;
 }
 
 void Jason::render()
@@ -17,6 +19,14 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (forceControlState != IDLE) {
 		controlState = forceControlState;
 	}
+
+	if (controlState & (DOWN)) {
+		is_craw = true;
+	}
+	else {
+		is_craw = false;
+	}
+
 	if (controlState & (LEFT | RIGHT)) {
 
 		//NOTE: body state is controlled by input
@@ -45,6 +55,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		else vx = 0;
 		changeState(COMMON_JASON_IDLE);
 	}
+	
 
 	if (controlState & (PRIMARY)) {
 		if (!isOnAir) {
@@ -84,25 +95,37 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
-
-		// block every object first!
-		if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
-		else x += dx;
-		y += min_ty * dy + ny * 0.4f;
-
+		bool foundNearSophia = false;
+		
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<Portal*>(e->obj))
-			{
-				Portal* p = dynamic_cast<Portal*>(e->obj);
-				if (!ignoreCollision) this->activeSection = p->getSectionEnd();
-			}
-		}
+			if (dynamic_cast<Block*>(e->obj)) {
+				if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
+				else x += dx;
+				y += min_ty * dy + ny * 0.4f;
+				if (nx != 0) vx = 0;
+				if (ny < 0) { isOnAir = false; }
+				if (ny != 0) vy = 0;
 
-		if (nx != 0) vx = 0;
-		if (ny < 0) { isOnAir = false; }
-		if (ny != 0) vy = 0;
+				if (dynamic_cast<Portal*>(e->obj))
+				{
+					Portal* p = dynamic_cast<Portal*>(e->obj);
+					if (!ignoreCollision) this->activeSection = p->getSectionEnd();
+				}
+			}
+			else {
+				if (dynamic_cast<Sophia*>(e->obj)) {
+					foundNearSophia = true;
+					y += dy;
+					x += dx;
+				}
+			}
+			
+		}
+		if (foundNearSophia) isCloseToSophia = true;
+		else isCloseToSophia = false;
+		
 	}
 }
 
@@ -116,24 +139,30 @@ void Jason::changeState(int stateId)
 		//case COMMON_PLAYER_IDLE:
 		//	state = stateId;
 		//	break;
+	case JASON_WALK_LEFT:
+		if (is_craw) state = JASON_CRAW_LEFT;
+		else state = JASON_WALK_LEFT;
+		break;
+	case JASON_WALK_RIGHT:
+		if (is_craw) state = JASON_CRAW_RIGHT;
+		else state = JASON_WALK_RIGHT;
+		break;
 	case COMMON_JASON_IDLE:
 		if (state == JASON_WALK_LEFT || state == JASON_CRAW_IDLE_LEFT || state == JASON_CRAW_LEFT) state = JASON_IDLE_LEFT;
 		else if (state == JASON_WALK_RIGHT || state == JASON_CRAW_IDLE_RIGHT || state == JASON_CRAW_RIGHT) state = JASON_IDLE_RIGHT;
-		else break;
+		if (is_craw) {
+			if (state == JASON_WALK_LEFT || state == JASON_IDLE_LEFT || state == JASON_CRAW_LEFT || state == JASON_CRAW_IDLE_LEFT)
+				state = JASON_CRAW_IDLE_LEFT;
+			else if (state == JASON_WALK_RIGHT || state == JASON_IDLE_RIGHT || state == JASON_CRAW_RIGHT || state == JASON_CRAW_IDLE_RIGHT)
+				state = JASON_CRAW_IDLE_RIGHT;
+		}
 		break;
-	case COMMON_JASON_CRAW_IDLE:
-		if (state == JASON_WALK_LEFT || state == JASON_IDLE_LEFT || state == JASON_CRAW_LEFT || state == JASON_CRAW_IDLE_LEFT)
-			state = JASON_CRAW_IDLE_LEFT;
-		else if (state == JASON_WALK_RIGHT || state == JASON_IDLE_RIGHT || state == JASON_CRAW_RIGHT || state == JASON_CRAW_IDLE_RIGHT)
-			state = JASON_CRAW_IDLE_RIGHT;
-		else break;
-		break;
+	//TODO: climb state
 	default:
 		state = stateId;
 	}
 }
 
-//NOTE: Turn to pure virtual ASAP after inheiritance is completed
 void Jason::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y;

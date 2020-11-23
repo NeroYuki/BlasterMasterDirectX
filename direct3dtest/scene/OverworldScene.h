@@ -12,6 +12,7 @@ private:
 	SceneStateMachine* sceneState;
 	std::stack<Player*>* p_stack;
 	GameTimer* sectionSwitchTimer;
+	GameTimer* blockShiftTimer;
 public:
 	OverworldScene(SceneStateMachine* sceneState);
 	void initScene();

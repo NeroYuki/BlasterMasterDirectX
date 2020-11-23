@@ -7,17 +7,15 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(), sceneSt
 	fgTexture_id = 9;
 	activeSection = 0;
 	sectionSwitchTimer = new GameTimer(3000);
+	blockShiftTimer = new GameTimer(1000);
 }
 
 void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
-	Sophia* s = new Sophia(88, 3079, 1);
-	Jason* js = new Jason(88, 3000, 1);
+	Sophia* s = new Sophia(88, 3000, 1);
 	p_stack->push(s);
-	p_stack->push(js);
 	this->addObject(s);
-	this->addObject(js);
 	cam->setFollow(p_stack->top());
 }
 
@@ -43,7 +41,26 @@ void OverworldScene::handlingInput()
 		control_state += SECONDARY;
 	}
 	if (InputHandler::getInstance()->isKeyDown(DIK_LSHIFT)) {
-		//spawn a small jason and switch 
+		if (blockShiftTimer->peekState() != TIMER_ACTIVE) {
+			if (dynamic_cast<Sophia*>(p_stack->top())) {
+				float x, y;
+				p_stack->top()->getPos(x, y);
+				Jason* new_jason = new Jason(x, y - 4, 1, p_stack->top()->getActiveSection());
+				p_stack->push(new_jason);
+				this->addObject(new_jason);
+				cam->setFollow(p_stack->top());
+				blockShiftTimer->restart();
+			}
+			else if (dynamic_cast<Jason*>(p_stack->top())) {
+				Jason* jason_p = dynamic_cast<Jason*>(p_stack->top());
+				if (jason_p->getIsCloseToSophia()) {
+					p_stack->pop();
+					this->removeObject(jason_p);
+					cam->setFollow(p_stack->top());
+				}
+				blockShiftTimer->restart();
+			}
+		}
 	}
 	p_stack->top()->setControlState(control_state);
 }
@@ -59,6 +76,8 @@ void OverworldScene::update(DWORD dt)
 	}
 
 	short timerState = sectionSwitchTimer->update(dt);
+	blockShiftTimer->update(dt);
+
 	if (timerState == TIMER_STARTED) {
 		p_stack->top()->setIgnoreCollision(true);
 		//find the corresponded portal

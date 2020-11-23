@@ -11,6 +11,29 @@ void Scene::addObject(GameObject* obj)
 	objectGridMap.push_back(new ObjectGrid(obj));
 }
 
+// costly operation, use with caution
+bool Scene::removeObject(GameObject* obj)
+{
+	//TODO: improve this (might not even be possible due to how objectGridMap is built)
+	for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it) {
+		if ((*it)->getObj() == obj) {
+			ObjectGrid* toBeDeleted = (*it);
+			//iterate through coObjects in case deleted object is pushed to this list
+			for (std::vector<GameObject*>::iterator i_it = coObjects.begin(); i_it != coObjects.end(); ++i_it) {
+				if ((*i_it) == obj) {
+					coObjects.erase(i_it);
+					break;
+				}
+			}
+			objectGridMap.erase(it);
+			delete toBeDeleted->getObj();
+			delete toBeDeleted;
+			break;
+		}
+	}
+	return false;
+}
+
 void Scene::addSection(SceneSection* section)
 {
 	sectionGraph.addSection(section);

@@ -65,6 +65,7 @@ protected:
 public:
 	Scene();
 	void addObject(GameObject* obj);
+	bool removeObject(GameObject* obj);
 	void addSection(SceneSection* section);
 	void addPortal(Portal* p);
 	virtual void initScene() = 0;
