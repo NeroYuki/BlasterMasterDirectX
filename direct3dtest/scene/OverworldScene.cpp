@@ -14,8 +14,12 @@ void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
 	Sophia* s = new Sophia(88, 3000, 1);
+	Worm* w1 = new Worm(100, 2950, 1);
+	Floater* F1 = new Floater(100, 3000, 1);
 	p_stack->push(s);
 	this->addObject(s);
+	this->addObject(w1);
+	this->addObject(F1);
 	cam->setFollow(p_stack->top());
 }
 

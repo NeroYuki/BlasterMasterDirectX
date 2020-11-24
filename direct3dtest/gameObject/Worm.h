@@ -5,6 +5,8 @@
 #define BBOX_WORM_HEIGHT 10
 
 class Worm : public Enemy {
+private:
+	bool isOnAir = false;
 public:
 	Worm(float x, float y, int hp);
 	void render();

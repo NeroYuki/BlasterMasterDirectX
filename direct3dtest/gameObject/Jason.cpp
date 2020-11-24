@@ -120,6 +120,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 					y += dy;
 					x += dx;
 				}
+
 			}
 			
 		}
