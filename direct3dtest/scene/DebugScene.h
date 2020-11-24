@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "../SceneStateMachine.h"
 #include "../InputHandler.h"
 #include <stack>
 
@@ -9,7 +8,6 @@
 
 class DebugScene : public Scene {
 private:
-	SceneStateMachine* sceneState;
 	std::stack<Player*>* p_stack;
 	GameTimer* sectionSwitchTimer;
 public:

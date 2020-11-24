@@ -283,6 +283,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceImporter.h" />
     <ClInclude Include="SceneStateMachine.h" />
+    <ClInclude Include="scene\AllScene.h" />
     <ClInclude Include="scene\DebugScene.h" />
     <ClInclude Include="scene\DugeonScene.h" />
     <ClInclude Include="scene\EndScene.h" />

@@ -1,6 +1,6 @@
 #include "OverworldScene.h"
 
-OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(), sceneState(sceneState)
+OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState)
 {
 	initScene();
 	bgTexture_id = 5;

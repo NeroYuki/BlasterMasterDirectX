@@ -1,7 +1,11 @@
 #pragma once
+
+class SceneStateMachine;
+
 #include <vector>
 #include "../gameObject/AllObject.h"
 #include "../Camera.h"
+#include "../SceneStateMachine.h"
 
 class ObjectGrid {
 private:
@@ -62,8 +66,9 @@ protected:
 	Camera* cam;
 	int activeSection = -1;
 	SectionGraph sectionGraph;
+	SceneStateMachine* sceneState;
 public:
-	Scene();
+	Scene(SceneStateMachine* sceneState);
 	void addObject(GameObject* obj);
 	bool removeObject(GameObject* obj);
 	void addSection(SceneSection* section);

@@ -1,10 +1,13 @@
 #pragma once
+class Scene;
+
 #include "scene/Scene.h"
 
 class SceneStateMachine
 {
 private:
 	std::unordered_map<int, Scene*> sceneMap;
+	std::unordered_map<int, const char*> sceneLabel;
 	Scene* curScene;
 	int curAssignedId = 0;
 	
@@ -18,7 +21,8 @@ public:
 	void update(DWORD dt);
 	void render();
 
-	int addScene(Scene* scene);
+	int addScene(Scene* scene, const char* label = "Unknown");
+	int getSceneByLabel(const char* query);
 	void switchToScene(int id);
 	void removeScene(int id);
 	Scene* getSceneById(int id);

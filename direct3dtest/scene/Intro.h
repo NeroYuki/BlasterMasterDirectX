@@ -1,14 +1,13 @@
 #pragma once
 #include "Scene.h"
-#include "../SceneStateMachine.h"
 #include "../InputHandler.h"
 
 class Intro : public Scene
 {
 private:
-	SceneStateMachine* sceneState;
 	int introID;
 	GameTimer* timerunFirstIntro;
+	GameTimer* timerunReady;
 public:
 	Intro(SceneStateMachine* sceneState);
 	void initScene();

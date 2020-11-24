@@ -1,9 +1,9 @@
-#include"Intro.h"
+#include "Intro.h"
 
-
-Intro::Intro(SceneStateMachine* sceneState) : Scene(), sceneState(sceneState)
+Intro::Intro(SceneStateMachine* sceneState) : Scene(sceneState)
 {
-	timerunFirstIntro = new GameTimer(19500);
+	timerunFirstIntro = new GameTimer(20500);
+	timerunReady = new GameTimer(5000);
 	introID = FIRST_INTRO;
 	initScene();
 
@@ -16,15 +16,30 @@ void Intro::initScene() {
 
 void Intro::handlingInput() {
 	if (InputHandler::getInstance()->isKeyDown(DIK_RETURN)) {
-		this->changeIntroID(THIRD_INTRO);
+		if (introID == FIRST_INTRO) {
+			timerunFirstIntro->stop();
+			this->changeIntroID(SECOND_INTRO);
+		}
+		else if (introID == SECOND_INTRO) {
+			this->changeIntroID(THIRD_INTRO);
+			timerunReady->restart();
+		}
+		
 	}
 }
 
 void Intro::update(DWORD dt) {
 	Scene::update(dt);
 	short timerState = timerunFirstIntro->update(dt);
+	short timerReadyState = timerunReady->update(dt);
 	if (timerState == TIMER_ENDED) {
 		changeIntroID(SECOND_INTRO);
+	}
+	if (timerReadyState == TIMER_ENDED) {
+		int sceneId = sceneState->getSceneByLabel("Overworld");
+		if (sceneId != -1) {
+			sceneState->switchToScene(sceneId);
+		}
 	}
 }
 

@@ -129,14 +129,15 @@ void CGame::loadResource()
 
 void CGame::initGame()
 {
-	//int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
-	int IntroId = sceneStateMachine->addScene(new Intro(sceneStateMachine));
-	//ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
-	//ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
+	int IntroId = sceneStateMachine->addScene(new Intro(sceneStateMachine), "Intro");
+	
+	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine), "Debug");
+	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
+	ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
 
-	//int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine));
-	//ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
-	//ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
+	int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine), "Overworld");
+	ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
+	ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
 	sceneStateMachine->switchToScene(IntroId);
 }
 

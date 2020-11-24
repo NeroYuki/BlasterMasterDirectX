@@ -1,6 +1,6 @@
 #include "DebugScene.h"
 
-DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(), sceneState(sceneState)
+DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(sceneState)
 {
 	initScene();
 	bgTexture_id = 6;

@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-Scene::Scene()
+Scene::Scene(SceneStateMachine* sceneState)
 {
-	//this->sceneState = sceneState;
+	this->sceneState = sceneState;
 	cam = new Camera();
 }
 

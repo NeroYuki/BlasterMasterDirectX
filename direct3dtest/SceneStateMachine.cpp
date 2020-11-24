@@ -41,16 +41,27 @@ void SceneStateMachine::render()
 	curScene->render();
 }
 
-int SceneStateMachine::addScene(Scene* scene)
+int SceneStateMachine::addScene(Scene* scene, const char* label)
 {
 	//might fail
 	sceneMap[curAssignedId] = scene;
+	sceneLabel[curAssignedId] = label;
 
 	sceneMap[curAssignedId]->onCreate();
 
 	curAssignedId++;
 	
 	return curAssignedId - 1;
+}
+
+int SceneStateMachine::getSceneByLabel(const char* query)
+{
+	for (std::unordered_map<int, const char*>::iterator it = sceneLabel.begin(); it != sceneLabel.end(); ++it) {
+		if (strcmp((*it).second, query) == 0) {
+			return (*it).first;
+		}
+	}
+	return -1;
 }
 
 void SceneStateMachine::switchToScene(int id)
