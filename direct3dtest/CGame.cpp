@@ -111,7 +111,13 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(9, "resource\\OverworldMapFg.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(10, "resource\\bbox.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(11, "resource\\Player_add.png", D3DCOLOR_XRGB(0, 57, 115));
-	
+	TextureManager::getInstance()->add(12, "resource\\intro_1.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(13, "resource\\intro_2.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(14, "resource\\menu_1.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(15, "resource\\menu_2.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(16, "resource\\menu_3.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(17, "resource\\menu_4.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(18, "resource\\menu_5.png", D3DCOLOR_XRGB(0, 57, 115));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();
@@ -123,14 +129,15 @@ void CGame::loadResource()
 
 void CGame::initGame()
 {
-	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
-	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
-	ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
+	//int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
+	int IntroId = sceneStateMachine->addScene(new Intro(sceneStateMachine));
+	//ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
+	//ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
 
-	int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine));
-	ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
-	ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
-	sceneStateMachine->switchToScene(OverworldSceneId);
+	//int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine));
+	//ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
+	//ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
+	sceneStateMachine->switchToScene(IntroId);
 }
 
 bool CGame::Release()

@@ -71,7 +71,7 @@ public:
 	virtual void initScene() = 0;
 	virtual void handlingInput() = 0;
 	virtual void update(DWORD dt);
-	void render();
+	virtual void render();
 	Camera* getCamera() { return cam; }
 
 	int getBgTexture_id() { return bgTexture_id; }
