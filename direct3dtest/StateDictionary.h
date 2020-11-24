@@ -3,6 +3,10 @@
 
 //Player State
 //Animation State
+#define FIRST_INTRO 100001
+#define SECOND_INTRO 100002
+#define THIRD_INTRO 100003
+
 #define COMMON_PLAYER_IDLE 10000
 #define TOP_JASON_IDLE_LEFT 10001
 #define TOP_JASON_IDLE_RIGHT 10002
