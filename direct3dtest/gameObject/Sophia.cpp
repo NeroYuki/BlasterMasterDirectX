@@ -122,39 +122,67 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		isOnAir = true;
 	}
 	else {
-		//DebugOut("Collision occured\n");
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
 		float rdy = 0;
 
-		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+		//// LEGACY CODE
+		//FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
+		//// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
+		////if (rdx != 0 && rdx!=dx)
+		////	x += nx*abs(rdx); 
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<Block*>(e->obj)) {
-				if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
-				else x += dx;
-				y += min_ty * dy + ny * 0.4f;
-				if (nx != 0) vx = 0;
-				if (ny < 0) { isOnAir = false; }
-				if (ny != 0) vy = 0;
+		//for (UINT i = 0; i < coEventsResult.size(); i++)
+		//{
+		//	LPCOLLISIONEVENT e = coEventsResult[i];
+		//	if (dynamic_cast<Block*>(e->obj)) {
+		//		if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
+		//		else x += dx;
+		//		y += min_ty * dy + ny * 0.4f;
+		//		if (nx != 0) vx = 0;
+		//		if (ny < 0) { isOnAir = false; }
+		//		if (ny != 0) vy = 0;
 
+		//		if (dynamic_cast<Portal*>(e->obj))
+		//		{
+		//			Portal* p = dynamic_cast<Portal*>(e->obj);
+		//			if (!ignoreCollision) this->activeSection = p->getSectionEnd();
+		//		}
+		//	}
+		//	else {
+		//		y += dy;
+		//		x += dx;
+		//	}
+		//}
+
+		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+		//after this method, coEvents SHOULD only contain collision event thats the target is not a block (ie Entity) 
+		//and coEventsResult is now contain closest collision to a block to adjust player position accordingly
+		if (coEventsResult.size() != 0) {
+			if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
+			else x += dx;
+			y += min_ty * dy + ny * 0.4f;
+			if (nx != 0) vx = 0;
+			if (ny < 0) { isOnAir = false; }
+			if (ny != 0) vy = 0;
+
+			for (UINT i = 0; i < coEventsResult.size(); i++) {
+				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (dynamic_cast<Portal*>(e->obj))
 				{
 					Portal* p = dynamic_cast<Portal*>(e->obj);
 					if (!ignoreCollision) this->activeSection = p->getSectionEnd();
 				}
 			}
-			else {
-				y += dy;
-				x += dx;
-			}
+		}
+		else {
+			y += dy;
+			x += dx;
+		}
+
+		for (UINT i = 0; i < coEvents.size(); i++) {
+			DebugOut("Entity collision\n");
 		}
 	}
 }
