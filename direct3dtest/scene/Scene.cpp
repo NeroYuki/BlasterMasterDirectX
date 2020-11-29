@@ -79,6 +79,6 @@ void Scene::render()
 {
 	for (std::vector<GameObject*>::iterator it = coObjects.begin(); it != coObjects.end(); ++it) {
 		(*it)->render();
-		//(*it)->renderBoundingBox();
+		(*it)->renderBoundingBox();
 	}
 }

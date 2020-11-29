@@ -47,6 +47,42 @@ LPCOLLISIONEVENT GameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, rdx, rdy, coO);
 	return e;
 }
+LPCOLLISIONEVENT GameObject::SweptAABBEx(LPGAMEOBJECT coO,float deltax, float deltay)
+{
+	float sl, st, sr, sb;		// static object bbox
+	float ml, mt, mr, mb;		// moving object bbox
+	float t, nx, ny;
+
+	coO->GetBoundingBox(st, sl, sb, sr);
+
+	// deal with moving object: m speed = original m speed - collide object speed
+	float svx, svy;
+	coO->getVelocity(svx, svy);
+
+	float sdx = svx * dt;
+	float sdy = svy * dt;
+
+	// (rdx, rdy) is RELATIVE movement distance/velocity 
+	float rdx = this->dx - sdx;
+	float rdy = this->dy - sdy;
+
+	GetBoundingBox(mt, ml, mb, mr);
+	mt +=  deltay;
+	ml +=  deltax;
+	mb +=  deltay;
+	mr +=  deltax;
+	
+
+	CollisionHelper::sweptAABB(
+		ml, mt, mr, mb,
+		rdx, rdy,
+		sl, st, sr, sb,
+		t, nx, ny
+	);
+
+	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, rdx, rdy, coO);
+	return e;
+}
 
 /*
 	Calculate potential collisions with the list of colliable objects
@@ -70,7 +106,23 @@ void GameObject::CalcPotentialCollisions(
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
+void GameObject::CalcPotentialCollisions(
+	std::vector<LPGAMEOBJECT>* coObjects,
+	std::vector<LPCOLLISIONEVENT>& coEvents,
+	float deltax, float deltay)
+{
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i), deltax,  deltay);
 
+		if (e->t > 0 && e->t <= 1.0f)
+			coEvents.push_back(e);
+		else
+			delete e;
+	}
+
+	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
 void GameObject::FilterCollision(
 	std::vector<LPCOLLISIONEVENT>& coEvents,
 	std::vector<LPCOLLISIONEVENT>& coEventsResult,

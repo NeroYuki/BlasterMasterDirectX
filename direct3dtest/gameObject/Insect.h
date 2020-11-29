@@ -5,6 +5,8 @@
 #define BBOX_INSECT_HEIGHT 20
 
 class Insect : public Enemy {
+private:
+
 public:
 	Insect(float x, float y, int hp);
 	void render();

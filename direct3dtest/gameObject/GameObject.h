@@ -58,7 +58,9 @@ public:
 	virtual void renderBoundingBox();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
+	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO, float deltax, float deltay);
 	void CalcPotentialCollisions(std::vector<LPGAMEOBJECT>* coObjects, std::vector<LPCOLLISIONEVENT>& coEvents);
+	void CalcPotentialCollisions(std::vector<LPGAMEOBJECT>* coObjects, std::vector<LPCOLLISIONEVENT>& coEvents, float deltax, float deltay);
 	void FilterCollision(
 		std::vector<LPCOLLISIONEVENT>& coEvents,
 		std::vector<LPCOLLISIONEVENT>& coEventsResult,

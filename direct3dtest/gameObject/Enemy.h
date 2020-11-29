@@ -12,4 +12,12 @@ public:
 	virtual void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects) = 0;
 	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right) = 0;
 	~Enemy();
+	void FilterCollisionBlock(std::vector<LPCOLLISIONEVENT>& coEvents,
+		std::vector<LPCOLLISIONEVENT>& coEventsResult,
+		float& min_tx,
+		float& min_ty,
+		float& nx,
+		float& ny,
+		float& rdx,
+		float& rdy);
 };

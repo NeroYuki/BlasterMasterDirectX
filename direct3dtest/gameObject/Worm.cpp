@@ -44,7 +44,7 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
 		//if (rdx != 0 && rdx!=dx)

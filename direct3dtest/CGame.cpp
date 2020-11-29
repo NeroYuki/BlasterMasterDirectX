@@ -138,7 +138,7 @@ void CGame::initGame()
 	int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine), "Overworld");
 	ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
 	ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
-	sceneStateMachine->switchToScene(IntroId);
+	sceneStateMachine->switchToScene(OverworldSceneId);
 }
 
 bool CGame::Release()
