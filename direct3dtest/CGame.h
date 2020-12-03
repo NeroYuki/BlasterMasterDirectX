@@ -5,6 +5,7 @@
 #include "d3dx9.h"
 #include "Debug.h"
 #include"scene/Intro.h"
+#include"scene/EndScene.h"
 #include "SceneStateMachine.h"
 #include "scene/DebugScene.h"
 #include "scene/OverworldScene.h"

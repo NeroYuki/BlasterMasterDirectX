@@ -214,6 +214,7 @@
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="scene\EndScene.cpp" />
     <ClCompile Include="gameObject\Block.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
     <ClCompile Include="gameObject\Cannon.cpp" />
@@ -241,7 +242,6 @@
     <ClCompile Include="SceneStateMachine.cpp" />
     <ClCompile Include="scene\DebugScene.cpp" />
     <ClCompile Include="scene\DungeonScene.cpp" />
-    <ClCompile Include="scene\EndScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\Intro.cpp" />
     <ClCompile Include="scene\OverworldScene.cpp" />
@@ -256,6 +256,7 @@
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="scene\EndScene.h" />
     <ClInclude Include="gameObject\AllObject.h" />
     <ClInclude Include="gameObject\Block.h" />
     <ClInclude Include="gameObject\Boss.h" />
@@ -285,7 +286,6 @@
     <ClInclude Include="SceneStateMachine.h" />
     <ClInclude Include="scene\DebugScene.h" />
     <ClInclude Include="scene\DugeonScene.h" />
-    <ClInclude Include="scene\EndScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\Intro.h" />
     <ClInclude Include="scene\OverworldScene.h" />
@@ -300,6 +300,7 @@
     <Image Include="resource\DungeonMapBg.png" />
     <Image Include="resource\DungeonMapFg.png" />
     <Image Include="resource\DungeonMapLayoutFg.png" />
+    <Image Include="resource\ending.png" />
     <Image Include="resource\Enemies.png" />
     <Image Include="resource\intro_1.png" />
     <Image Include="resource\intro_2.png" />

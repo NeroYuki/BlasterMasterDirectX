@@ -118,6 +118,7 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(16, "resource\\menu_3.png", D3DCOLOR_XRGB(0, 57, 115));
 	TextureManager::getInstance()->add(17, "resource\\menu_4.png", D3DCOLOR_XRGB(0, 57, 115));
 	TextureManager::getInstance()->add(18, "resource\\menu_5.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(19, "resource\\ending.png", D3DCOLOR_XRGB(0, 57, 115));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();
@@ -129,15 +130,20 @@ void CGame::loadResource()
 
 void CGame::initGame()
 {
-	//int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
+	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine));
 	int IntroId = sceneStateMachine->addScene(new Intro(sceneStateMachine));
-	//ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
-	//ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
+	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
+	ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
 
-	//int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine));
-	//ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
-	//ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
-	sceneStateMachine->switchToScene(IntroId);
+	int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine));
+	ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
+	ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
+	
+	int EndSceneId = sceneStateMachine->addScene(new EndScene(sceneStateMachine));
+	
+	
+	sceneStateMachine->switchToScene(EndSceneId);
+	//sceneStateMachine->switchToScene(IntroId);
 }
 
 bool CGame::Release()
