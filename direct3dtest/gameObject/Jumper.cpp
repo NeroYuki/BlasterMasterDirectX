@@ -1,5 +1,4 @@
 #include "Jumper.h"
-
 Jumper::Jumper(float x, float y, int hp) :Enemy(x,y,hp)
 {
 	vx = 0.00;
@@ -21,21 +20,21 @@ void Jumper::render()
 
 void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-
+	if (this->HitPoint <= 0) this->isDie = 1;
 	vy += 0.05;
 	int futureCollision = -1;
 	////bounding logic
 	//if (x <= 0) vx = 0.03;
 	//else if (x >= SCREEN_WIDTH - 18) vx = -0.03;
 	GameObject::update(dt);
-	short timerstate =waitTime->update(dt);
+	short timerstate = waitTime->update(dt);
 	short timerstate2 = watTime2->update(dt);
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
 
 	if (vx < 0) {
-		CalcPotentialCollisions(coObjects, coEvents,-16,0);
+		CalcPotentialCollisions(coObjects, coEvents, -16, 0);
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
 		float rdy = 0;
@@ -44,7 +43,7 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		}
 		else futureCollision = 1;
 	}
-	else if(vx>0){
+	else if (vx > 0) {
 		CalcPotentialCollisions(coObjects, coEvents, 16, 0);
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
@@ -64,6 +63,9 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		isJump = true;
 	}
 	else {
+
+
+
 		//DebugOut("Collision occured\n");
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
@@ -108,6 +110,7 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	
 	//if (nx != 0 && !ignoreCollision) vx = 0;
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
@@ -116,10 +119,24 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			float px, py;
 			Player* p = dynamic_cast<Player*>(coObjects->at(i));
 			p->getPos(px, py);
-			if (this->x > px)facing=1;
-			else if (this->x < px)facing=2;
+			if (this->x > px)facing = 1;
+			else if (this->x < px)facing = 2;
 		}
+
+		//if (dynamic_cast<Bullet*>(coObjects->at(i))) 
+		//{
+		//	float px, py;
+		//	float top, left, bottom, right;
+		//	Bullet* b = dynamic_cast<Bullet*>(coObjects->at(i));
+		//	b->getPos(px, py);
+		//	this->GetBoundingBox(top, left, bottom, right);
+		//	if (px<right && px> left && py > top && py < bottom) {
+		//		this->isDie = 1;
+		//		break;
+		//	}
+		//}
 	}
+	
 	if (jumpCounter > 0) {
 		if (!isJump) {
 			if (timerstate == TIMER_INACTIVE) waitTime->restart();
@@ -138,6 +155,7 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				}
 				jumpCounter--;
 			}
+
 		}
 	}
 	else {
@@ -154,17 +172,14 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	}
 
 
-	if (vx < 0 && isJump) {
-		state = JUMPER_MOVE_LEFT;
+	if (vx < 0) {
+		if (state == JUMPER_MOVE_LEFT) state = JUMPER_IDLE_LEFT;
+		else state = JUMPER_MOVE_LEFT;
 	}
-	else if (vx > 0 && isJump) {
-		state = JUMPER_MOVE_RIGHT;
+	else if (vx > 0) {
+		if (state == JUMPER_MOVE_RIGHT) state = JUMPER_IDLE_RIGHT;
+		else state = JUMPER_MOVE_RIGHT;
 	}
-	else {
-		if (vx< 0) state = JUMPER_IDLE_LEFT;
-		else if (vx > 0) state = JUMPER_IDLE_RIGHT;
-	}
-
 }
 
 void Jumper::GetBoundingBox(float& top, float& left, float& bottom, float& right)

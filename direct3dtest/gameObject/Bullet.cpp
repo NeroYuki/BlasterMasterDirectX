@@ -1,34 +1,15 @@
-#include "Player.h"
-#include <string>
+#include "Bullet.h"
 
-Player::Player(float x, float y, int hp) : GameObject(x,y)
-{
-	vx = 0; vy = 0;
-	//this->isDie = 0;
+Bullet::Bullet(float x, float y, float vx, float vy) : GameObject(x, y) {
+	this->HitPoint = 0;
 }
 
-void Player::render()
-{
-	LPANIMATION ani;
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
-}
-
-void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
-{
-
-}
-
-Player::~Player()
+Bullet::~Bullet()
 {
 }
 
-void Player::changeState(int stateId)
-{
-	this->state = stateId;
-}
 
-void Player::FilterCollisionBlock(std::vector<LPCOLLISIONEVENT> &coEvents, std::vector<LPCOLLISIONEVENT> &coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
+void Bullet::FilterCollisionBlock(std::vector<LPCOLLISIONEVENT>& coEvents, std::vector<LPCOLLISIONEVENT>& coEventsResult, float& min_tx, float& min_ty, float& nx, float& ny, float& rdx, float& rdy)
 {
 	min_tx = 1.0f;
 	min_ty = 1.0f;
@@ -74,6 +55,5 @@ void Player::FilterCollisionBlock(std::vector<LPCOLLISIONEVENT> &coEvents, std::
 	if (minimum_x_event != nullptr) coEventsResult.push_back(minimum_x_event);
 	if (minimum_y_event != nullptr) coEventsResult.push_back(minimum_y_event);
 
-	
-}
 
+}

@@ -9,6 +9,7 @@ Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 	movingState = SOPHIA_WHEEL_NORMAL_RIGHT_IDLE;
 	turningTimer = new GameTimer(250);
 	gunRaiseTimer = new GameTimer(100);
+	bulletDelayTimer = new GameTimer(300);
 }
 
 void Sophia::render()
@@ -50,12 +51,14 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				vx -= SOPHIA_MOVE_ACCEL;
 			else vx == -SOPHIA_MOVE_SPEED_CAP;
 			changeState(SOPHIA_BODY_FLAT_MOVE_LEFT);
+			nx = -1;
 		}
 		else if (controlState & (RIGHT) && (!(controlState & (LEFT)))) {
 			if (vx <= SOPHIA_MOVE_SPEED_CAP)
 				vx += SOPHIA_MOVE_ACCEL;
 			else vx == SOPHIA_MOVE_SPEED_CAP;
 			changeState(SOPHIA_BODY_FLAT_MOVE_RIGHT);
+			nx = 1;
 		}
 		else {
 			if (vx > 0.011) vx -= SOPHIA_MOVE_ACCEL;
@@ -81,12 +84,34 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (vy < 0) vy = 0;
 	}
 	vy += 0.01;
-	
+	if (controlState & (SECONDARY) ) {
+		if (bulletDelayTimer->peekState() == TIMER_INACTIVE) {
+			if (ny == 1)
+			{
+				if(nx==1)
+				new PLayerBullet(this->x + 5, this->y - 26, 0, 0, 3);
+				else if(nx==-1)
+					new PLayerBullet(this->x + 12, this->y - 26, 0, 0, 3);
+
+			}
+			else if (nx==1) {
+				new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH -10, this->y + 1, 0, 0, 1);
+			}
+			else if(nx==-1){
+				new PLayerBullet(this->x -5, this->y + 1, 0, 0, 2);
+			}
+			bulletDelayTimer->restart();
+		}
+
+	}
+
 	if (controlState & UP) {
 		changeState(SOPHIA_GUN_MOUNT_RAISE);
+		ny = 1;
 	}
 	else {
 		changeState(SOPHIA_GUN_MOUNT_UNRAISE);
+		ny = 0;
 	}
 
 	//NOTE: Wheel state is control by actual movement
@@ -95,18 +120,16 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		changeMovingState(SOPHIA_MOVING_RIGHT);
 	}
 	else if (vx < -0.001) {
-
 		changeMovingState(SOPHIA_MOVING_LEFT);
 	}
 	else {
-
 		changeMovingState(SOPHIA_MOVING_IDLE);
 	}
 	
 	GameObject::update(dt);
 	turningTimer->update(dt);
 	gunRaiseTimer->update(dt);
-
+	bulletDelayTimer->update(dt);
 	//Handling collision
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
@@ -125,36 +148,6 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
 		float rdy = 0;
-
-		//// LEGACY CODE
-		//FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		//// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
-		////if (rdx != 0 && rdx!=dx)
-		////	x += nx*abs(rdx); 
-
-		//for (UINT i = 0; i < coEventsResult.size(); i++)
-		//{
-		//	LPCOLLISIONEVENT e = coEventsResult[i];
-		//	if (dynamic_cast<Block*>(e->obj)) {
-		//		if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
-		//		else x += dx;
-		//		y += min_ty * dy + ny * 0.4f;
-		//		if (nx != 0) vx = 0;
-		//		if (ny < 0) { isOnAir = false; }
-		//		if (ny != 0) vy = 0;
-
-		//		if (dynamic_cast<Portal*>(e->obj))
-		//		{
-		//			Portal* p = dynamic_cast<Portal*>(e->obj);
-		//			if (!ignoreCollision) this->activeSection = p->getSectionEnd();
-		//		}
-		//	}
-		//	else {
-		//		y += dy;
-		//		x += dx;
-		//	}
-		//}
 
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		//after this method, coEvents SHOULD only contain collision event thats the target is not a block (ie Entity) 

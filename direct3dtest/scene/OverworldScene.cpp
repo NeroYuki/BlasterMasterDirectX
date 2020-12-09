@@ -14,10 +14,17 @@ void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
 	Sophia* s = new Sophia(88, 3000, 1);
-	Jumper* j1 = new Jumper(88, 3000, 1);
+	Jumper* j1 = new Jumper(150, 3000, 6);
+	Jumper* j2 = new Jumper(170, 3000, 3);
+	Jumper* j3 = new Jumper(180, 3000, 4);
+	Floater* F1 = new Floater(400, 3000, 5);
+	Insect* insect1 = new Insect(150, 3000, 5);
 	p_stack->push(s);
 	this->addObject(s);
+	this->addObject(insect1);
 	this->addObject(j1);
+	this->addObject(j2);
+	this->addObject(j3);
 	cam->setFollow(p_stack->top());
 }
 
@@ -70,7 +77,21 @@ void OverworldScene::handlingInput()
 void OverworldScene::update(DWORD dt)
 {
 	Scene::update(dt);
-
+	BulletManager* r = BulletManager::getinstance();
+	if (r->getBullet()->size() != 0) {
+		for (int i = 0; i < r->getBullet()->size(); i++)
+		{
+			this->addObject(r->getBullet()->at(i));
+		}
+		r->getBullet()->clear();
+	}
+	if (r->getDeleteBullet()->size() != 0) {
+		for (int i = 0; i < r->getDeleteBullet()->size(); i++)
+		{
+			this->removeObject(r->getDeleteBullet()->at(i));
+		}
+		r->getDeleteBullet()->clear();
+	}
 	//attempt section switching logic
 	if (p_stack->top()->getActiveSection() != activeSection) {
 		if (!sectionSwitchTimer->isStarted())

@@ -2,6 +2,8 @@
 
 Orb::Orb(float x, float y, int hp) : Enemy(x, y, hp)
 {
+	this->vx = 0.3;
+	this->vy = 0;
 }
 
 void Orb::render()
@@ -14,6 +16,7 @@ void Orb::render()
 
 void Orb::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+
 }
 
 void Orb::GetBoundingBox(float& top, float& left, float& bottom, float& right)

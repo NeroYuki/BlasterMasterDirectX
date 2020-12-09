@@ -73,6 +73,7 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			p->getPos(px, py);
 			if (this->x > px)vx = -0.03;
 			else vx = 0.03;
+			break;
 		}
 	}
 

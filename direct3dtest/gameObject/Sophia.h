@@ -15,6 +15,7 @@ private:
 	int movingState = 0;
 	GameTimer* turningTimer;
 	GameTimer* gunRaiseTimer;
+	GameTimer* bulletDelayTimer;
 public:
 	Sophia(float x, float y, int hp);
 	void render();

@@ -44,7 +44,7 @@ protected:
 	int nx = 0, ny = 0;
 	DWORD dt;
 	int state = 0;
-
+	int isDie = -1;
 public:
 	//constructor
 	GameObject(float x, float y);
@@ -54,6 +54,7 @@ public:
 	void getPos(float &x, float &y) { x = this->x; y = this->y; }
 	void getVelocity(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 	int getState() { return state; }
+	int getisDie() { return isDie; }
 
 	virtual void renderBoundingBox();
 

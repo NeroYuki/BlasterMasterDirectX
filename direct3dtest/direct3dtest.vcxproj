@@ -159,7 +159,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug (Cuong)|x64'">
@@ -216,6 +216,8 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="gameObject\Block.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
+    <ClCompile Include="gameObject\Bullet.cpp" />
+    <ClCompile Include="gameObject\BulletManager.cpp" />
     <ClCompile Include="gameObject\Cannon.cpp" />
     <ClCompile Include="gameObject\Dome.cpp" />
     <ClCompile Include="gameObject\Enemy.cpp" />
@@ -229,6 +231,7 @@
     <ClCompile Include="gameObject\Mine.cpp" />
     <ClCompile Include="gameObject\Orb.cpp" />
     <ClCompile Include="gameObject\Player.cpp" />
+    <ClCompile Include="gameObject\PlayerBullet.cpp" />
     <ClCompile Include="gameObject\Portal.cpp" />
     <ClCompile Include="gameObject\Skull.cpp" />
     <ClCompile Include="gameObject\Sophia.cpp" />
@@ -259,6 +262,8 @@
     <ClInclude Include="gameObject\AllObject.h" />
     <ClInclude Include="gameObject\Block.h" />
     <ClInclude Include="gameObject\Boss.h" />
+    <ClInclude Include="gameObject\Bullet.h" />
+    <ClInclude Include="gameObject\BulletManager.h" />
     <ClInclude Include="gameObject\Cannon.h" />
     <ClInclude Include="gameObject\Dome.h" />
     <ClInclude Include="gameObject\Enemy.h" />
@@ -272,6 +277,7 @@
     <ClInclude Include="gameObject\Mine.h" />
     <ClInclude Include="gameObject\Orb.h" />
     <ClInclude Include="gameObject\Player.h" />
+    <ClInclude Include="gameObject\PlayerBullet.h" />
     <ClInclude Include="gameObject\Portal.h" />
     <ClInclude Include="gameObject\Skull.h" />
     <ClInclude Include="gameObject\Sophia.h" />
@@ -304,6 +310,7 @@
     <Image Include="resource\Enemies.png" />
     <Image Include="resource\intro_1.png" />
     <Image Include="resource\intro_2.png" />
+    <Image Include="resource\items.png" />
     <Image Include="resource\menu_1.png" />
     <Image Include="resource\menu_2.png" />
     <Image Include="resource\menu_3.png" />

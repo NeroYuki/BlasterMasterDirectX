@@ -135,6 +135,15 @@
     <ClCompile Include="GameTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\BulletManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\PlayerBullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -269,6 +278,15 @@
     <ClInclude Include="scene\AllScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\BulletManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\PlayerBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -323,6 +341,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\menu_5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\items.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

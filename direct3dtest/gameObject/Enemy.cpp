@@ -2,6 +2,7 @@
 
 Enemy::Enemy(float x, float y, int hp) : GameObject(x, y){
 	this->HitPoint = hp;
+//	this->isDie = 0;
 }
 
 Enemy::~Enemy()
@@ -52,4 +53,9 @@ void Enemy::FilterCollisionBlock(std::vector<LPCOLLISIONEVENT>& coEvents, std::v
 
 	if (minimum_x_event != nullptr) coEventsResult.push_back(minimum_x_event);
 	if (minimum_y_event != nullptr) coEventsResult.push_back(minimum_y_event);
+}
+
+void Enemy::GetHit(int n)
+{
+	this->HitPoint -= n;
 }

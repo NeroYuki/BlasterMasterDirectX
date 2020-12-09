@@ -19,3 +19,5 @@
 #include "Sophia.h"
 #include "Block.h"
 #include "Portal.h"
+#include "Bullet.h"
+#include "BulletManager.h"

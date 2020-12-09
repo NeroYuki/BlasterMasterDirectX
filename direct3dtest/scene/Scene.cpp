@@ -58,14 +58,20 @@ void Scene::update(DWORD dt)
 	//TODO: use grid algo to reduce the size of coObject
 	for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
 	{
+		
 		if ((*it)->isNearby(gridX_origin, gridY_origin)) {
 			coObjects.push_back((*it)->getObj());
 		}
+	}
+	for (int i = 0; i < coObjects.size(); i++) {
+		if (coObjects.at(i)->getisDie() == 1)
+			removeObject(coObjects.at(i));
 	}
 
 	for (std::vector<GameObject*>::iterator it = coObjects.begin(); it != coObjects.end(); ++it) {
 		(*it)->update(dt, &coObjects);
 	}
+
 
 	for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
 	{
@@ -79,6 +85,6 @@ void Scene::render()
 {
 	for (std::vector<GameObject*>::iterator it = coObjects.begin(); it != coObjects.end(); ++it) {
 		(*it)->render();
-		(*it)->renderBoundingBox();
+		//(*it)->renderBoundingBox();
 	}
 }

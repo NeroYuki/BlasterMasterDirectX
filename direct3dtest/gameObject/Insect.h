@@ -6,7 +6,9 @@
 
 class Insect : public Enemy {
 private:
-
+	int insectState =1;
+	GameTimer* insecttimer1;
+	GameTimer* insecttimer2;
 public:
 	Insect(float x, float y, int hp);
 	void render();
