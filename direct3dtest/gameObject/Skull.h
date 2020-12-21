@@ -5,6 +5,11 @@
 #define BBOX_SKULL_HEIGHT 21
 
 class Skull : public Enemy {
+private:
+	int skullstate = 1;
+	GameTimer* skulltimer1;
+	GameTimer* skulltimer2;
+	int facing = -1;
 public:
 	Skull(float x, float y, int hp);
 	void render();

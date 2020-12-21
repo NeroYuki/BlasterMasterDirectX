@@ -17,15 +17,19 @@ void OverworldScene::initScene()
 	Jumper* j1 = new Jumper(150, 3000, 6);
 	Jumper* j2 = new Jumper(170, 3000, 3);
 	Jumper* j3 = new Jumper(180, 3000, 4);
-	Floater* F1 = new Floater(400, 3000, 5);
+	Floater* F1 = new Floater(180, 3000, 5);
 	Insect* insect1 = new Insect(150, 3000, 5);
+	Skull* skull1 = new Skull(500, 3000, 5);
 	p_stack->push(s);
 	this->addObject(s);
-	this->addObject(insect1);
-	this->addObject(j1);
-	this->addObject(j2);
-	this->addObject(j3);
+	this->addObject(skull1);
+	//this->addObject(insect1);
+	//this->addObject(j1);
+	//this->addObject(j2);
+	//this->addObject(j3);
+	this->addObject(F1);
 	cam->setFollow(p_stack->top());
+	heatlhbar->setFollow(p_stack->top());
 }
 
 void OverworldScene::handlingInput()

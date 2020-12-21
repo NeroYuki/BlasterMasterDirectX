@@ -178,6 +178,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			DebugOut("Entity collision\n");
 		}
 	}
+	if (hitpoint < 0) hitpoint = 0;
 }
 
 Sophia::~Sophia()

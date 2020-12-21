@@ -119,6 +119,7 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(17, "resource\\menu_4.png", D3DCOLOR_XRGB(0, 57, 115));
 	TextureManager::getInstance()->add(18, "resource\\menu_5.png", D3DCOLOR_XRGB(0, 57, 115));
 	TextureManager::getInstance()->add(19, "resource\\items.png", D3DCOLOR_XRGB(255, 0, 255));
+	TextureManager::getInstance()->add(20, "resource\\bars.png", D3DCOLOR_XRGB(255, 0, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();

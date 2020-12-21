@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Player.h"
+#include "EnemyBullet.h"
 
 #define WALKING_SPEED 0.03
 

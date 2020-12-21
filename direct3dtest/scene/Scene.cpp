@@ -4,6 +4,7 @@ Scene::Scene(SceneStateMachine* sceneState)
 {
 	this->sceneState = sceneState;
 	cam = new Camera();
+	heatlhbar = new HeatlhBar();
 }
 
 void Scene::addObject(GameObject* obj)
@@ -47,8 +48,10 @@ void Scene::addPortal(Portal* p)
 
 void Scene::update(DWORD dt)
 {
-	if (activeSection != -1)
+	if (activeSection != -1) {
 		cam->update(sectionGraph.getSection(activeSection));
+		heatlhbar->update(cam);
+	}
 	else {
 		cam->update(nullptr);
 	}
@@ -87,4 +90,5 @@ void Scene::render()
 		(*it)->render();
 		//(*it)->renderBoundingBox();
 	}
+	heatlhbar->render();
 }

@@ -1,8 +1,7 @@
 #pragma once
 class Bullet;
 
-#include "PlayerBullet.h"
-
+#include "Bullet.h"
 class BulletManager {
 private:
 	static BulletManager* instance;

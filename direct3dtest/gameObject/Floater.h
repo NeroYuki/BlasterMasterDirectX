@@ -5,6 +5,8 @@
 #define BBOX_FLOATER_HEIGHT 20
 
 class Floater : public Enemy {
+private:
+	GameTimer* shoottimer;
 public:
 	Floater(float x, float y, int hp);
 	void render();

@@ -16,6 +16,8 @@ protected:
 	bool ignoreCollision = false;
 	bool ignoreInput = false;
 	int forceControlState = 0;
+	int hitpoint = 8;
+	int upgrade = 1;
 public:
 	Player(float x, float y, int hp);
 	void render();
@@ -45,4 +47,7 @@ public:
 		float& ny,
 		float& rdx,
 		float& rdy);
+	void PlayerGetHit(int dmg) { this->hitpoint -= dmg; }
+	void PlayerHeal(int value) { this->hitpoint += value; if (hitpoint > 8)hitpoint = 8; }
+	void GetPlayerHitPoint(int& heatlhpoint) { heatlhpoint = this->hitpoint; }
 };

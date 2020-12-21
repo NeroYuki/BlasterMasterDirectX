@@ -6,6 +6,7 @@ class SceneStateMachine;
 #include "../gameObject/AllObject.h"
 #include "../Camera.h"
 #include "../SceneStateMachine.h"
+#include"../hub/HeatlhBar.h"
 
 class ObjectGrid {
 private:
@@ -67,6 +68,7 @@ protected:
 	int activeSection = -1;
 	SectionGraph sectionGraph;
 	SceneStateMachine* sceneState;
+	HeatlhBar* heatlhbar;
 public:
 	Scene(SceneStateMachine* sceneState);
 	void addObject(GameObject* obj);

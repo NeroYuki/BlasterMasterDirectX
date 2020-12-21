@@ -221,9 +221,12 @@
     <ClCompile Include="gameObject\Cannon.cpp" />
     <ClCompile Include="gameObject\Dome.cpp" />
     <ClCompile Include="gameObject\Enemy.cpp" />
+    <ClCompile Include="gameObject\EnemyBullet.cpp" />
     <ClCompile Include="gameObject\Eyeball.cpp" />
     <ClCompile Include="gameObject\Floater.cpp" />
     <ClCompile Include="gameObject\GameObject.cpp" />
+    <ClCompile Include="hub\GunBar.cpp" />
+    <ClCompile Include="hub\HeatlhBar.cpp" />
     <ClCompile Include="gameObject\Insect.cpp" />
     <ClCompile Include="gameObject\Jason.cpp" />
     <ClCompile Include="gameObject\JasonTop.cpp" />
@@ -267,9 +270,12 @@
     <ClInclude Include="gameObject\Cannon.h" />
     <ClInclude Include="gameObject\Dome.h" />
     <ClInclude Include="gameObject\Enemy.h" />
+    <ClInclude Include="gameObject\EnemyBullet.h" />
     <ClInclude Include="gameObject\Eyeball.h" />
     <ClInclude Include="gameObject\Floater.h" />
     <ClInclude Include="gameObject\GameObject.h" />
+    <ClInclude Include="hub\GunBar.h" />
+    <ClInclude Include="hub\HeatlhBar.h" />
     <ClInclude Include="gameObject\Insect.h" />
     <ClInclude Include="gameObject\Jason.h" />
     <ClInclude Include="gameObject\JasonTop.h" />
@@ -303,6 +309,7 @@
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\bars.png" />
     <Image Include="resource\bbox.png" />
     <Image Include="resource\DungeonMapBg.png" />
     <Image Include="resource\DungeonMapFg.png" />

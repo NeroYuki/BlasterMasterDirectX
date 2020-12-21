@@ -173,12 +173,10 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 
 	if (vx < 0) {
-		if (state == JUMPER_MOVE_LEFT) state = JUMPER_IDLE_LEFT;
-		else state = JUMPER_MOVE_LEFT;
+		state = JUMPER_MOVE_LEFT;
 	}
 	else if (vx > 0) {
-		if (state == JUMPER_MOVE_RIGHT) state = JUMPER_IDLE_RIGHT;
-		else state = JUMPER_MOVE_RIGHT;
+		state = JUMPER_MOVE_RIGHT;
 	}
 }
 

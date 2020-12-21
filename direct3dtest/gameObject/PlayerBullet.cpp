@@ -142,7 +142,7 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 		if (vx > 0) { vx += 20; vy += 2; }
 		if (vx < 0) { vx -= 20; vy += 2; }
-		if (vx > 0) { vx += 2; vy += 20; }
+		if (vy > 0) { vx += 2; vy += 20; }
 		vx = 0;
 		vy = 0;
 

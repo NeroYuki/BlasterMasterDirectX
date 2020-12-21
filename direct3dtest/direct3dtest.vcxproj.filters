@@ -144,6 +144,15 @@
     <ClCompile Include="gameObject\PlayerBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\EnemyBullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hub\HeatlhBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hub\GunBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -287,6 +296,15 @@
     <ClInclude Include="gameObject\PlayerBullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\EnemyBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hub\HeatlhBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hub\GunBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -344,6 +362,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\items.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\bars.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
