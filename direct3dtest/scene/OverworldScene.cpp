@@ -19,10 +19,12 @@ void OverworldScene::initScene()
 	Jumper* j3 = new Jumper(180, 3000, 4);
 	Floater* F1 = new Floater(180, 3000, 5);
 	Insect* insect1 = new Insect(150, 3000, 5);
-	Skull* skull1 = new Skull(500, 3000, 5);
+	Mine* mine1 = new Mine(192, 3024, 1);
+	//Skull* skull1 = new Skull(500, 3000, 5);
 	p_stack->push(s);
 	this->addObject(s);
-	this->addObject(skull1);
+	this->addObject(mine1);
+	//this->addObject(skull1);
 	//this->addObject(insect1);
 	//this->addObject(j1);
 	//this->addObject(j2);
@@ -59,17 +61,21 @@ void OverworldScene::handlingInput()
 				float x, y;
 				p_stack->top()->getPos(x, y);
 				Jason* new_jason = new Jason(x, y - 4, 1, p_stack->top()->getActiveSection());
+				new_jason->setFollow(p_stack->top());
 				p_stack->push(new_jason);
 				this->addObject(new_jason);
 				cam->setFollow(p_stack->top());
+				heatlhbar->setFollow(p_stack->top());
 				blockShiftTimer->restart();
 			}
 			else if (dynamic_cast<Jason*>(p_stack->top())) {
 				Jason* jason_p = dynamic_cast<Jason*>(p_stack->top());
 				if (jason_p->getIsCloseToSophia()) {
+					jason_p->unfollow();
 					p_stack->pop();
 					this->removeObject(jason_p);
 					cam->setFollow(p_stack->top());
+					heatlhbar->setFollow(p_stack->top());
 				}
 				blockShiftTimer->restart();
 			}

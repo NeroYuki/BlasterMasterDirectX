@@ -13,6 +13,7 @@ private:
 	bool is_craw = false;
 	bool isOnAir = false;
 	bool isCloseToSophia = false;
+	Player* followingSophia = NULL;
 public:
 	Jason(float x, float y, int hp, int activeSection = 0);
 	void render();
@@ -23,4 +24,6 @@ public:
 	void changeState(int stateId);
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
 	bool getIsCloseToSophia() { return isCloseToSophia; }
+	void setFollow(Player* followingSophia);
+	void unfollow();
 };

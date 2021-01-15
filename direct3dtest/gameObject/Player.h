@@ -3,6 +3,7 @@
 #include "../Debug.h"
 #include "Portal.h"
 #include "PlayerBullet.h"
+#include "lightning.h"
 
 #define PLAYER_WALKING_SPEED 0.06
 

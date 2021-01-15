@@ -13,6 +13,7 @@ private:
 	bool isOnAir = false;
 	//movingState for the wheel, inherited state for the body 
 	int movingState = 0;
+	int rocket = 4;
 	GameTimer* turningTimer;
 	GameTimer* gunRaiseTimer;
 	GameTimer* bulletDelayTimer;

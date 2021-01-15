@@ -225,6 +225,7 @@
     <ClCompile Include="gameObject\Eyeball.cpp" />
     <ClCompile Include="gameObject\Floater.cpp" />
     <ClCompile Include="gameObject\GameObject.cpp" />
+    <ClCompile Include="gameObject\Lightning.cpp" />
     <ClCompile Include="hub\GunBar.cpp" />
     <ClCompile Include="hub\HeatlhBar.cpp" />
     <ClCompile Include="gameObject\Insect.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="gameObject\Eyeball.h" />
     <ClInclude Include="gameObject\Floater.h" />
     <ClInclude Include="gameObject\GameObject.h" />
+    <ClInclude Include="gameObject\lightning.h" />
     <ClInclude Include="hub\GunBar.h" />
     <ClInclude Include="hub\HeatlhBar.h" />
     <ClInclude Include="gameObject\Insect.h" />
@@ -328,6 +330,7 @@
     <Image Include="resource\DungeonTileset.png" />
     <Image Include="resource\OverworldMapBg.png" />
     <Image Include="resource\Player.png" />
+    <Image Include="resource\playerbullet.png" />
     <Image Include="resource\Player_add.png" />
   </ItemGroup>
   <ItemGroup>

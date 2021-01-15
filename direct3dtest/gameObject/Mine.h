@@ -5,6 +5,8 @@
 #define BBOX_MINE_HEIGHT 6
 
 class Mine : public Enemy {
+private:
+	int explo = 0;
 public:
 	Mine(float x, float y, int hp);
 	void render();

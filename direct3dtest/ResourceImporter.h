@@ -15,6 +15,7 @@ public:
 	static void spriteImport(LPCSTR filename, SpriteManager* sprManager, AnimationManager* aniManager);
 	static void mapDataImport(LPCSTR filename, Scene* applyingScene);
 	static void mapObjImport(LPCSTR filename, Scene* applyingScene);
+	static void enemyImport(LPCSTR filename, Scene* applyingScene);
 	static void tilesetImporter(LPCSTR filename);
 };
 

@@ -14,7 +14,7 @@ void HeatlhBar::update(Camera* cam)
 		return;
 	}
 	this->x=cam->getX()+10;
-	this->y = cam->getY()+50;
+	this->y = cam->getY()+100;
 
 	followingObj->GetPlayerHitPoint(displayHitPoint);
 	switch (displayHitPoint)

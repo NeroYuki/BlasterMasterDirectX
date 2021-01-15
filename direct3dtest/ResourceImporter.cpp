@@ -237,6 +237,11 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 	}
 }
 
+void ResourceImporter::enemyImport(LPCSTR filename, Scene* applyingScene)
+{
+
+}
+
 void ResourceImporter::tilesetImporter(LPCSTR filename)
 {
 }

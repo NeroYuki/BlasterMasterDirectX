@@ -10,6 +10,8 @@ Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 	turningTimer = new GameTimer(250);
 	gunRaiseTimer = new GameTimer(100);
 	bulletDelayTimer = new GameTimer(300);
+	upgrade = 2;
+	rocket = 5;
 }
 
 void Sophia::render()
@@ -84,27 +86,58 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (vy < 0) vy = 0;
 	}
 	vy += 0.01;
+	this->rocket = 3;
 	if (controlState & (SECONDARY) ) {
 		if (bulletDelayTimer->peekState() == TIMER_INACTIVE) {
-			if (ny == 1)
-			{
-				if(nx==1)
-				new PLayerBullet(this->x + 5, this->y - 26, 0, 0, 3);
-				else if(nx==-1)
-					new PLayerBullet(this->x + 12, this->y - 26, 0, 0, 3);
+			if (controlState & (DOWN)){
+				if (nx == 1) {
+					if (rocket == 3) {
+						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 3, 1);
+					}
+					else if (rocket == 4) {
+						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 1);
+						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 3);
+						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 4);
+					}
+					else if (rocket == 5) {
+						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
+					}
+				}
+				else if (nx == -1) {
+					if (rocket == 3) {
+						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 3, 2);
+					}
+					else if (rocket == 4) {
+						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 2);
+						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 5);
+						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 6);
+					}
+					else if (rocket == 5) {
+						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
+					}
+				}
+			}
+			else {
+				if (ny == 1)
+				{
+					if (nx == 1)
+						new PLayerBullet(this->x + 5, this->y - 26, 0, 0, upgrade, 3);
+					else if (nx == -1)
+						new PLayerBullet(this->x + 12, this->y - 26, 0, 0, upgrade, 3);
 
-			}
-			else if (nx==1) {
-				new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH -10, this->y + 1, 0, 0, 1);
-			}
-			else if(nx==-1){
-				new PLayerBullet(this->x -5, this->y + 1, 0, 0, 2);
+				}
+				else if (nx == 1) {
+					new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, upgrade, 1);
+				}
+				else if (nx == -1) {
+					new PLayerBullet(this->x - 5, this->y + 1, 0, 0, upgrade, 2);
+				}
 			}
 			bulletDelayTimer->restart();
 		}
-
 	}
 
+	
 	if (controlState & UP) {
 		changeState(SOPHIA_GUN_MOUNT_RAISE);
 		ny = 1;

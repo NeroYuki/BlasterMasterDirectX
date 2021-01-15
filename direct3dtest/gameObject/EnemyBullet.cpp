@@ -22,6 +22,15 @@ EnemyBullet::EnemyBullet(float x, float y, float inputx, float inputy, int type)
 		bulletheight = 10;
 		enemytype = 2;
 	}
+	if (type == 3) {
+		state = ENEMY_BULLET_3;
+		this->vx = inputx;
+		this->vy = -0.3;
+		bulletwidth = 8;
+		bulletheight = 8;
+		enemytype = 3;
+		surviveTime = new GameTimer(500);
+	}
 	//if (type == 3) {
 	//	state = SOPHIA_BULLET_UP;
 	//	this->vx = 0;
@@ -44,6 +53,10 @@ void EnemyBullet::render()
 void EnemyBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	if (enemytype == 2) {
+		vy += 0.03;
+	}
+	if (enemytype == 3)
+	{
 		vy += 0.03;
 	}
 	GameObject::update(dt);
@@ -132,6 +145,38 @@ void EnemyBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 						vx = -vx;
 					}
 
+				}
+			}
+			else {
+				y += dy;
+				x += dx;
+			}
+		}
+		else if (enemytype == 3) {
+			for (UINT i = 0; i < coEvents.size(); i++) {
+
+				LPCOLLISIONEVENT e = coEvents[i];
+				if (dynamic_cast<Player*>(e->obj)) {
+					if (e->ny != 0 || e->nx != 0) {
+						dynamic_cast<Player*>(e->obj)->PlayerGetHit(1);
+						surviveTime->stop(); timestate = TIMER_ENDED;
+						active = -1;
+						break;
+					}
+				}
+			}
+			if (coEventsResult.size() != 0) {
+				for (UINT i = 0; i < coEventsResult.size(); i++)
+				{
+					LPCOLLISIONEVENT e = coEventsResult[i];
+					x += min_tx * dx + nx * 0.4f;
+					y += min_ty * dy + ny * 0.4f;
+					if (ny < 0) {
+							vy = 0;
+					}
+					if (nx != 0) {
+						vx = -vx;
+					}
 				}
 			}
 			else {

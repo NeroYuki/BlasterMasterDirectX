@@ -78,6 +78,8 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
+	bool foundNearSophia = false;
+
 	if (coEvents.size() == 0) {
 		x += dx;
 		y += dy;
@@ -90,44 +92,58 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
-		bool foundNearSophia = false;
+		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<Block*>(e->obj)) {
-				if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
-				else x += dx;
-				y += min_ty * dy + ny * 0.4f;
-				if (nx != 0) vx = 0;
-				if (ny < 0) { isOnAir = false; }
-				if (ny != 0) vy = 0;
 
+		if (coEventsResult.size() > 0) {
+
+			if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
+			else x += dx;
+			y += min_ty * dy + ny * 0.4f;
+			if (nx != 0) vx = 0;
+			if (ny < 0) { isOnAir = false; }
+			if (ny != 0) vy = 0;
+
+			for (UINT i = 0; i < coEventsResult.size(); i++)
+			{
+				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (dynamic_cast<Portal*>(e->obj))
 				{
 					Portal* p = dynamic_cast<Portal*>(e->obj);
 					if (!ignoreCollision) this->activeSection = p->getSectionEnd();
 				}
 			}
-			else {
-				if (dynamic_cast<Sophia*>(e->obj)) {
-					foundNearSophia = true;
-					y += dy;
-					x += dx;
-				}
-
-			}
-			
 		}
-		if (foundNearSophia) isCloseToSophia = true;
-		else isCloseToSophia = false;
-		
+		else {
+			x += dx;
+			y += dy;
+		}
+
+		//for (UINT i = 0; i < coEvents.size(); i++) {
+		//	LPCOLLISIONEVENT e = coEvents[i];
+		//	if (dynamic_cast<Sophia*>(e->obj)) {
+		//		DebugOut("Sophia\n");
+		//		foundNearSophia = true;
+		//	}
+		//}
+	
 	}
+
+	if (this->followingSophia != NULL) {
+
+		float tempx, tempy;
+		this->followingSophia->getPos(tempx, tempy);
+		isCloseToSophia = false;
+		if (this->x > tempx && this->x < tempx + 30) {
+			if (this->y + 10 > tempy && this->y < tempy + 48) {
+				DebugOut("Sophia\n");
+				//foundNearSophia = true;
+				isCloseToSophia = true;
+			}
+		}
+	}
+	//if (foundNearSophia) isCloseToSophia = true;
+	//else isCloseToSophia = false;
 }
 
 Jason::~Jason()
@@ -170,4 +186,14 @@ void Jason::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 	left = this->x;
 	bottom = top + BBOX_JASON_HEIGHT;
 	right = left + BBOX_JASON_WIDTH;
+}
+
+void Jason::setFollow(Player* followingSophia)
+{
+	this->followingSophia = followingSophia;
+}
+
+void Jason::unfollow()
+{
+	this->followingSophia = NULL;
 }
