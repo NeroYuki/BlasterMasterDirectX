@@ -4,6 +4,8 @@
 #include "Portal.h"
 #include "PlayerBullet.h"
 #include "lightning.h"
+#include "Ladder.h"
+#include "ScenePortal.h"
 
 #define PLAYER_WALKING_SPEED 0.06
 

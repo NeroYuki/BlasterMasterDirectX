@@ -5,7 +5,8 @@
 #define ENTITY_LIST 4
 #define PORTAL_LIST 5
 #define SECTION_LIST 6
-
+#define LADDER_LIST 7
+#define SCENEPORTAL_LIST 8
 std::vector<std::string> split(std::string line, std::string delimeter)
 {
 	std::vector<std::string> tokens;
@@ -108,6 +109,7 @@ void ResourceImporter::spriteImport(LPCSTR filename, SpriteManager* sprManager, 
 			catch (int er) {
 				DebugOut("[ERROR] An error occured\n");			
 			}
+
 			break;
 		default:
 			DebugOut("[WARNING] Unknown section\n");
@@ -182,6 +184,12 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 		if (line == "[SECTION]") {
 			parseSection = SECTION_LIST; continue;
 		}
+		if (line == "[LADDER]") {
+			parseSection = LADDER_LIST; continue;
+		}
+		if (line == "[ScenePortal]") {
+			parseSection = SCENEPORTAL_LIST; continue;
+		}
 		switch (parseSection) {
 		case ENTITY_LIST:
 			if (component.size() < 4) {
@@ -231,9 +239,46 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				DebugOut("[ERROR] An error occured\n");
 			}
 			break;
+		case LADDER_LIST:
+			if (component.size() < 4) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				int t = std::stoi(component[0], nullptr);
+				int l = std::stoi(component[1], nullptr);
+				int b = std::stoi(component[2], nullptr);
+				int r = std::stoi(component[3], nullptr);
+				applyingScene->addObject(new Ladder(t, l, b, r));
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+		case SCENEPORTAL_LIST:
+			if (component.size() < 9) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				float x = std::stof(component[0], nullptr);
+				float y = std::stof(component[1], nullptr);
+				int w = std::stoi(component[2], nullptr);
+				int h = std::stoi(component[3], nullptr);
+				float lx = std::stof(component[4], nullptr);
+				float ly = std::stof(component[5], nullptr);
+				int sectionStart = std::stoi(component[6], nullptr);
+				int sectionEnd = std::stoi(component[7], nullptr);
+				int isChangeScene = std::stoi(component[8], nullptr);
+				applyingScene->addObject(new ScenePortal(x, y, w, h, lx, ly, sectionStart, sectionEnd,isChangeScene));
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+			break;
 		default:
 			DebugOut("[WARNING] Unknown section\n");
 		}
+
 	}
 }
 

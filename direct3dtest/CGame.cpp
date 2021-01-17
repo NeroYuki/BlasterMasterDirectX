@@ -128,6 +128,8 @@ void CGame::loadResource()
 
 	ResourceImporter::spriteImport("resource\\spriteResource.grc", sprManager, aniManager);
 
+	SoundManager::getInstance()->loadSound(_hWnd);
+
 	DebugOut("[INFO] All resource sprite loaded\n");
 }
 

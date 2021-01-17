@@ -133,7 +133,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;dsound.lib;dxerr.lib;winmm.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug (Cuong)|Win32'">
@@ -214,6 +214,7 @@
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="dxaudio.cpp" />
     <ClCompile Include="gameObject\Block.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
     <ClCompile Include="gameObject\Bullet.cpp" />
@@ -225,7 +226,9 @@
     <ClCompile Include="gameObject\Eyeball.cpp" />
     <ClCompile Include="gameObject\Floater.cpp" />
     <ClCompile Include="gameObject\GameObject.cpp" />
+    <ClCompile Include="gameObject\Ladder.cpp" />
     <ClCompile Include="gameObject\Lightning.cpp" />
+    <ClCompile Include="gameObject\ScenePortal.cpp" />
     <ClCompile Include="hub\GunBar.cpp" />
     <ClCompile Include="hub\HeatlhBar.cpp" />
     <ClCompile Include="gameObject\Insect.cpp" />
@@ -254,6 +257,7 @@
     <ClCompile Include="scene\OverworldScene.cpp" />
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="scene\SceneSection.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
@@ -263,6 +267,7 @@
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="dxaudio.h" />
     <ClInclude Include="gameObject\AllObject.h" />
     <ClInclude Include="gameObject\Block.h" />
     <ClInclude Include="gameObject\Boss.h" />
@@ -275,7 +280,9 @@
     <ClInclude Include="gameObject\Eyeball.h" />
     <ClInclude Include="gameObject\Floater.h" />
     <ClInclude Include="gameObject\GameObject.h" />
+    <ClInclude Include="gameObject\Ladder.h" />
     <ClInclude Include="gameObject\lightning.h" />
+    <ClInclude Include="gameObject\ScenePortal.h" />
     <ClInclude Include="hub\GunBar.h" />
     <ClInclude Include="hub\HeatlhBar.h" />
     <ClInclude Include="gameObject\Insect.h" />
@@ -306,6 +313,7 @@
     <ClInclude Include="scene\OverworldScene.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\SceneSection.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StateDictionary.h" />
     <ClInclude Include="TextureManager.h" />
@@ -342,10 +350,50 @@
   <ItemGroup>
     <None Include="resource\map_data\dungeon_layoutData.csv" />
     <None Include="resource\map_data\overworld_layoutData.csv" />
+    <None Include="resource\Sound_data\NES - Blaster Master - Sound Effects.zip" />
     <None Include="resource\spriteResource.grc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="direct3dtest.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resource\Sound_data\Blaster Master SFX (1).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (10).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (11).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (12).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (13).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (14).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (15).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (16).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (17).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (18).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (19).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (2).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (20).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (21).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (22).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (23).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (24).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (25).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (26).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (27).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (28).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (29).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (3).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (30).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (31).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (32).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (33).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (34).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (35).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (36).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (37).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (4).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (5).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (6).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (7).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (8).wav" />
+    <Media Include="resource\Sound_data\Blaster Master SFX (9).wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,6 +6,7 @@
 #include "../GlobalConstant.h"
 #include "../CollisionHelper.h"
 #include "../GameTimer.h"
+#include "../SoundManager.h"
 #include <algorithm>
 
 class GameObject;

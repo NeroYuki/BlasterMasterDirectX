@@ -20,12 +20,6 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		controlState = forceControlState;
 	}
 
-	if (controlState & (DOWN)) {
-		is_craw = true;
-	}
-	else {
-		is_craw = false;
-	}
 
 	if (controlState & (LEFT | RIGHT)) {
 
@@ -68,8 +62,49 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	}
 	vy += 0.01;
 
-	GameObject::update(dt);
+	followingLadder = isOnLadder(coObjects);
+	if (followingLadder != NULL) { vy = 0; };
 
+	if (controlState & (DOWN)) {
+		if (isCloseToSophia == false) {
+			if (isOnScenePortal(coObjects)!=NULL) {
+				ScenePortal* portal = isOnScenePortal(coObjects);
+
+			}
+			else if (followingLadder != NULL) {
+				float tempx, tempy;
+				followingLadder->getPos(tempx, tempy);
+				this->x = tempx + 4;
+				if (this->y < tempy+216) {
+					vy = 0.1;
+				}
+				else vy = 0;
+				if (this->state == JASON_CLIMB) { this->state = JASON_CLIMB_IDLE; }
+				else this->state = JASON_CLIMB;
+			}
+			else {
+				is_craw = -is_craw;
+			}
+		}
+	}
+	if (controlState & (UP)) {
+		if (isCloseToSophia == false) {
+			if (followingLadder != NULL) {
+				float tempx, tempy;
+				followingLadder->getPos(tempx, tempy);
+				this->x = tempx+4;
+				if (this->y >= tempy+1) {
+					vy = -0.1;
+				}
+				else vy = 0;
+				if (this->state == JASON_CLIMB) { this->state = JASON_CLIMB_IDLE; }
+				else this->state = JASON_CLIMB;
+			}
+		}
+	}
+
+
+	GameObject::update(dt);
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -130,7 +165,6 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	if (this->followingSophia != NULL) {
-
 		float tempx, tempy;
 		this->followingSophia->getPos(tempx, tempy);
 		isCloseToSophia = false;
@@ -196,4 +230,43 @@ void Jason::setFollow(Player* followingSophia)
 void Jason::unfollow()
 {
 	this->followingSophia = NULL;
+	this->followingLadder = NULL;
 }
+
+Ladder* Jason::isOnLadder(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	for (UINT i = 0; i < coObjects->size(); i++) {
+		if (dynamic_cast<Ladder*>(coObjects->at(i))) {
+			Ladder* ladder= dynamic_cast<Ladder*>(coObjects->at(i));
+			float x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+			ladder->GetBoundingBox(y1, x1, y2, x2);
+			x1 = x1 - this->x;
+			x2 = x2 - this->x- 8;
+			y1 = y1 - this->y;
+			y2 = y2 - this->y -16 ;
+			if ((x1 < 0 && x2>0) && (y1 < 0 && y2>0)) {
+				return ladder;
+			}
+		}
+	}
+	return NULL;
+}
+ScenePortal* Jason::isOnScenePortal(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	for (UINT i = 0; i < coObjects->size(); i++) {
+		if (dynamic_cast<ScenePortal*>(coObjects->at(i))) {
+			ScenePortal* portal = dynamic_cast<ScenePortal*>(coObjects->at(i));
+			float x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+			portal->GetBoundingBox(y1, x1, y2, x2);
+			x1 = x1 - this->x;
+			x2 = x2 - this->x - 8;
+			y1 = y1 - this->y;
+			y2 = y2 - this->y - 16;
+			if ((x1 < 0 && x2>0) && (y1 < 0 && y2>0)) {
+				return portal;
+			}
+		}
+	}
+	return NULL;
+}
+

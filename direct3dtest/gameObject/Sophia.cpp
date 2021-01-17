@@ -12,6 +12,7 @@ Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 	bulletDelayTimer = new GameTimer(300);
 	upgrade = 2;
 	rocket = 5;
+	activeSection = 5;
 }
 
 void Sophia::render()
@@ -132,6 +133,8 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				else if (nx == -1) {
 					new PLayerBullet(this->x - 5, this->y + 1, 0, 0, upgrade, 2);
 				}
+				SoundManager::getInstance()->Play(eSoundId::BACKGROUND_STAGE1);
+
 			}
 			bulletDelayTimer->restart();
 		}

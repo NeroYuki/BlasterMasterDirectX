@@ -14,6 +14,7 @@ private:
 	bool isOnAir = false;
 	bool isCloseToSophia = false;
 	Player* followingSophia = NULL;
+	Ladder* followingLadder = NULL;
 public:
 	Jason(float x, float y, int hp, int activeSection = 0);
 	void render();
@@ -26,4 +27,6 @@ public:
 	bool getIsCloseToSophia() { return isCloseToSophia; }
 	void setFollow(Player* followingSophia);
 	void unfollow();
+	Ladder* isOnLadder(std::vector<LPGAMEOBJECT>* coObjects);
+	ScenePortal* isOnScenePortal(std::vector<LPGAMEOBJECT>* coObjects); 
 };

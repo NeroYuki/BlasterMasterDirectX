@@ -156,6 +156,18 @@
     <ClCompile Include="gameObject\Lightning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\Ladder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\ScenePortal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dxaudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -311,6 +323,18 @@
     <ClInclude Include="gameObject\lightning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\Ladder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\ScenePortal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dxaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -387,10 +411,124 @@
     <None Include="resource\spriteResource.grc" />
     <None Include="resource\map_data\dungeon_layoutData.csv" />
     <None Include="resource\map_data\overworld_layoutData.csv" />
+    <None Include="resource\Sound_data\NES - Blaster Master - Sound Effects.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="direct3dtest.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resource\Sound_data\Blaster Master SFX (1).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (2).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (3).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (4).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (5).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (6).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (7).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (8).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (9).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (11).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (10).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (12).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (13).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (14).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (16).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (15).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (18).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (17).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (19).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (20).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (21).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (23).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (22).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (24).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (25).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (26).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (27).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (28).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (29).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (30).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (31).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (32).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (33).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (34).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (35).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (36).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Blaster Master SFX (37).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

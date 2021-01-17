@@ -5,7 +5,7 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState
 	initScene();
 	bgTexture_id = 5;
 	fgTexture_id = 9;
-	activeSection = 0;
+	activeSection = 5;
 	sectionSwitchTimer = new GameTimer(3000);
 	blockShiftTimer = new GameTimer(1000);
 }
@@ -13,7 +13,7 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState
 void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
-	Sophia* s = new Sophia(88, 3000, 1);
+	Sophia* s = new Sophia(1616, 392, 1);
 	Jumper* j1 = new Jumper(150, 3000, 6);
 	Jumper* j2 = new Jumper(170, 3000, 3);
 	Jumper* j3 = new Jumper(180, 3000, 4);
@@ -56,6 +56,7 @@ void OverworldScene::handlingInput()
 		control_state += SECONDARY;
 	}
 	if (InputHandler::getInstance()->isKeyDown(DIK_LSHIFT)) {
+
 		if (blockShiftTimer->peekState() != TIMER_ACTIVE) {
 			if (dynamic_cast<Sophia*>(p_stack->top())) {
 				float x, y;
@@ -80,6 +81,7 @@ void OverworldScene::handlingInput()
 				blockShiftTimer->restart();
 			}
 		}
+
 	}
 	p_stack->top()->setControlState(control_state);
 }

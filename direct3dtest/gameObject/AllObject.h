@@ -21,3 +21,4 @@
 #include "Portal.h"
 #include "Bullet.h"
 #include "BulletManager.h"
+#include "ScenePortal.h"
