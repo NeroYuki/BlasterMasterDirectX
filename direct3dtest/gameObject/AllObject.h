@@ -22,3 +22,5 @@
 #include "Bullet.h"
 #include "BulletManager.h"
 #include "ScenePortal.h"
+#include "CollectableManager.h"
+#include "Spike.h"

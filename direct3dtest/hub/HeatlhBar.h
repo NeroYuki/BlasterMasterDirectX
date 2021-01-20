@@ -17,4 +17,5 @@ public:
 	void update(Camera* cam) ;
 	void setFollow(Player* obj);
 	void unfollow();
+	int isShow();
 };

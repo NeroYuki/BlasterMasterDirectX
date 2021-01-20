@@ -7,3 +7,5 @@
 #include "DugeonScene.h"
 #include "OverworldScene.h"
 #include "EndScene.h"
+#include "MenuScene.h"
+#include "DeadScene.h"

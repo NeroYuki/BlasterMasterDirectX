@@ -5,17 +5,36 @@ Jason::Jason(float x, float y, int hp, int activeSection) : Player(x,y,hp)
 	vx = 0; vy = 0;
 	state = JASON_IDLE_LEFT;
 	this->activeSection = activeSection;
+	facing = 1;
+	bulletDelayTimer = new GameTimer(200);
+	inDeadAniTimer = new GameTimer(1500);
+	deadState = 20014;
 }
 
 void Jason::render()
 {
 	LPANIMATION ani;
+	LPANIMATION dead_ani;
+	dead_ani = AnimationManager::getInstance()->get(deadState);
 	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+
+	if (this->invincible == 1) {
+		dead_ani->render(this->x, this->y);
+	}
+	else {
+		ani = AnimationManager::getInstance()->get(state);
+		if (istakingdmg == 1)ani->render(x, y, D3DCOLOR_RGBA(228, 128, 125, 255));
+		else ani->render(x, y);
+	}
+
 }
 
 void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	Player::update(dt, coObjects);
+
+
+
 	if (forceControlState != IDLE) {
 		controlState = forceControlState;
 	}
@@ -29,12 +48,14 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				vx -= JASON_MOVE_ACCEL;
 			else vx == -JASON_MOVE_SPEED_CAP;
 			changeState(JASON_WALK_LEFT);
+			facing = 1;
 		}
 		else if (controlState & (RIGHT) && (!(controlState & (LEFT)))) {
 			if (vx <= JASON_MOVE_SPEED_CAP)
 				vx += JASON_MOVE_ACCEL;
 			else vx == JASON_MOVE_SPEED_CAP;
 			changeState(JASON_WALK_RIGHT);
+			facing = 2;
 		}
 		else {
 			if (vx > 0.011) vx -= JASON_MOVE_ACCEL;
@@ -49,7 +70,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		else vx = 0;
 		changeState(COMMON_JASON_IDLE);
 	}
-	
+
 
 	if (controlState & (PRIMARY)) {
 		if (!isOnAir) {
@@ -61,15 +82,26 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (vy < 0) vy = 0;
 	}
 	vy += 0.01;
+	if (controlState & SECONDARY) {
+		if (bulletDelayTimer->peekState() == TIMER_INACTIVE) {
+			SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
+			if (facing == 1) { new PLayerBullet(this->x + 4, this->y + 4, -0.2, 0, 5, 0); }
+			if (facing == 2) { new PLayerBullet(this->x + 4, this->y + 4, 0.2, 0, 5, 0); }
+			bulletDelayTimer->restart();
+		}
+	}
 
 	followingLadder = isOnLadder(coObjects);
 	if (followingLadder != NULL) { vy = 0; };
 
 	if (controlState & (DOWN)) {
 		if (isCloseToSophia == false) {
-			if (isOnScenePortal(coObjects)!=NULL) {
-				ScenePortal* portal = isOnScenePortal(coObjects);
-
+			this->followingScenePortal = isOnScenePortal(coObjects);
+			if (followingScenePortal!=NULL) {
+				int ischangescene = this->followingScenePortal->getIsChangeScene();
+				if (ischangescene == 1) {
+					this->changeSection = 1;
+				}
 			}
 			else if (followingLadder != NULL) {
 				float tempx, tempy;
@@ -105,7 +137,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 
 	GameObject::update(dt);
-
+	bulletDelayTimer->update(dt);
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -129,9 +161,25 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		
-
+		for (UINT i = 0; i < coEvents.size(); i++) {
+			LPCOLLISIONEVENT e = coEvents[i];
+			if (dynamic_cast<Enemy*>(e->obj)) {
+				this->PlayerGetHit(2);
+			}
+			else if (dynamic_cast<Collectable*>(e->obj)) {
+				Collectable* pickup = dynamic_cast<Collectable*>(e->obj);
+				int t, v;
+				pickup->getPicked(t, v);
+				if (t == 1) this->hitpoint += v;
+				if (hitpoint > 16) hitpoint == 16;
+			}
+			else if (dynamic_cast<Spike*>(e->obj))
+			{
+				Spike* spike = dynamic_cast<Spike*>(e->obj);
+				this->contactedSpike = spike;
+			}
+		}
 		if (coEventsResult.size() > 0) {
-
 			if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
 			else x += dx;
 			y += min_ty * dy + ny * 0.4f;
@@ -139,15 +187,6 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			if (ny < 0) { isOnAir = false; }
 			if (ny != 0) vy = 0;
 
-			for (UINT i = 0; i < coEventsResult.size(); i++)
-			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (dynamic_cast<Portal*>(e->obj))
-				{
-					Portal* p = dynamic_cast<Portal*>(e->obj);
-					if (!ignoreCollision) this->activeSection = p->getSectionEnd();
-				}
-			}
 		}
 		else {
 			x += dx;

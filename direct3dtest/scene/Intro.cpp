@@ -6,7 +6,7 @@ Intro::Intro(SceneStateMachine* sceneState) : Scene(sceneState)
 	timerunReady = new GameTimer(5000);
 	introID = FIRST_INTRO;
 	initScene();
-
+	isEnterKeyDown = 0;
 }
 
 void Intro::initScene() {
@@ -16,6 +16,9 @@ void Intro::initScene() {
 
 void Intro::handlingInput() {
 	if (InputHandler::getInstance()->isKeyDown(DIK_RETURN)) {
+		isEnterKeyDown = 1;
+	}
+	if ((isEnterKeyDown == 1)&&(InputHandler::getInstance()->isKeyDown(DIK_RETURN)==0)) {
 		if (introID == FIRST_INTRO) {
 			timerunFirstIntro->stop();
 			this->changeIntroID(SECOND_INTRO);
@@ -24,7 +27,7 @@ void Intro::handlingInput() {
 			this->changeIntroID(THIRD_INTRO);
 			timerunReady->restart();
 		}
-		
+		isEnterKeyDown = 0;
 	}
 }
 
@@ -36,7 +39,7 @@ void Intro::update(DWORD dt) {
 		changeIntroID(SECOND_INTRO);
 	}
 	if (timerReadyState == TIMER_ENDED) {
-		int sceneId = sceneState->getSceneByLabel("Overworld");
+		int sceneId = sceneState->getSceneByLabel("DeadScene");
 		if (sceneId != -1) {
 			sceneState->switchToScene(sceneId);
 		}

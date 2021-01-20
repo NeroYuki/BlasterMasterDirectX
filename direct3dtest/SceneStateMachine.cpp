@@ -3,6 +3,7 @@
 SceneStateMachine::SceneStateMachine()
 {
 	curScene = NULL;
+	preScene = NULL;
 }
 
 void SceneStateMachine::handlingInput()
@@ -41,6 +42,12 @@ void SceneStateMachine::render()
 	curScene->render();
 }
 
+void SceneStateMachine::renderHUD()
+{
+	if (curScene == NULL) return;
+	curScene->renderHUD();
+}
+
 int SceneStateMachine::addScene(Scene* scene, const char* label)
 {
 	//might fail
@@ -66,6 +73,7 @@ int SceneStateMachine::getSceneByLabel(const char* query)
 
 void SceneStateMachine::switchToScene(int id)
 {
+	preScene = curScene;
 	auto findResult = sceneMap.find(id);
 	if (findResult != sceneMap.end()) {
 		if (curScene != NULL) {
@@ -95,3 +103,17 @@ Scene* SceneStateMachine::getSceneById(int id)
 	if (sceneMap[id] == nullptr) return NULL;
 	return sceneMap[id];
 }
+
+void SceneStateMachine::switchBackToPreScene()
+{
+
+	if (preScene != NULL) {
+		Scene* temp = curScene;
+		curScene = preScene;
+		preScene = temp;
+		preScene->onDeactivated();
+		curScene->onActivate();
+	}
+	
+}
+

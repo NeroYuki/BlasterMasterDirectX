@@ -5,6 +5,7 @@ Scene::Scene(SceneStateMachine* sceneState)
 	this->sceneState = sceneState;
 	cam = new Camera();
 	heatlhbar = new HeatlhBar();
+	gunBar = new GunBar();
 }
 
 void Scene::addObject(GameObject* obj)
@@ -48,9 +49,10 @@ void Scene::addPortal(Portal* p)
 
 void Scene::update(DWORD dt)
 {
+
 	if (activeSection != -1) {
 		cam->update(sectionGraph.getSection(activeSection));
-		heatlhbar->update(cam);
+
 	}
 	else {
 		cam->update(nullptr);
@@ -61,14 +63,16 @@ void Scene::update(DWORD dt)
 	//TODO: use grid algo to reduce the size of coObject
 	for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
 	{
-		
 		if ((*it)->isNearby(gridX_origin, gridY_origin)) {
 			coObjects.push_back((*it)->getObj());
 		}
 	}
 	for (int i = 0; i < coObjects.size(); i++) {
-		if (coObjects.at(i)->getisDie() == 1)
+		if (coObjects.at(i)->getisDie() == 1) {
+			if (dynamic_cast<Enemy*>(coObjects.at(i)))
+				SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 			removeObject(coObjects.at(i));
+		}
 	}
 
 	for (std::vector<GameObject*>::iterator it = coObjects.begin(); it != coObjects.end(); ++it) {
@@ -90,5 +94,38 @@ void Scene::render()
 		(*it)->render();
 		//(*it)->renderBoundingBox();
 	}
-	heatlhbar->render();
 }
+
+bool Scene::resetSceneEnemy()
+{
+	coObjects.clear();
+	for (int i = objectGridMap.size() - 1; i >= 0; i--) {
+		if (dynamic_cast<Enemy*>(objectGridMap.at(i)->getObj())) {
+			ObjectGrid* toBeDeleted = objectGridMap.at(i);
+			objectGridMap.erase(objectGridMap.begin() + i);
+			delete toBeDeleted->getObj();
+			delete toBeDeleted;
+
+		}
+		else if (dynamic_cast<Player*>(objectGridMap.at(i)->getObj())) {
+			objectGridMap.at(i)->updateGridPos();
+		}
+		
+	}
+
+	if (this->getCurrentSceneNumber()>0) {
+		if (this->getCurrentSceneNumber() == 1) {
+			ResourceImporter::enemyImport("resource\\map_data\\overworld_entityData.txt", this);
+			return true;
+		}
+		else if (this->getCurrentSceneNumber() == 2) {
+			ResourceImporter::enemyImport("resource\\map_data\\dungeon_entityData.txt", this);
+			return true;
+		}
+	}
+
+}
+
+
+
+

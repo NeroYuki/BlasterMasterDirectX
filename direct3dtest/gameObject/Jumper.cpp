@@ -12,15 +12,13 @@ Jumper::Jumper(float x, float y, int hp) :Enemy(x,y,hp)
 
 void Jumper::render()
 {
-	LPANIMATION ani;
-
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+	Enemy::render();
 }
 
 void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->HitPoint <= 0) this->isDie = 1;
+	Enemy::update(dt, coObjects);
+	if (this->isDie == 2) this->isDie = 1;
 	vy += 0.05;
 	int futureCollision = -1;
 	////bounding logic
@@ -93,11 +91,11 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 						}
 					}
 					if (nx > 0) {
-						vx = 0.1;
+						vx = 0.05;
 						facing2 = -facing2;
 					}
 					if (nx < 0) {
-						vx = -0.1;
+						vx = -0.05;
 						facing2 = -facing2;
 					}
 				}
@@ -143,13 +141,13 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			else if (timerstate == TIMER_ENDED) {
 				if (facing == 1) {
 					vy = -0.3;
-					vx = -0.1;
+					vx = -0.05;
 					isJump == true;
 					facing2 = 1;
 				}
 				else {
 					vy = -0.3;
-					vx = 0.1;
+					vx = 0.05;
 					isJump == true;
 					facing2 == -1;
 				}

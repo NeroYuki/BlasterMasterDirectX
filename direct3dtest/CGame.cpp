@@ -121,7 +121,10 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(19, "resource\\items.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(20, "resource\\bars.png", D3DCOLOR_XRGB(255, 0, 255));
 	TextureManager::getInstance()->add(21, "resource\\playerbullet.png", D3DCOLOR_XRGB(255, 0, 255));
-
+	TextureManager::getInstance()->add(22, "resource\\ending.png", D3DCOLOR_XRGB(0, 57, 115));
+	TextureManager::getInstance()->add(23, "resource\\Charset.png", D3DCOLOR_XRGB(100, 100, 100));
+	TextureManager::getInstance()->add(24, "resource\\blastermaster_pauseblocks2.png", D3DCOLOR_XRGB(255, 255, 255));
+	TextureManager::getInstance()->add(25, "resource\\DeadScene.png", D3DCOLOR_XRGB(255, 100, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();
@@ -136,7 +139,8 @@ void CGame::loadResource()
 void CGame::initGame()
 {
 	int IntroId = sceneStateMachine->addScene(new Intro(sceneStateMachine), "Intro");
-	
+	int EndSceneId = sceneStateMachine->addScene(new EndScene(sceneStateMachine), "Ending");
+
 	int DebugSceneId = sceneStateMachine->addScene(new DebugScene(sceneStateMachine), "Debug");
 	ResourceImporter::mapDataImport("resource\\map_data\\dungeon_layoutData.csv", sceneStateMachine->getSceneById(DebugSceneId));
 	ResourceImporter::mapObjImport("resource\\map_data\\dungeon_entityData.txt", sceneStateMachine->getSceneById(DebugSceneId));
@@ -144,7 +148,12 @@ void CGame::initGame()
 	int OverworldSceneId = sceneStateMachine->addScene(new OverworldScene(sceneStateMachine), "Overworld");
 	ResourceImporter::mapDataImport("resource\\map_data\\overworld_layoutData.csv", sceneStateMachine->getSceneById(OverworldSceneId));
 	ResourceImporter::mapObjImport("resource\\map_data\\overworld_entityData.txt", sceneStateMachine->getSceneById(OverworldSceneId));
-	sceneStateMachine->switchToScene(OverworldSceneId);
+
+	int MenuSceneId = sceneStateMachine->addScene(new MenuScene(sceneStateMachine), "Menu");
+	int DeadSceneID = sceneStateMachine->addScene(new DeadScene(sceneStateMachine), "DeadScene");
+	
+	sceneStateMachine->switchToScene(DeadSceneID);
+
 }
 
 bool CGame::Release()
@@ -191,6 +200,7 @@ void CGame::Loop(DWORD dt)
 			LPDIRECT3DTEXTURE9 fg_tex = TextureManager::getInstance()->get(fgTexture_id);
 			draw(transX, transY, fg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
 		}
+		sceneStateMachine->renderHUD();
 
 		spriteHandler->End();
 		d3ddev->EndScene();

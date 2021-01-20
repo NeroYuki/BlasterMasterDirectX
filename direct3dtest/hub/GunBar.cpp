@@ -1,5 +1,7 @@
 #include "GunBar.h"
 
+
+
 void GunBar::render()
 {
 	LPANIMATION ani;
@@ -14,9 +16,10 @@ void GunBar::update(Camera* cam)
 		return;
 	}
 	this->x = cam->getX() + 10;
-	this->y = cam->getY() + 30;
-
-	followingObj->GetPlayerHitPoint(displayHitPoint);
+	this->y = cam->getY() + 50;
+	displayHitPoint = 10;
+	//followingObj->GetPlayerHitPoint(displayHitPoint);
+	displayHitPoint = SharedData::getInstance()->upgrade;
 	switch (displayHitPoint)
 	{
 	case 0:state = GUN_BAR_0; break;
@@ -41,4 +44,10 @@ void GunBar::setFollow(Player* obj)
 void GunBar::unfollow()
 {
 	this->followingObj = NULL;
+}
+
+int GunBar::isShow()
+{
+	if (followingObj == NULL) return 0;
+	return 1;
 }

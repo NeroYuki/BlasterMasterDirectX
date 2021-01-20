@@ -4,6 +4,10 @@
 
 class JasonTop : public Player {
 private:
+	int facing = 0;
+	GameTimer* bulletDelayTimer;
+	GameTimer* grenadeDelayTimer; 
+	int bullettype = 2;
 public:
 	JasonTop(float x, float y, int hp);
 	void render();

@@ -168,6 +168,27 @@
     <ClCompile Include="dxaudio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SharedData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\Grenade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\Collectable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\CollectableManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\MenuScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\DeadScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\Spike.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -335,6 +356,30 @@
     <ClInclude Include="dxaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SharedData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\Grenade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\Collectable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\CollectableManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\MenuScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\DeadScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\CharsetShow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\Spike.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -400,6 +445,18 @@
     <Image Include="resource\playerbullet.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\ending.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\blastermaster_pauseblocks2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\charset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\DeadScene.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\ref.txt" />
@@ -411,7 +468,6 @@
     <None Include="resource\spriteResource.grc" />
     <None Include="resource\map_data\dungeon_layoutData.csv" />
     <None Include="resource\map_data\overworld_layoutData.csv" />
-    <None Include="resource\Sound_data\NES - Blaster Master - Sound Effects.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="direct3dtest.rc">
@@ -419,13 +475,16 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Media Include="resource\Sound_data\Worm_moving.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Area2_BG.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (1).wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (2).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (3).wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (4).wav">
@@ -434,55 +493,16 @@
     <Media Include="resource\Sound_data\Blaster Master SFX (5).wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (6).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (7).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (8).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (9).wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (11).wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (10).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (12).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (13).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (14).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (16).wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (15).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (18).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (17).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (19).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (20).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (21).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (23).wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (22).wav">
@@ -494,40 +514,85 @@
     <Media Include="resource\Sound_data\Blaster Master SFX (25).wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (26).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (27).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (28).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (29).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (30).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (31).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (32).wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (33).wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (34).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (35).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="resource\Sound_data\Blaster Master SFX (36).wav">
-      <Filter>Resource Files</Filter>
-    </Media>
     <Media Include="resource\Sound_data\Blaster Master SFX (37).wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Boss_warning.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Dome_move.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Ending.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Enemy_explode.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Insect_fly.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Intro.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Jason_die.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Jason_fire.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Jason_hurt.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\JasonShot_explode.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Jumper_jump.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Mine_ticking.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Open.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Pickup_collect.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Player_jump.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Skull_bombing.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\SmallJason_fire.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Sophia_die.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Sophia_fire.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Sophia_fly.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Sophia_thunder.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Teleporter_shoot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Teleporter_teleport.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Unknown.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

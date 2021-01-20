@@ -15,6 +15,8 @@ private:
 	bool isCloseToSophia = false;
 	Player* followingSophia = NULL;
 	Ladder* followingLadder = NULL;
+	int facing = 1;
+	GameTimer* bulletDelayTimer;
 public:
 	Jason(float x, float y, int hp, int activeSection = 0);
 	void render();

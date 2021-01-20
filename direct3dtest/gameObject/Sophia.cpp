@@ -10,15 +10,18 @@ Sophia::Sophia(float x, float y, int hp) : Player(x, y, hp)
 	turningTimer = new GameTimer(250);
 	gunRaiseTimer = new GameTimer(100);
 	bulletDelayTimer = new GameTimer(300);
-	upgrade = 2;
+	upgrade = 1;
 	rocket = 5;
 	activeSection = 5;
+	deadState = SOPHIA_DEAD_ANI;
 }
 
 void Sophia::render()
 {
 	LPANIMATION body_ani;
 	LPANIMATION wheel_ani;
+	LPANIMATION dead_ani;
+	dead_ani = AnimationManager::getInstance()->get(deadState);
 	body_ani = AnimationManager::getInstance()->get(state);
 	wheel_ani = AnimationManager::getInstance()->get(movingState);
 	float body_render_x = x - 1;
@@ -36,13 +39,26 @@ void Sophia::render()
 		body_render_y -= 16; body_render_x -= 4;
 	}
 	if (isOnAir && dy < -1) body_render_y -= 4;
-	body_ani->render(body_render_x, body_render_y);
-	wheel_ani->render(x, y + 8);
+
+	if (this->invincible == 1) {
+		dead_ani->render(this->x - 5, this->y - 24);
+	}
+	else {
+		if (istakingdmg == 1) {
+			body_ani->render(body_render_x, body_render_y, D3DCOLOR_RGBA(228, 125, 125, 128));
+			wheel_ani->render(x, y + 8, D3DCOLOR_RGBA(228, 0, 88, 128));
+		}
+		else
+		{
+			body_ani->render(body_render_x, body_render_y);
+			wheel_ani->render(x, y + 8);
+		}
+	}
 }
 
 void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-
+	Player::update(dt, coObjects);
 	if (forceControlState != IDLE) {
 		controlState = forceControlState;
 	}
@@ -81,40 +97,57 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (!isOnAir) {
 			vy -= SOPHIA_JUMP_SPEED;
 			isOnAir = true;
+			SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_JUMPING);
 		}
 	}
 	else {
 		if (vy < 0) vy = 0;
 	}
 	vy += 0.01;
-	this->rocket = 3;
+
+
+	SharedData* instance = SharedData::getInstance();
+	this->rocket = instance->weapon;
 	if (controlState & (SECONDARY) ) {
 		if (bulletDelayTimer->peekState() == TIMER_INACTIVE) {
 			if (controlState & (DOWN)){
 				if (nx == 1) {
-					if (rocket == 3) {
+					if (rocket == 1 &&instance->homingMissle >0) {
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 3, 1);
+						//placeholder
+						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+						instance->homingMissle -= 1;
 					}
-					else if (rocket == 4) {
+					else if (rocket == 3&& instance->x3Missle>0) {
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 1);
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 3);
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 4);
+						//placeholder
+						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+						instance->x3Missle -= 1;
 					}
-					else if (rocket == 5) {
+					else if (rocket == 2 && instance->lightning > 0) {
 						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
+						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
+						instance->lightning -= 1;
 					}
 				}
 				else if (nx == -1) {
-					if (rocket == 3) {
+					if (rocket == 1 && instance->homingMissle > 0) {
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 3, 2);
+						//placeholder
+						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 					}
-					else if (rocket == 4) {
+					else if (rocket == 3 && instance->x3Missle > 0) {
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 2);
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 5);
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 6);
+						//placeholder
+						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 					}
-					else if (rocket == 5) {
+					else if (rocket == 2 && instance->lightning > 0) {
 						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
+						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
 					}
 				}
 			}
@@ -122,20 +155,20 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (ny == 1)
 				{
 					if (nx == 1)
-						new PLayerBullet(this->x + 5, this->y - 26, 0, 0, upgrade, 3);
+						new PLayerBullet(this->x + 5, this->y - 10, 0, 0, upgrade, 3);
 					else if (nx == -1)
-						new PLayerBullet(this->x + 12, this->y - 26, 0, 0, upgrade, 3);
+						new PLayerBullet(this->x + 12, this->y - 10, 0, 0, upgrade, 3);
 
 				}
 				else if (nx == 1) {
-					new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, upgrade, 1);
+					new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH/2, this->y , 0, 0, upgrade, 1);
 				}
 				else if (nx == -1) {
-					new PLayerBullet(this->x - 5, this->y + 1, 0, 0, upgrade, 2);
+					new PLayerBullet(this->x , this->y, 0, 0, upgrade, 2);
 				}
-				SoundManager::getInstance()->Play(eSoundId::BACKGROUND_STAGE1);
-
+				SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_FIRING);
 			}
+			
 			bulletDelayTimer->restart();
 		}
 	}
@@ -188,6 +221,25 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 		//after this method, coEvents SHOULD only contain collision event thats the target is not a block (ie Entity) 
 		//and coEventsResult is now contain closest collision to a block to adjust player position accordingly
+		for (UINT i = 0; i < coEvents.size(); i++) {
+			LPCOLLISIONEVENT e = coEvents[i];
+			if (dynamic_cast<Enemy*>(e->obj)) {
+				this->PlayerGetHit(2);
+				SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_HURTING);
+			}
+			else if (dynamic_cast<Collectable*>(e->obj)) {
+				Collectable* pickup = dynamic_cast<Collectable*>(e->obj);
+				int t, v;
+				pickup->getPicked(t,v);
+				if (t == 1) this->hitpoint += v;
+				if (hitpoint > 16) hitpoint == 16;
+			}
+			else if (dynamic_cast<Spike*>(e->obj))
+			{
+				Spike* spike = dynamic_cast<Spike*>(e->obj);
+				this->contactedSpike = spike;
+			}
+		}
 		if (coEventsResult.size() != 0) {
 			if (!ignoreCollision) x += min_tx * dx + nx * 0.4f;
 			else x += dx;
@@ -203,6 +255,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 					Portal* p = dynamic_cast<Portal*>(e->obj);
 					if (!ignoreCollision) this->activeSection = p->getSectionEnd();
 				}
+
 			}
 		}
 		else {

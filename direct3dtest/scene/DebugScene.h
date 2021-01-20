@@ -10,10 +10,15 @@ class DebugScene : public Scene {
 private:
 	std::stack<Player*>* p_stack;
 	GameTimer* sectionSwitchTimer;
+	GameTimer* switchSceneTimer;
 public:
 	DebugScene(SceneStateMachine* sceneState);
 	void initScene();
 	void handlingInput();
 	void update(DWORD dt);
+	void onActivate();
+	void onDeAtivate();
+	void renderHUD();
+	int getCurrentSceneNumber() { return 2; }
 	~DebugScene();
 };

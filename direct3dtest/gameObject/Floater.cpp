@@ -10,15 +10,14 @@ Floater::Floater(float x, float y, int hp) : Enemy(x, y, hp)
 
 void Floater::render()
 {
-	LPANIMATION ani;
+	Enemy::render();
 
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
 }
 
 void Floater::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->HitPoint <= 0) this->isDie = 1;
+	Enemy::update(dt, coObjects);
+	if (this->isDie == 2) this->isDie = 1;
 	float tempx = 1;
 	float tempy = 1;
 	//x += vx * dt;
@@ -99,6 +98,7 @@ void Floater::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 	}
+
 	if (shoottimer->peekState() == TIMER_INACTIVE) {
 		new EnemyBullet(this->x + 10, this->y + 10, tempx, tempy, 1);
 		shoottimer->restart();

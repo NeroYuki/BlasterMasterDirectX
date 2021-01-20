@@ -5,20 +5,23 @@ Worm::Worm(float x, float y, int hp) : Enemy(x, y, hp)
 	vx = 0.03;
 	vy = 0.03;
 	state = WORM_IDLE_LEFT;
+	spawnPlace = 1;
 }
 
 void Worm::render()
 {
-	LPANIMATION ani;
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+	Enemy::render();
 }
 
 void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	Enemy::update(dt, coObjects);
+
 	//x += vx * dt;
 	//y += vy * dt;
 	vy += 0.02;
+
+	if (this->isDie == 2) this->isDie = 1;
 
 	////bounding logic
 	//if (x <= 0) vx = 0.03;
@@ -58,7 +61,7 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				y += min_ty * dy + ny * 0.4f;
 				if (ny != 0) vy = 0;
 				if (ny < 0) { isOnAir = false; }
-				if (nx != 0) vx = 0;
+				if (nx != 0) { vx = 0; vy -= 0.5; }
 			}
 		}
 	}

@@ -12,14 +12,13 @@ Insect::Insect(float x, float y, int hp) : Enemy(x, y, hp)
 
 void Insect::render()
 {
-	LPANIMATION ani;
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+	Enemy::render();
 }
 
 void Insect::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->HitPoint <= 0) this->isDie = 1;
+	Enemy::update(dt, coObjects);
+	if (this->isDie == 2) this->isDie = 1;
 	if (insectState == 0) {
 		vy +=0.01;
 	}

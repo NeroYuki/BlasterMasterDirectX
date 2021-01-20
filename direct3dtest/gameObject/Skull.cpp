@@ -12,15 +12,14 @@ Skull::Skull(float x, float y, int hp) : Enemy(x, y, hp)
 
 void Skull::render()
 {
-	LPANIMATION ani;
+	Enemy::render();
 
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
 }
 
 void Skull::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (HitPoint < 0) this->isDie = 1;
+	Enemy::update(dt, coObjects);
+	if (this->isDie == 2) this->isDie = 1;
 	float tempx = 1;
 	float tempy = 1;
 	GameObject::update(dt);
@@ -92,6 +91,7 @@ void Skull::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		vy = -0.1;
 		this->facing = -facing;
 		new EnemyBullet(this->x + 8, this->y + 16, 0.05 * facing, 0, 2);
+		SoundManager::getInstance()->Play(eSoundId::SOUND_SKULL_BOMBING);
 	}
 	if (skullstate == 3) {
 		if (timerstate1 == TIMER_INACTIVE) skulltimer1->start();

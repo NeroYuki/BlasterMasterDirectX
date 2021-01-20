@@ -2,6 +2,8 @@
 class Bullet;
 
 #include "Bullet.h"
+#include <algorithm>
+
 class BulletManager {
 private:
 	static BulletManager* instance;
@@ -14,5 +16,4 @@ public:
 	void removeBullet(Bullet* bullet);
 	std::vector<Bullet*>* getBullet();
 	std::vector<Bullet*>* getDeleteBullet();
-
 };

@@ -4,7 +4,7 @@ Mine::Mine(float x, float y, int hp) : Enemy(x, y, hp)
 {
 	this->state = MINE_TICK;
 	this->x = x;
-	this->y = y + 8;
+	this->y = y ;
 	this->HitPoint = 1;
 	explo = 0;
 }
@@ -12,22 +12,20 @@ Mine::Mine(float x, float y, int hp) : Enemy(x, y, hp)
 void Mine::render()
 {
 
-	LPANIMATION ani;
-
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
+	Enemy::render();
 }
 
 void Mine::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (HitPoint < 0) {
+	Enemy::update(dt, coObjects);
+	if (this->isDie == 2 ) {
 		new EnemyBullet(this->x + 3, this->y, 0.075, 0, 3);
 		new EnemyBullet(this->x + 3, this->y, -0.05, 0, 3);
 		new EnemyBullet(this->x + 3, this->y, 0, 0, 3);
 		this->isDie = 1;
 	}
 	GameObject::update(dt);
-	}
+}
 
 void Mine::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {

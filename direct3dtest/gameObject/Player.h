@@ -6,6 +6,9 @@
 #include "lightning.h"
 #include "Ladder.h"
 #include "ScenePortal.h"
+#include "Grenade.h"
+#include "Collectable.h"
+#include "Spike.h"
 
 #define PLAYER_WALKING_SPEED 0.06
 
@@ -19,8 +22,16 @@ protected:
 	bool ignoreCollision = false;
 	bool ignoreInput = false;
 	int forceControlState = 0;
-	int hitpoint = 8;
+	int hitpoint = 16;
 	int upgrade = 1;
+	int changeSection = 0;
+	int dmgtaken = 0;
+	ScenePortal* followingScenePortal = NULL;
+	GameTimer* dameTakenTimer;
+	GameTimer* inDeadAniTimer;
+	int istakingdmg, invincible =0;
+	int deadState= 10009;
+	Spike* contactedSpike= NULL;
 public:
 	Player(float x, float y, int hp);
 	void render();
@@ -34,7 +45,9 @@ public:
 
 	int getActiveSection() { return activeSection; }
 	void setActiveSection(int inp) { this->activeSection = inp; }
-
+	int getIsChangeScene() { return changeSection; }
+	void setIsChangeScence(int inp) { this->changeSection = inp; }
+	ScenePortal* getScenePortal() { return  followingScenePortal; }
 	void setIgnoreCollision(bool inp) { this->ignoreCollision = inp; }
 	void setIgnoreInput(bool inp) { this->ignoreInput = inp; }
 
@@ -50,7 +63,10 @@ public:
 		float& ny,
 		float& rdx,
 		float& rdy);
-	void PlayerGetHit(int dmg) { this->hitpoint -= dmg; }
+	void PlayerGetHit(int dmg) { if (dmgtaken == 0) this->dmgtaken = dmg; }
 	void PlayerHeal(int value) { this->hitpoint += value; if (hitpoint > 8)hitpoint = 8; }
 	void GetPlayerHitPoint(int& heatlhpoint) { heatlhpoint = this->hitpoint; }
+	void resetPlayer(float x, float y);
+	int checkSpiked();
+	int getInvincible() { return invincible; };
 };

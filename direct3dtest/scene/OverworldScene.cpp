@@ -8,28 +8,17 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState
 	activeSection = 5;
 	sectionSwitchTimer = new GameTimer(3000);
 	blockShiftTimer = new GameTimer(1000);
+	switchSceneTimer = new GameTimer(500);
 }
 
 void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
-	Sophia* s = new Sophia(1616, 392, 1);
-	Jumper* j1 = new Jumper(150, 3000, 6);
-	Jumper* j2 = new Jumper(170, 3000, 3);
-	Jumper* j3 = new Jumper(180, 3000, 4);
-	Floater* F1 = new Floater(180, 3000, 5);
-	Insect* insect1 = new Insect(150, 3000, 5);
-	Mine* mine1 = new Mine(192, 3024, 1);
-	//Skull* skull1 = new Skull(500, 3000, 5);
+	spawnerX = 1616;
+	spawnerY = 392;
+	Sophia* s = new Sophia(spawnerX, spawnerY, 1);
 	p_stack->push(s);
 	this->addObject(s);
-	this->addObject(mine1);
-	//this->addObject(skull1);
-	//this->addObject(insect1);
-	//this->addObject(j1);
-	//this->addObject(j2);
-	//this->addObject(j3);
-	this->addObject(F1);
 	cam->setFollow(p_stack->top());
 	heatlhbar->setFollow(p_stack->top());
 }
@@ -37,58 +26,71 @@ void OverworldScene::initScene()
 void OverworldScene::handlingInput()
 {
 	int control_state = 0;
-	if (InputHandler::getInstance()->isKeyDown(DIK_DOWN)) {
-		control_state += DOWN;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_UP)) {
-		control_state += UP;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_LEFT)) {
-		control_state += LEFT;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_RIGHT)) {
-		control_state += RIGHT;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_Z)) {
-		control_state += PRIMARY;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_X)) {
-		control_state += SECONDARY;
-	}
-	if (InputHandler::getInstance()->isKeyDown(DIK_LSHIFT)) {
-
-		if (blockShiftTimer->peekState() != TIMER_ACTIVE) {
-			if (dynamic_cast<Sophia*>(p_stack->top())) {
-				float x, y;
-				p_stack->top()->getPos(x, y);
-				Jason* new_jason = new Jason(x, y - 4, 1, p_stack->top()->getActiveSection());
-				new_jason->setFollow(p_stack->top());
-				p_stack->push(new_jason);
-				this->addObject(new_jason);
-				cam->setFollow(p_stack->top());
-				heatlhbar->setFollow(p_stack->top());
-				blockShiftTimer->restart();
-			}
-			else if (dynamic_cast<Jason*>(p_stack->top())) {
-				Jason* jason_p = dynamic_cast<Jason*>(p_stack->top());
-				if (jason_p->getIsCloseToSophia()) {
-					jason_p->unfollow();
-					p_stack->pop();
-					this->removeObject(jason_p);
+	if (p_stack->top()->getInvincible() != 1) {
+		if (InputHandler::getInstance()->isKeyDown(DIK_DOWN)) {
+			control_state += DOWN;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_UP)) {
+			control_state += UP;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_LEFT)) {
+			control_state += LEFT;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_RIGHT)) {
+			control_state += RIGHT;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_Z)) {
+			control_state += PRIMARY;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_X)) {
+			control_state += SECONDARY;
+		}
+		if (InputHandler::getInstance()->isKeyDown(DIK_LSHIFT)) {
+			if (blockShiftTimer->peekState() != TIMER_ACTIVE) {
+				if (dynamic_cast<Sophia*>(p_stack->top())) {
+					float x, y;
+					p_stack->top()->getPos(x, y);
+					Jason* new_jason = new Jason(x, y - 4, 1, p_stack->top()->getActiveSection());
+					new_jason->setFollow(p_stack->top());
+					p_stack->push(new_jason);
+					this->addObject(new_jason);
 					cam->setFollow(p_stack->top());
 					heatlhbar->setFollow(p_stack->top());
+					blockShiftTimer->restart();
 				}
-				blockShiftTimer->restart();
+				else if (dynamic_cast<Jason*>(p_stack->top())) {
+					Jason* jason_p = dynamic_cast<Jason*>(p_stack->top());
+					if (jason_p->getIsCloseToSophia()) {
+						jason_p->unfollow();
+						p_stack->pop();
+						this->removeObject(jason_p);
+						cam->setFollow(p_stack->top());
+						heatlhbar->setFollow(p_stack->top());
+					}
+					blockShiftTimer->restart();
+				}
+			}
+
+		}
+		p_stack->top()->setControlState(control_state);
+		if (InputHandler::getInstance()->isKeyDown(DIK_RETURN)) {
+			isEnterKeyDown = 1;
+		}
+		if (isEnterKeyDown == 1) {
+			if (InputHandler::getInstance()->isKeyDown(DIK_RETURN) == 0) {
+				isEnterKeyDown = 0;
+				int sceneid = sceneState->getSceneByLabel("Menu");
+				sceneState->switchToScene(sceneid);
 			}
 		}
-
 	}
-	p_stack->top()->setControlState(control_state);
+	
 }
 
 void OverworldScene::update(DWORD dt)
 {
 	Scene::update(dt);
+	heatlhbar->update(cam);
 	BulletManager* r = BulletManager::getinstance();
 	if (r->getBullet()->size() != 0) {
 		for (int i = 0; i < r->getBullet()->size(); i++)
@@ -98,19 +100,32 @@ void OverworldScene::update(DWORD dt)
 		r->getBullet()->clear();
 	}
 	if (r->getDeleteBullet()->size() != 0) {
-		for (int i = 0; i < r->getDeleteBullet()->size(); i++)
+		for (int i = 0; i < r->getDeleteBullet()->size(); i++) 
 		{
 			this->removeObject(r->getDeleteBullet()->at(i));
 		}
 		r->getDeleteBullet()->clear();
+	}
+	CollectableManager* c = CollectableManager::getinstance();
+	if (c->getCollectable()->size() != 0) {
+		for (int i = 0; i < c->getCollectable()->size(); i++)
+		{
+			this->addObject(c->getCollectable()->at(i));
+		}
+		c->getCollectable()->clear();
 	}
 	//attempt section switching logic
 	if (p_stack->top()->getActiveSection() != activeSection) {
 		if (!sectionSwitchTimer->isStarted())
 			sectionSwitchTimer->start();
 	}
-
+	if (p_stack->top()->getIsChangeScene() == 1 ) {
+		if (!switchSceneTimer->isStarted())
+			switchSceneTimer->start();
+		p_stack->top()->setIsChangeScence(0);
+	}
 	short timerState = sectionSwitchTimer->update(dt);
+	short timerState2 = switchSceneTimer->update(dt);
 	blockShiftTimer->update(dt);
 
 	if (timerState == TIMER_STARTED) {
@@ -157,5 +172,71 @@ void OverworldScene::update(DWORD dt)
 		p_stack->top()->setIgnoreCollision(false);
 		activeSection = p_stack->top()->getActiveSection();
 		cam->setForceVeloc(0, 0);
+		p_stack->top()->getPos(spawnerX, spawnerY);
 	}
+	if (timerState2 == TIMER_STARTED) {
+		ScenePortal* portal = p_stack->top()->getScenePortal();
+		if (portal != NULL) {
+			int sceneid =sceneState->getSceneByLabel("Debug");
+
+			Scene* returnScene = sceneState->getSceneById(sceneid);
+			returnScene->PreScenePortal = portal;
+
+			sceneState->switchToScene(sceneid);
+		}
+	}
+	if (p_stack->top()->getisDie() == 2) {
+		if (dynamic_cast<Jason*>(p_stack->top())) {
+			Jason* jason_p = dynamic_cast<Jason*>(p_stack->top());
+			jason_p->unfollow();
+			p_stack->pop();
+			this->removeObject(jason_p);
+			p_stack->top()->resetPlayer(spawnerX, spawnerY);
+			cam->setFollow(p_stack->top());
+			heatlhbar->setFollow(p_stack->top());
+		}
+		else {
+			p_stack->top()->resetPlayer(spawnerX, spawnerY);
+			cam->setFollow(p_stack->top());
+			heatlhbar->setFollow(p_stack->top());
+		}
+		int sceneid = sceneState->getSceneByLabel("DeadScene");
+		isresetenemy = 1;
+		sceneState->switchToScene(sceneid);
+	}
+}
+
+void OverworldScene::onActivate()
+{
+	//if (PreScenePortal != NULL) {
+	//	//p_stack->top()->setForceControlState(IDLE);
+	//	//p_stack->top()->setIgnoreCollision(false);
+	//	int section = PreScenePortal->getSectionEnd();
+	//	//p_stack->top()->setPos(PreScenePortal->getLx(), PreScenePortal->getLy());
+	//	p_stack->top()->setActiveSection(section);
+	//	activeSection = p_stack->top()->getActiveSection();
+	//	cam->update(this->sectionGraph.getSection(section));
+	//	//cam->setForceVeloc(0, 0);
+	//	//for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
+	//	//{
+	//	//	(*it)->updateGridPos();
+	//	//}
+	//	this->PreScenePortal = NULL;
+	//}
+	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
+	SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_BG_AREA2);
+}
+
+void OverworldScene::renderHUD() {
+	heatlhbar->render();
+}
+
+void OverworldScene::onDeactivated()
+{
+
+	//if(!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
+	SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
+	if(isresetenemy==1)
+	this->resetSceneEnemy();
+	isresetenemy = -1;
 }

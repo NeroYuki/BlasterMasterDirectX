@@ -5,11 +5,13 @@
 #define BBOX_CANNON_HEIGHT 26
 
 class Cannon : public Enemy {
+private:
+	GameTimer* interval;
+	int canonstate = 0;
 public:
 	Cannon(float x, float y, int hp);
 	void render();
 	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
 	~Cannon();
-
 };

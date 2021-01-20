@@ -10,14 +10,14 @@ Dome::Dome(float x, float y, int hp) : Enemy(x, y, hp)
 
 void Dome::render()
 {
-	LPANIMATION ani;
+	Enemy::render();
 
-	ani = AnimationManager::getInstance()->get(state);
-	ani->render(x, y);
 }
 
 void Dome::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	Enemy::update(dt, coObjects);
+
 	if (vx > 0) {
 		state = WORM_MOVE_RIGHT;
 	}

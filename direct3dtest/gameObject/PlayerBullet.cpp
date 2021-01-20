@@ -1,11 +1,12 @@
 #include "PlayerBullet.h"
 PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int direction) : Bullet(x,y,vx,vy) {
 
-	this->HitPoint = 0;
+	this->HitPoint = 5;
 	surviveTime = new GameTimer(2000);
 	exploTime = new GameTimer(200);
 	TurningTime = new GameTimer(100);
 	TurningTime2 = new GameTimer(200);
+	velocity = 0.05;
 	if (type == 1) {
 		this->bullettype = 1;
 		if (direction == 1) {
@@ -54,26 +55,33 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 			bulletwidth = 6;
 			bulletheight = 8;
 		}
+		if (direction == 4) {
+			state = SOPHIA_SMALL_BULLET_DOWN;
+			this->vx = 0;
+			this->vy = 0.25;
+			bulletwidth = 6;
+			bulletheight = 8;
+		}
 	}
 	if (type == 3) {
 		this->bullettype = 3;
 		if (direction == 1) {
 			minenemyx = 1000, minenemyy = 100;
 			state = SOPHIA_SMALL_ROCKET_RIGHT;
-			this->vx = 0.15;
+			this->vx = velocity;
 			this->vy = 0;
 		}
 		if (direction == 2) {
 			state = SOPHIA_SMALL_ROCKET_LEFT;
 			minenemyx = -1000, minenemyy = 100;
-			this->vx = -0.15;
+			this->vx = -velocity;
 			this->vy = 0;
 		}
 		if (direction == 3) {
 			minenemyx = 100, minenemyy = 1000;
 			state = SOPHIA_SMALL_ROCKET_TOP;
 			this->vx = 0;
-			this->vy = -0.15;
+			this->vy = -velocity;
 		}
 		bulletwidth = 11;
 		bulletheight = 11;
@@ -84,20 +92,20 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 		if (direction == 1) {
 			bulletdirection = 1;
 			state = SOPHIA_SMALL_ROCKET_RIGHT;
-			this->vx = 0.15;
+			this->vx = velocity;
 			this->vy = 0;
 		}
 		if (direction == 2) {
 			state = SOPHIA_SMALL_ROCKET_LEFT;
 			bulletdirection = 2;
-			this->vx = -0.15;
+			this->vx = -velocity;
 			this->vy = 0;
 		}
 		if (direction == 3) {
 			bulletdirection = 1;
 			state = SOPHIA_SMALL_ROCKET_TOP;
 			this->vx = -0.02;
-			this->vy = -0.15;
+			this->vy = -velocity;
 		}
 		if (direction == 4) {
 			bulletdirection = 1;
@@ -109,17 +117,35 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 			bulletdirection =2;
 			state = SOPHIA_SMALL_ROCKET_TOP;
 			this->vx = 0.02;
-			this->vy = -0.15;
+			this->vy = -velocity;
 		}
 		if (direction == 6) {
 			bulletdirection = 2;
 			state = SOPHIA_SMALL_ROCKET_DOWN;
 			this->vx = 0.02;
-			this->vy = 0.15;
+			this->vy = velocity;
 		}
 		bulletwidth = 11;
 		bulletheight = 11;
 	}
+	if(type ==5){
+		state = JASON_BULLET;
+		this->vx = vx;
+		this->vy = vy;
+		bulletwidth = 4;
+		bulletheight = 4;
+	}
+	if (type == 6) {
+		this->bullettype = 6;
+		bulletdirection = direction;
+		state = SOPHIA_SMALL_BULLET_LEFT;
+		bulletwidth = 8;
+		bulletheight = 8;
+		this->y += 10;
+		this->vx = vx;
+		this->vy = vy;
+	}
+
 	BulletManager::getinstance()->addBullet(this);
 }
 void PLayerBullet::render()
@@ -133,9 +159,13 @@ void PLayerBullet::render()
 
 void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	velocity += 0.01;
 
+	 GameObject::update(dt);
+	 if (bullettype == 6) {
+		 getDxDy(this->dx, this->dy, dt, T);
+	 }
 
-	GameObject::update(dt);
 	short timestate = surviveTime->update(dt);
 	short timestate2 = exploTime->update(dt);
 	short timestate3 = TurningTime->update(dt);
@@ -149,6 +179,7 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (coEvents.size() == 0) {
 		x += dx;
 		y += dy;
+		
 	}
 	else {
 		//DebugOut("Collision occured\n");
@@ -167,14 +198,15 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (dynamic_cast<Enemy*>(e->obj)) {
 				if (e->ny != 0 || e->nx != 0) {
-					dynamic_cast<Enemy*>(e->obj)->GetHit(1);
+					dynamic_cast<Enemy*>(e->obj)->GetHit(HitPoint);
+					if(this->bullettype==1 || this->bullettype ==2)BulletManager::getinstance()->removeBullet(this);
 					surviveTime->stop(); timestate = TIMER_ENDED;
 					active = -1;
 					break;
 				}
 			}
 		}
-		if (bullettype < 3) {
+		if (bullettype < 3|| bullettype == 5) {
 			if (coEventsResult.size() != 0) {
 				for (UINT i = 0; i < coEventsResult.size(); i++)
 				{
@@ -215,13 +247,13 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			}
 			if (abs(minenemyx) > abs(minenemyy)) {
 				if (minenemyx > 0) {
-					this->vx = 0.15;
+					this->vx = velocity;
 					this->vy = 0;
 					state = SOPHIA_SMALL_ROCKET_RIGHT;
 				}
 				else
 				{
-					this->vx = -0.15;
+					this->vx = -velocity;
 					this->vy = 0;
 					state = SOPHIA_SMALL_ROCKET_LEFT;
 				}
@@ -230,13 +262,13 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (minenemyy > 0) {
 					this->vx = 0;
-					this->vy = 0.15;
+					this->vy = velocity;
 					state = SOPHIA_SMALL_ROCKET_DOWN;
 				}
 				else
 				{
 					this->vx = 0;
-					this->vy = -0.15;
+					this->vy = -velocity;
 					state = SOPHIA_SMALL_ROCKET_TOP;
 				}
 			}
@@ -246,12 +278,12 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (timestate4 == TIMER_ENDED) {
 			if (bulletdirection == 1) {
 				state = SOPHIA_SMALL_ROCKET_RIGHT;
-				this->vx = 0.25;
+				this->vx = velocity;
 				this->vy = 0;
 			}
 			else if (bulletdirection == 2) {
 				state = SOPHIA_SMALL_ROCKET_LEFT;
-				this->vx = -0.25;
+				this->vx = -velocity;
 				this->vy = 0;
 			}
 		}
@@ -265,6 +297,7 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		if (vx > 0) { vx += 20; vy += 2; }
 		if (vx < 0) { vx -= 20; vy += 2; }
 		if (vy > 0) { vx += 2; vy += 20; }
+		if (vy < 0) { vx += 2; vy -= 20; }
 		vx = 0;
 		vy = 0;
 
@@ -280,7 +313,18 @@ void PLayerBullet::GetBoundingBox(float& top, float& left, float& bottom, float&
 	left = this->x;
 	bottom = top + bulletheight;
 	right = left + bulletwidth;
+	
 }
 PLayerBullet::~PLayerBullet()
 {
 }
+#define bankinh 32
+#define pi 3.14159265359
+#define vantoc 0.3
+void PLayerBullet::getDxDy(float& dx, float& dy, DWORD dt, DWORD& Totaltime) {
+	float T = 2 * pi * 32 / vantoc;
+	float omega = 2 * pi / T;
+	dy += bankinh * cos(omega * (Totaltime + dt)) - bankinh * cos(omega * (Totaltime));
+	dx += bankinh * sin(omega * (Totaltime + dt)) - bankinh * sin(omega * Totaltime);
+	Totaltime += dt;
+};

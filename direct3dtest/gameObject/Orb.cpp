@@ -8,17 +8,17 @@ Orb::Orb(float x, float y, int hp) : Enemy(x, y, hp)
 
 void Orb::render()
 {
-	LPANIMATION ani;
+	Enemy::render();
 
-	ani = AnimationManager::getInstance()->get(ORB_MOVE_LEFT);
-	ani->render(x, y);
 }
 
 void Orb::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	Enemy::update(dt, coObjects);
 	GameObject::update(dt);
 	//short insecttimerstate1 = insecttimer1->update(dt);
 	//short insecttimerstate2 = insecttimer2->update(dt);
+	if (this->isDie == 2) this->isDie = 1;
 
 	std::vector<LPCOLLISIONEVENT> coEvents;
 	std::vector<LPCOLLISIONEVENT> coEventsResult;
@@ -49,17 +49,6 @@ void Orb::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (dynamic_cast<Block*>(e->obj)) {
 					x += min_tx * dx + nx * 0.4f;
 					y += min_ty * dy + ny * 0.4f;
-					//if (ny > 0) {
-					//	vy = 0;
-					//}
-					//if (ny < 0) {
-					//	if (vy < 0.1) {
-					//		vy = 0;
-					//	}
-					//	else {
-					//		vy = -vy / 2;
-					//	}
-					//}
 					if (nx != 0) {
 						vx = -vx;
 					}

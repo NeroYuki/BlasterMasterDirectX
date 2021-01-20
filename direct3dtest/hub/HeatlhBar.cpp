@@ -1,5 +1,6 @@
 #include "HeatlhBar.h"
 
+
 void HeatlhBar::render()
 {
 		LPANIMATION ani;
@@ -14,9 +15,10 @@ void HeatlhBar::update(Camera* cam)
 		return;
 	}
 	this->x=cam->getX()+10;
-	this->y = cam->getY()+100;
+	this->y = cam->getY()+150;
 
 	followingObj->GetPlayerHitPoint(displayHitPoint);
+	displayHitPoint = (displayHitPoint / 2);
 	switch (displayHitPoint)
 	{
 	case 0:state = HIT_POINT_BAR_0; break;
@@ -42,4 +44,10 @@ void HeatlhBar::setFollow(Player* obj)
 void HeatlhBar::unfollow()
 {
 	this->followingObj = NULL;
+}
+
+int HeatlhBar::isShow()
+{
+	if (followingObj == NULL) return 0;
+	return 1;
 }

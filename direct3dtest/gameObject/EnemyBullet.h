@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 class BulletManager;
 #include "Bullet.h"
 #include "Player.h"

@@ -31,6 +31,15 @@ EnemyBullet::EnemyBullet(float x, float y, float inputx, float inputy, int type)
 		enemytype = 3;
 		surviveTime = new GameTimer(500);
 	}
+	if (type == 4) {
+		state = ENEMY_BULLET_3;
+		this->vx = inputx;
+		this->vy = inputy;
+		bulletwidth = 8;
+		bulletheight = 8;
+		enemytype = 4;
+		surviveTime = new GameTimer(500);
+	}
 	//if (type == 3) {
 	//	state = SOPHIA_BULLET_UP;
 	//	this->vx = 0;
@@ -81,7 +90,7 @@ void EnemyBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		if (enemytype == 1) {
+		if ((enemytype == 1)||(enemytype == 4)) {
 			for (UINT i = 0; i < coEvents.size(); i++) {
 
 				LPCOLLISIONEVENT e = coEvents[i];

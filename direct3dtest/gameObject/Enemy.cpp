@@ -2,7 +2,68 @@
 
 Enemy::Enemy(float x, float y, int hp) : GameObject(x, y){
 	this->HitPoint = hp;
-//	this->isDie = 0;
+	dameTakenTimer = new GameTimer(100);
+	dyingTimer = new GameTimer(200);
+	//this->isDie = 0;
+	istakingdmg = 0;
+	invincible = 0;
+}
+
+void Enemy::render()
+{
+	LPANIMATION ani;
+	LPANIMATION deadani;
+	deadani = AnimationManager::getInstance()->get(BULLET_EXPLO);
+	ani = AnimationManager::getInstance()->get(state);
+	if (this->invincible == 1) {
+		deadani->render(this->x , this->y);
+	}	
+	else {
+		if (istakingdmg == 1)ani->render(x, y, D3DCOLOR_RGBA(128, 128, 222, 255));
+		else ani->render(x, y);
+	}
+}
+
+void Enemy::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
+{
+	if (this->HitPoint <= 0) this->invincible = 1;
+	short dmgstate = dameTakenTimer->update(dt);
+	short deadtimerstate = dyingTimer->update(dt);
+
+	if (dmgstate == TIMER_INACTIVE) {
+		if (dmgtaken != 0)
+		{
+			this->HitPoint -= dmgtaken;
+			dmgtaken = 0;
+			istakingdmg = 0;
+			dameTakenTimer->restart();
+		}
+	}
+	else if (dmgstate == TIMER_ACTIVE) {
+		if (istakingdmg == 1)istakingdmg = 0;
+		else istakingdmg = 1;
+	}
+	else if (dmgstate == TIMER_ENDED) {
+		istakingdmg = 0;
+	}
+
+	if (deadtimerstate == TIMER_INACTIVE) {
+		if (invincible == 1) {
+			dyingTimer->restart();
+		}
+	}
+	else if (deadtimerstate == TIMER_STARTED)
+	{
+		this->vx = 0;
+		this->vy = 0;
+	}
+	else if (deadtimerstate == TIMER_ENDED) {
+		int randomdrop = SharedData::getInstance()->getRandomNumber();
+
+
+
+		this->isDie = 2;
+	}
 }
 
 Enemy::~Enemy()
@@ -55,7 +116,7 @@ void Enemy::FilterCollisionBlock(std::vector<LPCOLLISIONEVENT>& coEvents, std::v
 	if (minimum_y_event != nullptr) coEventsResult.push_back(minimum_y_event);
 }
 
-void Enemy::GetHit(int n)
+void Enemy::GetHit(int dmg)
 {
-	this->HitPoint -= n;
+	if (dmgtaken == 0) this->dmgtaken = dmg;
 }
