@@ -6,6 +6,7 @@ Dome::Dome(float x, float y, int hp) : Enemy(x, y, hp)
 	vy = 0.00;
 	state = DOME_IDLE_DOWN_LEFT;
 	domestate = 1;
+	spawnPlace = 1;
 }
 
 void Dome::render()

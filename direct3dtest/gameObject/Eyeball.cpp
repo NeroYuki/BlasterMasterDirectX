@@ -7,6 +7,7 @@ Eyeball::Eyeball(float x, float y, int hp) : Enemy(x, y, hp)
 	moveInterval = new GameTimer(1000);
 	stopinterval = 0;
 	this->state = EYE_IDLE;
+	spawnPlace = 2;
 }
 
 void Eyeball::render()

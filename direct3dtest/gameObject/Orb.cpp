@@ -4,6 +4,7 @@ Orb::Orb(float x, float y, int hp) : Enemy(x, y, hp)
 {
 	this->vx = 0.3;
 	this->vy = 0;
+	spawnPlace = 1;
 }
 
 void Orb::render()

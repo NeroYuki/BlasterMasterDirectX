@@ -5,6 +5,7 @@ Cannon::Cannon(float x, float y, int hp) : Enemy(x,y,hp)
 	this->state = CANON_IDLE;
 	this->HitPoint = hp;
 	interval = new GameTimer(500);
+	spawnPlace = 2;
 }
 
 void Cannon::render()

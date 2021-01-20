@@ -21,12 +21,12 @@ void Player::render()
 void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	if (hitpoint <= 0) this->invincible = 1;
-	if (checkSpiked() == 1) {
-		this->PlayerGetHit(3);
-	}
+
 	short dmgstate = dameTakenTimer->update(dt);
 	short deadtimerstate = inDeadAniTimer->update(dt);
-
+	if (checkSpiked() == 1) {
+		this->PlayerGetHit(1);
+	}
 	if (dmgstate == TIMER_INACTIVE) {
 		if (dmgtaken != 0)
 		{

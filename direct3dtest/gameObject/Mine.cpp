@@ -7,6 +7,7 @@ Mine::Mine(float x, float y, int hp) : Enemy(x, y, hp)
 	this->y = y ;
 	this->HitPoint = 1;
 	explo = 0;
+	spawnPlace = 1;
 }
 
 void Mine::render()

@@ -8,6 +8,7 @@ Insect::Insect(float x, float y, int hp) : Enemy(x, y, hp)
 	insecttimer1 = new GameTimer(900);
 	insecttimer2 = new GameTimer(100);
 	state = INSECT_IDLE_LEFT;
+	spawnPlace = 1;
 }
 
 void Insect::render()

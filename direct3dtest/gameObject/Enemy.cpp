@@ -58,10 +58,22 @@ void Enemy::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		this->vy = 0;
 	}
 	else if (deadtimerstate == TIMER_ENDED) {
-		int randomdrop = SharedData::getInstance()->getRandomNumber();
-
-
-
+		int randomdrop;
+		Collectable* collectable = NULL;
+		randomdrop= SharedData::getInstance()->getRandomNumber();
+		randomdrop= randomdrop % 10 + 1;
+		CollectableManager::getinstance();
+		switch (randomdrop) {
+		case 1:collectable = new Collectable(this->x, this->y, 1, 3); break;
+		case 2:collectable = new Collectable(this->x, this->y, 1, 3); break;
+		case 3:if(spawnPlace ==2 )collectable = new Collectable(this->x, this->y, 2, 1); break;
+		case 4:if(spawnPlace == 2)collectable = new Collectable(this->x, this->y, 2, 1); break;
+		case 5:collectable = new Collectable(this->x, this->y, 3, 10); break;
+		case 6:collectable = new Collectable(this->x, this->y, 4, 10); break;
+		case 7:collectable = new Collectable(this->x, this->y, 5, 10); break;
+		default: break;
+		}
+		if (collectable != NULL)  CollectableManager::getinstance()->addCollectable(collectable);
 		this->isDie = 2;
 	}
 }

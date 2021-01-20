@@ -6,6 +6,7 @@ Floater::Floater(float x, float y, int hp) : Enemy(x, y, hp)
 	state = FLOATER_IDLE_LEFT;
 	shoottimer = new GameTimer(2000);
 	this->HitPoint = 5;
+	spawnPlace = 1;
 }
 
 void Floater::render()

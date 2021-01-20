@@ -15,6 +15,7 @@ protected:
 	int istakingdmg;
 	int dmgtaken = 0;
 	int invincible = 0;
+	int spawnPlace = 0;
 public:
 	Enemy(float x, float y, int hp);
 	virtual void render();

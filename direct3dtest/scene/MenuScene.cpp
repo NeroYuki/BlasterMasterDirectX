@@ -79,6 +79,17 @@ void MenuScene::update(DWORD dt)
 	if (choice == 3) {
 		charsets[2]->state = POWER_UP_X3MISSLE_TICK;
 	}
+	int tempstate = 60000;
+
+	int temp1 = shareddate->homingMissle;
+	int temp2 = shareddate->lightning;
+	int temp3 = shareddate->x3Missle;
+	charsets[3] = new CharsetShow(89, 184, tempstate + temp1 / 10);
+	charsets[4] = new CharsetShow(97, 184, tempstate + temp1 % 10);
+	charsets[5] = new CharsetShow(121, 184, tempstate + temp2 / 10);
+	charsets[6] = new CharsetShow(129, 184, tempstate + temp2 % 10);
+	charsets[7] = new CharsetShow(153, 184, tempstate + temp3 / 10);
+	charsets[8] = new CharsetShow(161, 184, tempstate + temp3 % 10);
 
 }
 

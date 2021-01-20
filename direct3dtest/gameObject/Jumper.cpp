@@ -8,6 +8,7 @@ Jumper::Jumper(float x, float y, int hp) :Enemy(x,y,hp)
 	watTime2= new GameTimer(5000);
 	isJump = false;
 	facing = 1;
+	spawnPlace = 1;
 }
 
 void Jumper::render()

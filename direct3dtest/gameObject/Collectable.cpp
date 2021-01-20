@@ -36,6 +36,7 @@ void Collectable::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		default:
 			break;
 		}
+		this->isDie = 1;
 	}
 }
 

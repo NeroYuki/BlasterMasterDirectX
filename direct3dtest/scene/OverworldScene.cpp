@@ -233,8 +233,7 @@ void OverworldScene::renderHUD() {
 
 void OverworldScene::onDeactivated()
 {
-
-	//if(!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
+	if(SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
 	SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
 	if(isresetenemy==1)
 	this->resetSceneEnemy();

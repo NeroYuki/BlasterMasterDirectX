@@ -12,6 +12,7 @@ Teleporter::Teleporter(float x, float y, int hp) : Enemy(x, y, hp)
 	this->dx = 0;
 	this->dy = 0;
 	this->direction = 0;
+	spawnPlace = 2;
 }
 
 void Teleporter::render()
