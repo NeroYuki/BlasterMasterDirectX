@@ -78,6 +78,7 @@ protected:
 	int isEnterKeyDown = 0, isresetenemy=0;
 	float spawnerX, spawnerY;
 public:
+	int fromintro = 1;
 	Scene(SceneStateMachine* sceneState);
 	void addObject(GameObject* obj);
 	bool removeObject(GameObject* obj);

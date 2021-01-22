@@ -2,11 +2,13 @@
 
 Dome::Dome(float x, float y, int hp) : Enemy(x, y, hp)
 {
-	vx = -0.03;
-	vy = 0.00;
-	state = DOME_IDLE_DOWN_LEFT;
+	vx = 0;
+	vy = 0.05;
+	state = WORM_IDLE_LEFT;
 	domestate = 1;
 	spawnPlace = 1;
+	ontopwall = 1;
+	godown == 1;
 }
 
 void Dome::render()
@@ -19,159 +21,148 @@ void Dome::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	Enemy::update(dt, coObjects);
 
-	if (vx > 0) {
-		state = WORM_MOVE_RIGHT;
-	}
-	else if (vx < 0) {
-		state = WORM_MOVE_LEFT;
-	}
-	else {
-		if (state == WORM_MOVE_LEFT) state = WORM_IDLE_LEFT;
-		else if (state == WORM_MOVE_RIGHT) state = WORM_IDLE_RIGHT;
-	}
+	if (this->isDie == 2) this->isDie = 1;
+	//GameObject::update(dt);
+	//this->dt = dt;
+	//dx = 0;
+	//dy = 0;
+	//vx = 0;
+	//vy = 0;
 
-	velx = 32;
-	vely = 32;
-	if (isonwall) {
-		if (domestate == 1 ) {
-
-			for (UINT i = 0; i < coObjects->size(); i++)
-			{
-				if (dynamic_cast<Block*>(coObjects->at(i)))
-				{
-					float px, py;
-					Block* p = dynamic_cast<Block*>(coObjects->at(i));
-					p->getPos(px, py);
-					px = px - x;
-					py = py - y;
-					if (py > 0 && py < 16 && px < velx && px > 16) {
-						velx = px; vely = py;
-					}
-				}
-			}
-			if (velx > 16&&velx<20) {
-				domestate = 0;
-				vx = 0.01;
-				vy = 0.03;
-			}
-		}
-		else if (domestate == 2) {
-			for (UINT i = 0; i < coObjects->size(); i++)
-			{
-				if (dynamic_cast<Block*>(coObjects->at(i)))
-				{
-					float px, py;
-					Block* p = dynamic_cast<Block*>(coObjects->at(i));
-					p->getPos(px, py);
-					px = px - x;
-					py = py - y;
-					if (py>0 && py < 16 && px < velx && px > 16) {
-						velx = px; vely = py;
-					}
-				}
-			}
-			domestate = 1;
-			vx = -0.03;
-			vy = 0.01;
-		}
-		else if (domestate == 3)
-		{
-			domestate = 2;
-			vy = -0.03;
-			vx = -0.01;
-		}
-		else if (domestate == 0)
-		{
-			domestate = 3;
-			vx = 0.03;
-			vy = -0.01;
-		}
-
-	}
+	//goup = 0;
+	//godown = 0;
+	//goleft = 0;
+	//goright = 0;
 	
-
-	//if (domestate == 0) {
-	//	vy = 0.03;
+	//std::vector<LPCOLLISIONEVENT> coEvents;
+	//std::vector<LPCOLLISIONEVENT> coEventsResult;
+	//coEvents.clear();
+	//CalcPotentialCollisions(coObjects, coEvents);
+	//float min_tx, min_ty, nx = 0, ny = 0;
+	//float rdx = 0;
+	//float rdy = 0;
+	//FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+	//if (coEventsResult.size() != 0) {
+	//	for (UINT i = 0; i < coEventsResult.size(); i++)
+	//	{
+	//		LPCOLLISIONEVENT e = coEventsResult[i];
+	//		if (dynamic_cast<Block*>(e->obj)) {
+	//			if (ny == 1) {
+	//				goleft = 1;
+	//			}
+	//			else if (ny == -1) {
+	//				goright = 1;
+	//			}
+	//			if (nx == 1) {
+	//				goup = 1;
+	//			}
+	//			else if (nx == -1) {
+	//				godown = 1;
+	//			}
+	//		}
+	//	}
 	//}
-	//else 	if (domestate ==1) {
-	//	vx = -0.03;
+	//else {
+	//	if (ontopwall == 1) ontopwall = 0;
+	//	if (onrightwall == 1) onrightwall =0;
+	//	if (onleftwall == 1) onleftwall = 0;
+	//	if (onbtottomwall == 1)onbtottomwall =0;
 	//}
-	//else if (domestate == 2) {
-	//	vy = -0.03;
+	//
+
+
+
+	//checkdirection();
+	//this->dx = vx * dt;
+	//this->dy = dy * dt;
+	//coEvents.clear();
+	//coEventsResult.clear();
+	//CalcPotentialCollisions(coObjects, coEvents);
+
+	//if (coEvents.size() == 0) {
+	//	x += dx;
+	//	y += dy;
 	//}
-	//else if (domestate == 3) {
-	//	vx = 0.03;
+	//else {
+	//	float min_tx, min_ty, nx = 0, ny = 0;
+	//	float rdx = 0;
+	//	float rdy = 0;
+
+	//	// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
+	//	FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+	//	if (coEventsResult.size() != 0) {
+	//		for (UINT i = 0; i < coEventsResult.size(); i++)
+	//		{
+	//			LPCOLLISIONEVENT e = coEventsResult[i];
+	//			if (dynamic_cast<Block*>(e->obj)) {
+	//				x += min_tx * dx + nx * 0.4f;
+	//				y += min_ty * dy + ny * 0.4f;
+	//				if (ny ==1) { onbtottomwall = 1; }
+	//				else if (ny == -1) {
+	//					onbtottomwall = 1;
+	//				}
+	//				if (nx ==1) {
+	//					onleftwall = 1;
+	//				}
+	//				else if (nx ==-1 ){
+	//					onrightwall = 1;
+	//				}
+	//			}
+	//		}
+	//	}
+	//	else {
+	//		y += dy;
+	//		x += dx;
+	//	}
 	//}
-	GameObject::update(dt);
-	std::vector<LPCOLLISIONEVENT> coEvents;
-	std::vector<LPCOLLISIONEVENT> coEventsResult;
-	coEvents.clear();
-	CalcPotentialCollisions(coObjects, coEvents);
+	//if (ontopwall == 1) { vx = 0.2; vy = 0; }
+	//if (onrightwall == 1) { vx = 0; vy = 0.2; }
+	//if (onleftwall == 1) { vx = 0; vy = -0.2; }
+	//if (onbtottomwall == 1) { vx = -0.2; vy = 0; }
 
-	if (coEvents.size() == 0) {
-		x += dx;
-		y += dy;
-	}
-	else {
-		float min_tx, min_ty, nx = 0, ny = 0;
-		float rdx = 0;
-		float rdy = 0;
 
-		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		//after this method, coEvents SHOULD only contain collision event thats the target is not a block (ie Entity) 
-		//and coEventsResult is now contain closest collision to a block to adjust player position accordingly
-		if (coEventsResult.size() != 0) {
-			if (domestate == 1 && nx == 1) {
-				domestate = 2;
-				vy = -0.03;
-				vx = -0.01;
-				isonwall = true;
-			}
-			if (domestate == 2 && ny == 1) {
-				domestate = 3;
-				vx = 0.03;
-				vy = -0.01;
-				isonwall = true;
-			}
-			if (domestate == 3 && nx == -1)
-			{
-				domestate = 0;
-				vx = 0.01;
-				vy = 0.03;
-				isonwall = true;
-			}
-			if (domestate == 0 && ny == -1)
-			{
-				domestate = 1;
-				vx = -0.03;
-				vy = 0.01;
-				isonwall = true;
-			}
-			x += min_tx * dx + nx * 0.4f;
-			y += min_ty * dy + ny * 0.4f;
-			if (nx != 0) vx = 0;
-			else if (ny != 0) vy = 0;
-		}
-		else {
-			y += dy;
-			x += dx;
-		}
 
-		for (UINT i = 0; i < coEvents.size(); i++) {
-			DebugOut("Entity collision\n");
-		}
-	}
 }
 
 void Dome::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y;
 	left = this->x;
-	bottom = top + BBOX_DOME_HEIGHT;
-	right = left + BBOX_DOME_WIDTH;
+	bottom = top + 16;
+	right = left + 16;
 }
 
 
 Dome::~Dome()
 {
+}
+
+void Dome::checkdirection() {
+	vx = 0;
+	vy = 0;
+	if (ontopwall == 1 && goleft == 1) {
+		vx = -0.1;
+	}
+	if (ontopwall == 1 && goright == 1) {
+		vx = 0.1;
+	}
+	if (onbtottomwall == 1 && goleft == 1) {
+		vx = -0.1;
+	}
+	if (onbtottomwall == 1 && goright == 1) {
+		vx = 0.1;
+	}
+	if (onrightwall == 1 && goup == 1) {
+		vy = -0.1;
+	}
+	if (onrightwall == 1 && godown == 1) {
+		vx = 0.1;
+	}
+	if (onleftwall == 1 && goup == 1) {
+		vx = -0.1;
+	}
+	if (onleftwall == 1 && godown == 1) {
+		vx = 0.1;
+	}
 }

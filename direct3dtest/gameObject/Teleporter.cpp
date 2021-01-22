@@ -79,6 +79,7 @@ void Teleporter::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		float tempc = sqrt(tempx * tempx + tempy * tempy);
 		tempx = 0.2 * tempx / tempc;
 		tempy = 0.2 * tempy / tempc;
+		SoundManager::getInstance()->Play(eSoundId::SOUND_TELEPORTER_SHOOTING);
 		new EnemyBullet(this->x + 10, this->y + 10, tempx, tempy, 1);
 		numberOfTeleportation = (rand() % 5) + 5;
 		direction = 0;
@@ -90,6 +91,7 @@ void Teleporter::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			else {
 				this->y += 24 * direction;
 			}
+			SoundManager::getInstance()->Play(eSoundId::SOUND_TELEPORTER_TELEPORT);
 			this->state = TELEPORTER_MOVE;
 			numberOfTeleportation--;
 			direction = (rand() % 5) -2;

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Block.h"
-
+#include "DestrucableBlock.h"
 class Bullet : public GameObject {
 protected:
 	int HitPoint;

@@ -8,6 +8,7 @@ Mine::Mine(float x, float y, int hp) : Enemy(x, y, hp)
 	this->HitPoint = 1;
 	explo = 0;
 	spawnPlace = 1;
+
 }
 
 void Mine::render()
@@ -18,8 +19,14 @@ void Mine::render()
 
 void Mine::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_MINE_TICKING))
+		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_MINE_TICKING);
 	Enemy::update(dt, coObjects);
 	if (this->isDie == 2 ) {
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_MINE_TICKING)) {
+			SoundManager::getInstance()->Stop(eSoundId::SOUND_MINE_TICKING);
+
+		}
 		new EnemyBullet(this->x + 3, this->y, 0.075, 0, 3);
 		new EnemyBullet(this->x + 3, this->y, -0.05, 0, 3);
 		new EnemyBullet(this->x + 3, this->y, 0, 0, 3);

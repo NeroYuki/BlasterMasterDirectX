@@ -8,8 +8,7 @@ JasonTop::JasonTop(float x, float y, int hp) : Player(x, y, hp)
 	bulletDelayTimer = new GameTimer(300);
 	grenadeDelayTimer = new GameTimer(200);
 	deadState = 10009;
-	inDeadAniTimer = new GameTimer(1500);
-
+	inDeadAniTimer = new GameTimer(1600);
 }
 
 void JasonTop::render()
@@ -19,7 +18,7 @@ void JasonTop::render()
 	dead_ani = AnimationManager::getInstance()->get(deadState);
 	ani = AnimationManager::getInstance()->get(state);
 	if (this->invincible == 1) {
-		dead_ani->render(this->x, this->y );
+		dead_ani->render(x, y );
 	}
 	else {
 		ani = AnimationManager::getInstance()->get(state);
@@ -31,7 +30,7 @@ void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	Player::update(dt, coObjects);
 	vx = 0; vy = 0;
-
+	
 	if (forceControlState != IDLE) { 
 		controlState = forceControlState; 
 	}
@@ -72,14 +71,15 @@ void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			grenadeDelayTimer->restart();
 		}
 	}
+	this->upgrade = SharedData::getInstance()->upgrade;
 	bullettype = 6;
 	if (controlState & (SECONDARY)) {
 		if (bulletDelayTimer->peekState() == TIMER_INACTIVE) {
 			switch (facing) {
-			case 1: new PLayerBullet(this->x + 12, this->y + 16, -0.1, 0, bullettype, 2); break;
-			case 2: new PLayerBullet(this->x + 12, this->y + 16, 0.1, 0, bullettype, 1); break;
-			case 3:	new PLayerBullet(this->x + 12, this->y + 16, 0, -0.1, bullettype, 3); break;
-			case 4: new PLayerBullet(this->x + 12, this->y + 16, 0, 0.1, bullettype, 4); break;
+			case 1: new PLayerBullet(this->x + 12, this->y + 16, -0.1, 0, bullettype, 2, upgrade); break;
+			case 2: new PLayerBullet(this->x + 12, this->y + 16, 0.1, 0, bullettype, 1, upgrade); break;
+			case 3:	new PLayerBullet(this->x + 12, this->y + 16, 0, -0.1, bullettype, 3, upgrade); break;
+			case 4: new PLayerBullet(this->x + 12, this->y + 16, 0, 0.1, bullettype, 4, upgrade); break;
 			default: break;
 			}
 			bulletDelayTimer->restart();
@@ -203,9 +203,9 @@ void JasonTop::changeState(int stateId)
 
 void JasonTop::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
-	top = this->y + 16;
-	left = this->x;
-	bottom = top + BBOX_PLAYER_HEIGHT;
-	right = left + BBOX_PLAYER_WIDTH;
+	top = this->y + 19;
+	left = this->x+3;
+	bottom = top + BBOX_PLAYER_HEIGHT-3;
+	right = left + BBOX_PLAYER_WIDTH-3;
 }
 

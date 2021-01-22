@@ -115,7 +115,7 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 					if (rocket == 1 &&instance->homingMissle >0) {
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 3, 1);
 						//placeholder
-						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+//						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 						instance->homingMissle -= 1;
 					}
 					else if (rocket == 3&& instance->x3Missle>0) {
@@ -123,12 +123,12 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 3);
 						new PLayerBullet(this->x + BBOX_SOPHIA_WIDTH - 10, this->y + 1, 0, 0, 4, 4);
 						//placeholder
-						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+//						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 						instance->x3Missle -= 1;
 					}
 					else if (rocket == 2 && instance->lightning > 0) {
 						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
-						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
+//						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
 						instance->lightning -= 1;
 					}
 				}
@@ -136,18 +136,18 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 					if (rocket == 1 && instance->homingMissle > 0) {
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 3, 2);
 						//placeholder
-						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+//						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 					}
 					else if (rocket == 3 && instance->x3Missle > 0) {
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 2);
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 5);
 						new PLayerBullet(this->x - 5, this->y + 1, 0, 0, 4, 6);
 						//placeholder
-						SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+	//					SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
 					}
 					else if (rocket == 2 && instance->lightning > 0) {
 						new lightning(this->x + 5, this->y + BBOX_SOPHIA_HEIGHT);
-						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
+//						SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
 					}
 				}
 			}
@@ -155,9 +155,9 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (ny == 1)
 				{
 					if (nx == 1)
-						new PLayerBullet(this->x + 5, this->y - 10, 0, 0, upgrade, 3);
+						new PLayerBullet(this->x + 5, this->y - 8, 0, 0, upgrade, 3);
 					else if (nx == -1)
-						new PLayerBullet(this->x + 12, this->y - 10, 0, 0, upgrade, 3);
+						new PLayerBullet(this->x + 12, this->y - 8, 0, 0, upgrade, 3);
 
 				}
 				else if (nx == 1) {
@@ -225,7 +225,6 @@ void Sophia::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (dynamic_cast<Enemy*>(e->obj)) {
 				this->PlayerGetHit(2);
-				SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_HURTING);
 			}
 			else if (dynamic_cast<Collectable*>(e->obj)) {
 				Collectable* pickup = dynamic_cast<Collectable*>(e->obj);

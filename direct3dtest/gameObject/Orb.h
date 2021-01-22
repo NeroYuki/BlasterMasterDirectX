@@ -5,6 +5,10 @@
 #define BBOX_ORB_HEIGHT 18
 
 class Orb : public Enemy {
+private:
+	GameTimer* moveInterval;
+	int stopinterval;
+	int type = 0;
 public:
 	Orb(float x, float y, int hp);
 	void render();

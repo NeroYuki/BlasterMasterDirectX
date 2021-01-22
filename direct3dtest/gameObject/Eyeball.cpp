@@ -3,7 +3,7 @@
 Eyeball::Eyeball(float x, float y, int hp) : Enemy(x, y, hp)
 {
 	this->HitPoint = hp;
-	shootInterval = new GameTimer(1000);
+	shootInterval = new GameTimer(2000);
 	moveInterval = new GameTimer(1000);
 	stopinterval = 0;
 	this->state = EYE_IDLE;
@@ -67,8 +67,8 @@ void Eyeball::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (timestate2 == TIMER_INACTIVE) {
 		if (stopinterval == 2)stopinterval = 0;
 		if(stopinterval == 0){
-			this->vx =(float)(tempvx%10) / 100;
-			this->vy =(float)(tempvy%10)/ 100;
+			this->vx =(float)(tempvx%15) / 100;
+			this->vy =(float)(tempvy%15)/ 100;
 			this->state = EYE_IDLE;
 		}
 		else if(stopinterval ==1)
@@ -97,6 +97,7 @@ void Eyeball::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	tempx =0.2* tempx / tempc;
 	tempy =0.2* tempy / tempc;
 	if (timestate == TIMER_INACTIVE) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_TELEPORTER_SHOOTING);
 		new EnemyBullet(this->x + 10, this->y + 10, tempx, tempy, 1);
 		shootInterval->restart();
 	}

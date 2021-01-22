@@ -8,6 +8,7 @@ Skull::Skull(float x, float y, int hp) : Enemy(x, y, hp)
 	this->vx = -0.1;
 	this->vy = 0;
 	spawnPlace = 1;
+	this->y -= 6;
 }
 
 void Skull::render()

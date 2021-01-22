@@ -2,6 +2,7 @@
 
 Worm::Worm(float x, float y, int hp) : Enemy(x, y, hp)
 {
+	this->y -= 16;
 	vx = 0.03;
 	vy = 0.03;
 	state = WORM_IDLE_LEFT;
@@ -15,14 +16,21 @@ void Worm::render()
 
 void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_WORM_MOVING))
+		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_WORM_MOVING);
 	Enemy::update(dt, coObjects);
 
 	//x += vx * dt;
 	//y += vy * dt;
 	vy += 0.02;
 
-	if (this->isDie == 2) this->isDie = 1;
+	if (this->isDie == 2) {
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_WORM_MOVING)) {
+			SoundManager::getInstance()->Stop(eSoundId::SOUND_WORM_MOVING);
 
+		}
+		this->isDie = 1;
+	}
 	////bounding logic
 	//if (x <= 0) vx = 0.03;
 	//else if (x >= SCREEN_WIDTH - 18) vx = -0.03;
@@ -61,7 +69,7 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				y += min_ty * dy + ny * 0.4f;
 				if (ny != 0) vy = 0;
 				if (ny < 0) { isOnAir = false; }
-				if (nx != 0) { vx = 0; vy -= 0.5; }
+				if (nx != 0) { vx = 0; vy -= 0.06; }
 			}
 		}
 	}

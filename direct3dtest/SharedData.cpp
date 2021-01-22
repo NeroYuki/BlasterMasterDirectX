@@ -6,7 +6,8 @@ SharedData::SharedData() {
 	lightning = 15;
 	weapon = 1;
 	remaininglive = 1;
-	upgrade = 5;
+	upgrade =0;
+	color = 255;
 }
 SharedData* SharedData::instance = nullptr;
 SharedData* SharedData::getInstance()
@@ -16,4 +17,11 @@ SharedData* SharedData::getInstance()
 		instance = new SharedData;
 	}
 	return instance;
+}
+
+int SharedData::getColor()
+{	
+	color = color - 15;
+	if (color < 100) color = 255;
+	return color;
 }

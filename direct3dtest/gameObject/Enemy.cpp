@@ -26,7 +26,11 @@ void Enemy::render()
 
 void Enemy::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->HitPoint <= 0) this->invincible = 1;
+	if (this->HitPoint <= 0)
+	{
+		SoundManager::getInstance()->Play(eSoundId::SOUND_ENEMY_DYING);
+		this->invincible = 1;
+	}
 	short dmgstate = dameTakenTimer->update(dt);
 	short deadtimerstate = dyingTimer->update(dt);
 
@@ -64,14 +68,29 @@ void Enemy::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		randomdrop= randomdrop % 10 + 1;
 		CollectableManager::getinstance();
 		switch (randomdrop) {
-		case 1:collectable = new Collectable(this->x, this->y, 1, 3); break;
-		case 2:collectable = new Collectable(this->x, this->y, 1, 3); break;
-		case 3:if(spawnPlace ==2 )collectable = new Collectable(this->x, this->y, 2, 1); break;
-		case 4:if(spawnPlace == 2)collectable = new Collectable(this->x, this->y, 2, 1); break;
-		case 5:collectable = new Collectable(this->x, this->y, 3, 10); break;
-		case 6:collectable = new Collectable(this->x, this->y, 4, 10); break;
-		case 7:collectable = new Collectable(this->x, this->y, 5, 10); break;
-		default: break;
+		case 1:collectable = new Collectable(this->x, this->y, 1, 4); break;
+		case 2:collectable = new Collectable(this->x, this->y, 1, 4); break;
+		case 3:if (spawnPlace == 2)collectable = new Collectable(this->x, this->y, 2, 1); break;
+		case 4:if (spawnPlace == 2)collectable = new Collectable(this->x, this->y, 2, 1); break;
+		case 5:if (spawnPlace == 2) {
+			collectable = new Collectable(this->x, this->y, 2, 1);
+		}
+			  else collectable = new Collectable(this->x, this->y, 3, 10); 
+			break;
+		case 6:if (spawnPlace == 2) {
+			collectable = new Collectable(this->x, this->y, 2, 1);
+		}
+			 else 
+			collectable = new Collectable(this->x, this->y, 4, 10); 
+			break;
+		case 7:if (spawnPlace == 2) {
+			collectable = new Collectable(this->x, this->y, 2, 1);
+		}
+			  collectable = new Collectable(this->x, this->y, 5, 10);
+		break;
+		case 8:collectable = new Collectable(this->x, this->y, 1, 4); break;
+		case 9:collectable = new Collectable(this->x, this->y, 1, 4); break;
+		default: collectable = new Collectable(this->x, this->y, 1, 4); break;
 		}
 		if (collectable != NULL)  CollectableManager::getinstance()->addCollectable(collectable);
 		this->isDie = 2;

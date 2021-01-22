@@ -5,7 +5,7 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState
 	initScene();
 	bgTexture_id = 5;
 	fgTexture_id = 9;
-	activeSection = 5;
+	activeSection = 0;
 	sectionSwitchTimer = new GameTimer(3000);
 	blockShiftTimer = new GameTimer(1000);
 	switchSceneTimer = new GameTimer(500);
@@ -14,11 +14,12 @@ OverworldScene::OverworldScene(SceneStateMachine* sceneState) : Scene(sceneState
 void OverworldScene::initScene()
 {
 	p_stack = new std::stack<Player*>();
-	spawnerX = 1616;
-	spawnerY = 392;
+	spawnerX = 100;
+	spawnerY = 3000;
 	Sophia* s = new Sophia(spawnerX, spawnerY, 1);
 	p_stack->push(s);
 	this->addObject(s);
+	p_stack->top()->setActiveSection(0);
 	cam->setFollow(p_stack->top());
 	heatlhbar->setFollow(p_stack->top());
 }
@@ -217,10 +218,10 @@ void OverworldScene::onActivate()
 	//	activeSection = p_stack->top()->getActiveSection();
 	//	cam->update(this->sectionGraph.getSection(section));
 	//	//cam->setForceVeloc(0, 0);
-	//	//for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
-	//	//{
-	//	//	(*it)->updateGridPos();
-	//	//}
+	for (std::vector<ObjectGrid*>::iterator it = objectGridMap.begin(); it != objectGridMap.end(); ++it)
+	{
+		(*it)->updateGridPos();
+	}
 	//	this->PreScenePortal = NULL;
 	//}
 	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
@@ -233,8 +234,8 @@ void OverworldScene::renderHUD() {
 
 void OverworldScene::onDeactivated()
 {
-	if(SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
-	SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
+	//if(SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
+	//SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
 	if(isresetenemy==1)
 	this->resetSceneEnemy();
 	isresetenemy = -1;

@@ -12,6 +12,8 @@ public:
 	int weapon;
 	int remaininglive;
 	int upgrade;
+	int color;
 	static SharedData* getInstance();
 	float getRandomNumber() { return rand();}
+	int getColor() ;
 };

@@ -22,6 +22,7 @@ void Block::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 	right = left + this->w;
 }
 
+
 void Block::renderBoundingBox()
 {
 	(new Sprite(-1, 0, 0, h, w, TextureManager::getInstance()->get(10)))->draw(x, y);

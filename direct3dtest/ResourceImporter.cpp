@@ -7,6 +7,7 @@
 #define SECTION_LIST 6
 #define LADDER_LIST 7
 #define SCENEPORTAL_LIST 8
+#define COLLECTABLE_LIST 9
 std::vector<std::string> split(std::string line, std::string delimeter)
 {
 	std::vector<std::string> tokens;
@@ -138,6 +139,8 @@ void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 			int endBlockXCoord = -1;
 			int startSpikeXCoord = -1;
 			int endSpikeXCoord = -1;
+			int startdestrucableBlockCoord = -1;
+			int enddestrucableBlockCoord = -1;
 			for (int i = 0; i < component.size(); i++) {
 				int entry = std::stoi(component[i], nullptr);
 				if (entry == 120) {
@@ -156,19 +159,35 @@ void ResourceImporter::mapDataImport(LPCSTR filename, Scene* applyingScene)
 						startSpikeXCoord = i * 16;
 					endSpikeXCoord = i * 16 + 16;
 				}
-				else if (startBlockXCoord != -1) {
+				else if (startSpikeXCoord != -1) {
 					applyingScene->addObject(new Spike(startSpikeXCoord, row * 16, endSpikeXCoord - startSpikeXCoord, 16));
 					startSpikeXCoord = -1;
 					endSpikeXCoord = -1;
 				}
-
+				if (entry == 34) {
+					if (startdestrucableBlockCoord == -1)
+						startdestrucableBlockCoord = i * 16;
+					enddestrucableBlockCoord = i * 16 + 16;
+				}
+				else if (startdestrucableBlockCoord != -1) {
+					applyingScene->addObject(new DestrucableBlock(startdestrucableBlockCoord, row * 16, enddestrucableBlockCoord - startdestrucableBlockCoord, 16));
+					startdestrucableBlockCoord = -1;
+					enddestrucableBlockCoord = -1;
+				}
 				if (entry == -1) continue;
 			}
+
+
+
+
 			if (startBlockXCoord != -1) {
 				applyingScene->addObject(new Block(startBlockXCoord, row * 16, endBlockXCoord - startBlockXCoord, 16));
 			}
 			if (startSpikeXCoord != -1) {
 				applyingScene->addObject(new Spike(startSpikeXCoord, row * 16, endSpikeXCoord - startSpikeXCoord, 16));
+			}
+			if (startdestrucableBlockCoord != -1) {
+				applyingScene->addObject(new DestrucableBlock(startSpikeXCoord, row * 16, endSpikeXCoord - startSpikeXCoord, 16));
 			}
 
 		}
@@ -208,6 +227,9 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 		if (line == "[ScenePortal]") {
 			parseSection = SCENEPORTAL_LIST; continue;
 		}
+		if (line == "[COLLECTABLE]") {
+			parseSection = COLLECTABLE_LIST; continue;
+		}
 		switch (parseSection) {
 		case ENTITY_LIST:
 			if (component.size() < 3) {
@@ -225,7 +247,7 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				case 3: applyingScene->addObject(new Floater(x, y, 10)); break;
 				case 4: applyingScene->addObject(new Jumper(x, y, 10)); break;
 				case 5: applyingScene->addObject(new Insect(x, y, 10)); break;
-				//case 6: applyingScene->addObject(new Orb(x, y, 10)); break;
+				case 6: applyingScene->addObject(new Orb(x, y, 10)); break;
 				case 7: applyingScene->addObject(new Skull(x, y, 10)); break;
 				case 8: applyingScene->addObject(new Mine(x, y, 10)); break;
 				case 9:applyingScene->addObject(new Cannon(x, y, 10)); break;
@@ -311,6 +333,22 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				DebugOut("[ERROR] An error occured\n");
 			}
 			break;
+		case COLLECTABLE_LIST:
+			if (component.size() < 4) {
+				DebugOut("[WARNING] Not enough parameter for this line\n");
+				continue;
+			}
+			try {
+				float x = std::stof(component[0], nullptr);
+				float y = std::stof(component[1], nullptr);
+				int w = std::stoi(component[2], nullptr);
+				int h = std::stoi(component[3], nullptr);
+				applyingScene->addObject(new Collectable(x, y, w, h));
+			}
+			catch (int er) {
+				DebugOut("[ERROR] An error occured\n");
+			}
+			break;
 		default:
 			DebugOut("[WARNING] Unknown section\n");
 		}
@@ -358,11 +396,11 @@ void ResourceImporter::enemyImport(LPCSTR filename, Scene* applyingScene)
 				switch (id)
 				{
 				case 1: applyingScene->addObject(new Worm(x, y, 10)); break;
-					//case 2: applyingScene->addObject(new Dome(x, y, 10)); break;
+			//	case 2: applyingScene->addObject(new Dome(x, y, 10)); break;
 				case 3: applyingScene->addObject(new Floater(x, y, 10)); break;
 				case 4: applyingScene->addObject(new Jumper(x, y, 10)); break;
 				case 5: applyingScene->addObject(new Insect(x, y, 10)); break;
-					//case 6: applyingScene->addObject(new Orb(x, y, 10)); break;
+				case 6: applyingScene->addObject(new Orb(x, y, 10)); break;
 				case 7: applyingScene->addObject(new Skull(x, y, 10)); break;
 				case 8: applyingScene->addObject(new Mine(x, y, 10)); break;
 				case 9:applyingScene->addObject(new Cannon(x, y, 10)); break;

@@ -22,9 +22,6 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (this->isDie == 2) this->isDie = 1;
 	vy += 0.05;
 	int futureCollision = -1;
-	////bounding logic
-	//if (x <= 0) vx = 0.03;
-	//else if (x >= SCREEN_WIDTH - 18) vx = -0.03;
 	GameObject::update(dt);
 	short timerstate = waitTime->update(dt);
 	short timerstate2 = watTime2->update(dt);
@@ -62,10 +59,6 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		isJump = true;
 	}
 	else {
-
-
-
-		//DebugOut("Collision occured\n");
 		float min_tx, min_ty, nx = 0, ny = 0;
 		float rdx = 0;
 		float rdy = 0;
@@ -73,9 +66,6 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
 		if (coEventsResult.size() != 0) {
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
@@ -139,7 +129,9 @@ void Jumper::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (jumpCounter > 0) {
 		if (!isJump) {
 			if (timerstate == TIMER_INACTIVE) waitTime->restart();
+
 			else if (timerstate == TIMER_ENDED) {
+				SoundManager::getInstance()->Play(eSoundId::SOUND_JUMPER_JUMPING);
 				if (facing == 1) {
 					vy = -0.3;
 					vx = -0.05;

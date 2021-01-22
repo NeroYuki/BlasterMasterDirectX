@@ -10,6 +10,7 @@ public:
 	Portal(float x, float y, int w, int h, float lx, float ly, int sectionStart, int sectionEnd);
 	float getLx() { return lx; }
 	float getLy() { return ly; }
+	virtual void getHitByBullet() { return; };
 	int getSectionStart() { return sectionStart; }
 	int getSectionEnd() { return sectionEnd; }
 };

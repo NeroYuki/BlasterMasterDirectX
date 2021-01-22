@@ -6,6 +6,7 @@ DeadScene::DeadScene(SceneStateMachine* sceneState) : Scene(sceneState)
 	choice = 1;
 	bgTexture_id = 25;
 	fgTexture_id = -1;
+	fromintro = 0;
 }
 
 void DeadScene::initScene()
@@ -64,6 +65,7 @@ void DeadScene::handlingInput()
 				}
 				else if (choice == 2) {
 					int id =sceneState->getSceneByLabel("Intro");
+					fromintro = 1;
 					sceneState->switchToScene(id);
 				}
 				SharedData::getInstance()->remaininglive=3;
@@ -89,6 +91,10 @@ void DeadScene::update(DWORD dt)
 
 void DeadScene::onActivate()
 {
+	if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2))
+		SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
+
+
 	this->live =SharedData::getInstance()->remaininglive;
 	SharedData::getInstance()->remaininglive -= 1;
 }

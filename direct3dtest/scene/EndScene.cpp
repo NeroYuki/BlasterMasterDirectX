@@ -2,7 +2,7 @@
 
 EndScene::EndScene(SceneStateMachine* sceneState) : Scene(sceneState) 
 {
-	bgTexture_id = 19;
+	bgTexture_id = 22;
 	timerunEndingAni = new GameTimer(5600);
 	timerunTreeAni = new GameTimer(500);
 	startTrans = false;
@@ -16,7 +16,16 @@ void EndScene::initScene() {
 }
 
 void EndScene::handlingInput() {
-
+	if (InputHandler::getInstance()->isKeyDown(DIK_RETURN)) {
+		isEnterKeyDown = 1;
+	}
+	if ((isEnterKeyDown == 1) && (InputHandler::getInstance()->isKeyDown(DIK_RETURN) == 0)) {
+		int sceneId = sceneState->getSceneByLabel("Intro");
+		if (sceneId != -1) {
+			sceneState->switchToScene(sceneId);
+		}
+		isEnterKeyDown = 0;
+	}
 }
 
 void EndScene::update(DWORD dt) {
@@ -56,4 +65,16 @@ void EndScene::render() {
 		LPANIMATION treeAni = AnimationManager::getInstance()->get(300000 + countTreeAni);
 		treeAni->render(121, 114 + countTreeAni * 3);
 	}
+}
+
+void EndScene::onActivate()
+{
+	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_ENDING))
+		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_BG_ENDING);
+}
+
+void EndScene::onDeactivated()
+{
+	if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_ENDING))
+		SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_ENDING);
 }

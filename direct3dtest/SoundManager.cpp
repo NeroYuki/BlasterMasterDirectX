@@ -88,6 +88,9 @@ void SoundManager::loadSound(HWND hWnd)
 
 	sound = LoadSound("resource\\Sound_data\\Worm_moving.wav");
 	_listSound[eSoundId::SOUND_WORM_MOVING] = sound;
+
+	sound = LoadSound("resource\\Sound_data\\Boss_BG.wav");
+	_listSound[eSoundId::BOSS_BG] = sound;
 }
 
 bool SoundManager::IsPlaying(eSoundId soundid)

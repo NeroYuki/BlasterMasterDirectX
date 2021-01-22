@@ -6,7 +6,6 @@ class EndScene :
 	public Scene
 {
 private:
-	SceneStateMachine* sceneState;
 	GameTimer* timerunEndingAni;
 	GameTimer* timerunTreeAni;
 	bool startTrans;
@@ -18,5 +17,6 @@ public:
 	void handlingInput();
 	void update(DWORD dt);
 	void render();
-
+	void onActivate();
+	void onDeactivated();
 };

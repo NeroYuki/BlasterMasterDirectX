@@ -10,5 +10,6 @@ public:
 	void render();
 	void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& top, float& left, float& bottom, float& right);
+	virtual void getHitByBullet() { return; };
 	void renderBoundingBox();
 };

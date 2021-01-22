@@ -189,6 +189,12 @@
     <ClCompile Include="gameObject\Spike.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\DestrucableBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\BossJoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">
@@ -380,6 +386,12 @@
     <ClInclude Include="gameObject\Spike.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\DestrucableBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\BossJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemies.png">
@@ -455,6 +467,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\DeadScene.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\boss.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -593,6 +608,9 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="resource\Sound_data\Unknown.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\Sound_data\Boss_BG.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

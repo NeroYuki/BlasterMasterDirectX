@@ -217,10 +217,12 @@
     <ClCompile Include="dxaudio.cpp" />
     <ClCompile Include="gameObject\Block.cpp" />
     <ClCompile Include="gameObject\Boss.cpp" />
+    <ClCompile Include="gameObject\BossJoint.cpp" />
     <ClCompile Include="gameObject\Bullet.cpp" />
     <ClCompile Include="gameObject\BulletManager.cpp" />
     <ClCompile Include="gameObject\Cannon.cpp" />
     <ClCompile Include="gameObject\CollectableManager.cpp" />
+    <ClCompile Include="gameObject\DestrucableBlock.cpp" />
     <ClCompile Include="gameObject\Dome.cpp" />
     <ClCompile Include="gameObject\Enemy.cpp" />
     <ClCompile Include="gameObject\EnemyBullet.cpp" />
@@ -289,6 +291,8 @@
     <ClInclude Include="gameObject\Floater.h" />
     <ClInclude Include="gameObject\GameObject.h" />
     <ClInclude Include="gameObject\Grenade.h" />
+    <ClInclude Include="gameObject\DestrucableBlock.h" />
+    <ClInclude Include="gameObject\BossJoint.h" />
     <ClInclude Include="gameObject\Ladder.h" />
     <ClInclude Include="gameObject\lightning.h" />
     <ClInclude Include="gameObject\Collectable.h" />
@@ -337,6 +341,7 @@
     <Image Include="resource\bars.png" />
     <Image Include="resource\bbox.png" />
     <Image Include="resource\blastermaster_pauseblocks2.png" />
+    <Image Include="resource\boss.png" />
     <Image Include="resource\charset.png" />
     <Image Include="resource\DeadScene.png" />
     <Image Include="resource\DungeonMapBg.png" />
@@ -390,6 +395,7 @@
     <Media Include="resource\Sound_data\Blaster Master SFX (4).wav" />
     <Media Include="resource\Sound_data\Blaster Master SFX (5).wav" />
     <Media Include="resource\Sound_data\Blaster Master SFX (8).wav" />
+    <Media Include="resource\Sound_data\Boss_BG.wav" />
     <Media Include="resource\Sound_data\Boss_warning.wav" />
     <Media Include="resource\Sound_data\Dome_move.wav" />
     <Media Include="resource\Sound_data\Ending.wav" />

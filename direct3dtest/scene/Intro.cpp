@@ -7,10 +7,10 @@ Intro::Intro(SceneStateMachine* sceneState) : Scene(sceneState)
 	introID = FIRST_INTRO;
 	initScene();
 	isEnterKeyDown = 0;
+	fromintro = 0;
 }
 
 void Intro::initScene() {
-
 	timerunFirstIntro->restart();
 }
 
@@ -19,6 +19,8 @@ void Intro::handlingInput() {
 		isEnterKeyDown = 1;
 	}
 	if ((isEnterKeyDown == 1)&&(InputHandler::getInstance()->isKeyDown(DIK_RETURN)==0)) {
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_INTRO))
+			SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_INTRO);
 		if (introID == FIRST_INTRO) {
 			timerunFirstIntro->stop();
 			this->changeIntroID(SECOND_INTRO);
@@ -40,6 +42,8 @@ void Intro::update(DWORD dt) {
 	}
 	if (timerReadyState == TIMER_ENDED) {
 		int sceneId = sceneState->getSceneByLabel("DeadScene");
+		Scene* scene = sceneState->getSceneById(sceneId);
+		scene->fromintro = 1;
 		if (sceneId != -1) {
 			sceneState->switchToScene(sceneId);
 		}
@@ -49,9 +53,19 @@ void Intro::update(DWORD dt) {
 void Intro::render() {
 	LPANIMATION introAni = AnimationManager::getInstance()->get(introID);
 	introAni->render(0, 0);
-
 }
 
 void Intro::changeIntroID(int newID) {
 	introID = newID;
+}
+
+void Intro::onActivate()
+{
+	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_INTRO))
+		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_BG_INTRO);
+}
+
+void Intro::onDeactivated()
+{
+
 }

@@ -9,7 +9,9 @@ lightning::lightning(float x, float y) : Bullet(x, y, vx, vy)
 	bulletwidth = 20;
 	bulletheight = 94;
 	Lightningtimer->restart();
+	SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_THUNDER);
 	BulletManager::getinstance()->addBullet(this);
+
 }
 
 void lightning::render()

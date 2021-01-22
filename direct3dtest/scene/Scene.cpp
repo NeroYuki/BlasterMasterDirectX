@@ -105,12 +105,10 @@ bool Scene::resetSceneEnemy()
 			objectGridMap.erase(objectGridMap.begin() + i);
 			delete toBeDeleted->getObj();
 			delete toBeDeleted;
-
 		}
 		else if (dynamic_cast<Player*>(objectGridMap.at(i)->getObj())) {
 			objectGridMap.at(i)->updateGridPos();
-		}
-		
+		}		
 	}
 
 	if (this->getCurrentSceneNumber()>0) {

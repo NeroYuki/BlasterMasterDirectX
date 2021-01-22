@@ -50,6 +50,7 @@ EnemyBullet::EnemyBullet(float x, float y, float inputx, float inputy, int type)
 	BulletManager::getinstance()->addBullet(this);
 }
 
+
 void EnemyBullet::render()
 {
 

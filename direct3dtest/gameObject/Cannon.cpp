@@ -27,6 +27,7 @@ void Cannon::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			this->state = CANON_IDLE; break;
 		case 2:
 			this->state = CANON_TOPDOWN;
+			SoundManager::getInstance()->Play(eSoundId::SOUND_TELEPORTER_SHOOTING);
 			new EnemyBullet(this->x + 8, this->y, 0, -0.2, 4);
 			new EnemyBullet(this->x + 8, this->y+16, 0, 0.2, 4);
 			break;
@@ -34,6 +35,7 @@ void Cannon::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			this->state = CANON_IDLE; break;
 		case 4:
 			this->state = CANON_LEFTRIGHT;
+			SoundManager::getInstance()->Play(eSoundId::SOUND_TELEPORTER_SHOOTING);
 			new EnemyBullet(this->x , this->y+8, -0.2, 0, 4);
 			new EnemyBullet(this->x +16, this->y+8, 0.2, 0, 4);
 		default:

@@ -5,21 +5,30 @@ DebugScene::DebugScene(SceneStateMachine* sceneState) : Scene(sceneState)
 	initScene();
 	bgTexture_id = 6;
 	fgTexture_id = 8;
-	activeSection = 0;
 	sectionSwitchTimer = new GameTimer(3000);
 	switchSceneTimer = new GameTimer(500);
+	bossSceneTimer = new GameTimer(3000);
+	bossTimer = new GameTimer(1000);
+	//spawnerX = 90;
+	//spawnerY = 1420;
+	//activeSection = 0;
+
 }
 
 void DebugScene::initScene()
 {
+	spawnerX = 625;
+	spawnerY = 400;
+	activeSection = 25;
 	p_stack = new std::stack<Player*>();
-	JasonTop* s = new JasonTop(90, 1420, 1);
+	JasonTop* s = new JasonTop(spawnerX, spawnerY, 1);
 	p_stack->push(s);
-	//initially put every object into its respective grid
-	//this->addObject(sophia);
 	this->addObject(s);
+	s->setActiveSection(this->activeSection);
 	cam->setFollow(p_stack->top());
-
+	heatlhbar->setFollow(p_stack->top());
+	gunBar->setFollow(p_stack->top());
+	isBossFight = 0;
 }
 
 void DebugScene::handlingInput()
@@ -75,7 +84,7 @@ void DebugScene::update(DWORD dt) {
 		r->getBullet()->clear();
 	}
 	if (r->getDeleteBullet()->size() != 0) {
-		for (int i = 0; i < r->getDeleteBullet()->size(); i++) 
+		for (int i = 0; i < r->getDeleteBullet()->size(); i++)
 		{
 			this->removeObject(r->getDeleteBullet()->at(i));
 		}
@@ -94,6 +103,7 @@ void DebugScene::update(DWORD dt) {
 		if (!sectionSwitchTimer->isStarted())
 			sectionSwitchTimer->start();
 	}
+
 	if (p_stack->top()->getIsChangeScene() == 1) {
 		if (!switchSceneTimer->isStarted())
 			switchSceneTimer->start();
@@ -102,6 +112,69 @@ void DebugScene::update(DWORD dt) {
 
 	short timerState = sectionSwitchTimer->update(dt);
 	short timerState2 = switchSceneTimer->update(dt);
+	short timerState3 = bossSceneTimer->update(dt);
+	short timerState4 = bossTimer->update(dt);
+	if (this->activeSection == 28 && isBossFight == 0) {
+		isBossFight = 1;
+		this->bgTexture_id = 30;
+		this->fgTexture_id = 30;
+		bossSceneTimer->restart();
+	}
+	if (timerState3 == TIMER_STARTED) {
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2) == true) {
+			SoundManager::getInstance()->Stop(eSoundId::SOUND_BG_AREA2);
+		}
+		SoundManager::getInstance()->Play(eSoundId::SOUND_BOSS_WARNING);
+	}
+	if (timerState3 == TIMER_ENDED) {
+		SoundManager::getInstance()->PlayLoop(eSoundId::BOSS_BG);
+		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BOSS_WARNING) == true) {
+			SoundManager::getInstance()->Stop(eSoundId::SOUND_BOSS_WARNING);
+		}
+		boss = new Boss(spawnerX - 30, spawnerY - 150, 20);
+		this->addObject(boss);
+
+		bossjoints1[0] = new  BossJoint(spawnerX - 30, spawnerY, 30, 0, 15);
+		for (int i = 1; i < 5; i++) {
+			bossjoints1[i] = new BossJoint(bossjoints1[i - 1], 30, 1);
+		}
+		bossjoints1[4]->setState(1);
+		for (int i = 0; i < 5; i++) {
+			this->addObject(bossjoints1[i]);
+		}
+
+		bossjoints2[0] = new  BossJoint(spawnerX - 30, spawnerY, 30, 0, 15);
+		for (int i = 1; i < 5; i++) {
+			bossjoints2[i] = new BossJoint(bossjoints2[i - 1], 30, 1);
+		}
+		bossjoints2[4]->setState(2);
+		for (int i = 0; i < 5; i++) {
+			this->addObject(bossjoints2[i]);
+		}
+
+		this->fgTexture_id = 0;
+		this->bgTexture_id = 0;
+		tempdx = spawnerX - 30;
+		tempdy = spawnerY;
+		tempdx2 = spawnerX + 30;
+		tempdy2 = spawnerY;
+	}
+	if (boss != NULL) {
+		if (boss->getisDie() == 1) {
+			SoundManager::getInstance()->Stop(eSoundId::BOSS_BG);
+			this->isBossFight = 0;
+			int sceneid = sceneState->getSceneByLabel("Ending");
+			//Scene* returnScene = sceneState->getSceneById(sceneid);
+			//returnScene->PreScenePortal = portal;
+
+			sceneState->switchToScene(sceneid);
+		}
+		if (boss->getisDie() != 2) {
+			jointUpdate();
+		}
+	}
+
+
 	if (timerState == TIMER_STARTED) {
 		p_stack->top()->setIgnoreCollision(true);
 		//find the corresponded portal
@@ -133,8 +206,8 @@ void DebugScene::update(DWORD dt) {
 				cam->updateWithForceVeloc(dt);
 			}
 		}
-		
 	}
+
 	else if (timerState == TIMER_ACTIVE) {
 		cam->updateWithForceVeloc(dt);
 	}
@@ -171,6 +244,7 @@ void DebugScene::update(DWORD dt) {
 			cam->setFollow(p_stack->top());
 			heatlhbar->setFollow(p_stack->top());
 		}
+		this->isBossFight = 0;
 		int sceneid = sceneState->getSceneByLabel("DeadScene");
 		isresetenemy = 1;
 		sceneState->switchToScene(sceneid);
@@ -198,9 +272,21 @@ void DebugScene::onActivate() {
 		heatlhbar->setFollow(p_stack->top());
 		gunBar->setFollow(p_stack->top());
 	}
+	if (boss != NULL) {
+		this->boss->setisdie();
+		for (int i = 0; i < 5; i++) {
+			bossjoints1[i]->setisdie();
+			bossjoints2[i]->setisdie();
+		}
+	}
+	if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_BG_AREA2) == false) {
+		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_BG_AREA2);
+	}
 
 }
 void DebugScene::onDeAtivate() {
+
+
 	if (isresetenemy == 1)
 		this->resetSceneEnemy();
 	isresetenemy = -1;
@@ -214,6 +300,72 @@ void DebugScene::renderHUD()
 
 DebugScene::~DebugScene() {
 	//deallocate player control stack and object pool
+}
+void DebugScene::jointUpdate() {
+	if (bossTimer->peekState() == TIMER_INACTIVE) {
+		randomx = SharedData::getInstance()->getRandomNumber();
+		randomy = SharedData::getInstance()->getRandomNumber();
+		//	int randomy = SharedData::getInstance()->getRandomNumber();
+
+		bossTimer->restart();
+	}
+	tempdy += randomx % 7 - 3;
+	tempdx += randomy % 7 - 3;
+	tempdx2 += randomx % 7 - 3;
+	tempdy2 += randomy % 7 - 3;
+
+	if (tempdy < 0) tempdy = 0;
+	if (tempdy > 256) tempdy = 256;
+	if (tempdx < 760) tempdx = 760;
+	if (tempdx > 860) tempdx = 860;
+	if (tempdy2 < 0) tempdy2 = 0;
+	if (tempdy2> 256) tempdy2 = 256;
+	if (tempdx2 < 924) tempdx2 = 924;
+	if (tempdx2 > 1024) tempdx2 = 1024;
+
+//	if (tempdx < 0) tempdx = spawnerX;
+//	if (tempdy > spawnerY + 150) tempdy = spawnerY - 150;
+//	else  if (tempdy < spawnerY - 150) tempdy = spawnerY + 150;
+
+	if (bossjoints1[4] != NULL) {
+		bossjoints1[4]->follow(tempdx, tempdy);
+		bossjoints1[4]->update();
+		for (int i = 3; i >= 0; i--) {
+			bossjoints1[i]->follow(bossjoints1[i + 1]);
+			bossjoints1[i]->update();
+		}
+		float bossx, bossy;
+		boss->getLeftHand(bossx, bossy);
+		bossjoints1[0]->setPos(bossx, bossy);
+
+		bossjoints1[0]->calculateB();
+		for (int i = 1; i < 5; i++) {
+			bossjoints1[i]->setPos(bossjoints1[i - 1]->x2, bossjoints1[i - 1]->y2);
+			bossjoints1[i]->calculateB();
+		}
+		//		bossTimer->restart();
+	}
+	if (bossjoints2[4] != NULL) {
+		bossjoints2[4]->follow(tempdx2 , tempdy2);
+		bossjoints2[4]->update();
+		for (int i = 3; i >= 0; i--) {
+			bossjoints2[i]->follow(bossjoints2[i + 1]);
+			bossjoints2[i]->update();
+		}
+		float bossx = spawnerX, bossy = spawnerY;
+		boss->getRightHand(bossx, bossy);
+		bossjoints2[0]->setPos(bossx, bossy);
+
+		bossjoints2[0]->calculateB();
+		for (int i = 1; i < 5; i++) {
+			bossjoints2[i]->setPos(bossjoints2[i - 1]->x2, bossjoints2[i - 1]->y2);
+			bossjoints2[i]->calculateB();
+		}
+		//		bossTimer->restart();
+	}
+	//bossTimer->restart();
+
+	//	}
 }
 
 

@@ -125,6 +125,7 @@ void CGame::loadResource()
 	TextureManager::getInstance()->add(23, "resource\\Charset.png", D3DCOLOR_XRGB(100, 100, 100));
 	TextureManager::getInstance()->add(24, "resource\\blastermaster_pauseblocks2.png", D3DCOLOR_XRGB(255, 255, 255));
 	TextureManager::getInstance()->add(25, "resource\\DeadScene.png", D3DCOLOR_XRGB(255, 100, 255));
+	TextureManager::getInstance()->add(26, "resource\\Boss.png", D3DCOLOR_XRGB(255, 100, 255));
 	SpriteManager* sprManager = SpriteManager::getInstance();
 	
 	AnimationManager* aniManager = AnimationManager::getInstance();
@@ -152,7 +153,7 @@ void CGame::initGame()
 	int MenuSceneId = sceneStateMachine->addScene(new MenuScene(sceneStateMachine), "Menu");
 	int DeadSceneID = sceneStateMachine->addScene(new DeadScene(sceneStateMachine), "DeadScene");
 	
-	sceneStateMachine->switchToScene(DeadSceneID);
+	sceneStateMachine->switchToScene(IntroId);
 
 }
 
@@ -190,16 +191,26 @@ void CGame::Loop(DWORD dt)
 		D3DXMATRIX translationMat;
 		D3DXMatrixTranslation(&translationMat, -transX, -transY, 0);
 		spriteHandler->SetTransform(&translationMat);
-		if (bgTexture_id != 0) {
+		if (bgTexture_id == 30) {
+			int deadcolor = SharedData::getInstance()->getColor();
+			LPDIRECT3DTEXTURE9 bg_tex = TextureManager::getInstance()->get(6);
+			draw(transX, transY, bg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH,D3DCOLOR_RGBA(255,255,255, deadcolor));
+		}
+		else if (bgTexture_id != 0) {
 			LPDIRECT3DTEXTURE9 bg_tex = TextureManager::getInstance()->get(bgTexture_id);
 			draw(transX, transY, bg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
 		}
 		
 		sceneStateMachine->render();
-		if (fgTexture_id != 0) {
+		if (bgTexture_id == 30) {
+			int deadcolor = SharedData::getInstance()->getColor(); LPDIRECT3DTEXTURE9 fg_tex = TextureManager::getInstance()->get(fgTexture_id);
+			draw(transX, transY, fg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH, D3DCOLOR_RGBA(255, 255, 255, deadcolor));
+		}
+		else if (fgTexture_id != 0) {
 			LPDIRECT3DTEXTURE9 fg_tex = TextureManager::getInstance()->get(fgTexture_id);
 			draw(transX, transY, fg_tex, transYrounded, transXrounded, transYrounded + SCREEN_HEIGHT, transXrounded + SCREEN_WIDTH);
 		}
+
 		sceneStateMachine->renderHUD();
 
 		spriteHandler->End();

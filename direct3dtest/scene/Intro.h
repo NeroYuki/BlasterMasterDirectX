@@ -15,6 +15,8 @@ public:
 	void update(DWORD dt);
 	void render();
 	void changeIntroID(int newID);
+	void onActivate();
+	void onDeactivated();
 };
 
 

@@ -93,6 +93,7 @@ void Grenade::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	if (timestate2 == TIMER_ENDED) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_BULLET_EXPLODE);
 		BulletManager::getinstance()->removeBullet(this);
 	}
 

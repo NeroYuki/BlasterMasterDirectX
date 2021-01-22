@@ -8,31 +8,33 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 	TurningTime2 = new GameTimer(200);
 	velocity = 0.05;
 	if (type == 1) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
 		this->bullettype = 1;
 		if (direction == 1) {
 			state = SOPHIA_BULLET_RIGHT;
 			this->vx = 0.25;
 			this->vy = 0;
 			bulletwidth = 26;
-			bulletheight = 8;
+			bulletheight = 6;
 		}
 		if (direction == 2) {
 			state = SOPHIA_BULLET_LEFT;
 			this->vx = -0.25;
 			this->vy = 0;
 			bulletwidth = 26;
-			bulletheight = 8;
+			bulletheight = 6;
 		}
 		if (direction == 3) {
 			state = SOPHIA_BULLET_UP;
 			this->vx = 0;
 			this->vy = -0.25;
-			bulletwidth = 8;
+			bulletwidth = 6;
 			bulletheight = 26;
 		}
 	}
 	if (type == 2)
 	{
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
 		this->bullettype = 2;
 		if (direction == 1) {
 			state = SOPHIA_SMALL_BULLET_RIGHT;
@@ -64,6 +66,7 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 		}
 	}
 	if (type == 3) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_FIRING);
 		this->bullettype = 3;
 		if (direction == 1) {
 			minenemyx = 1000, minenemyy = 100;
@@ -87,25 +90,26 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 		bulletheight = 11;
 	}
 	if (type == 4) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_FIRING);
 		this->bullettype = 4;
 		TurningTime2->start();
 		if (direction == 1) {
 			bulletdirection = 1;
 			state = SOPHIA_SMALL_ROCKET_RIGHT;
-			this->vx = velocity;
+			this->vx = 0.2;
 			this->vy = 0;
 		}
 		if (direction == 2) {
 			state = SOPHIA_SMALL_ROCKET_LEFT;
 			bulletdirection = 2;
-			this->vx = -velocity;
+			this->vx = -0.2;
 			this->vy = 0;
 		}
 		if (direction == 3) {
 			bulletdirection = 1;
 			state = SOPHIA_SMALL_ROCKET_TOP;
 			this->vx = -0.02;
-			this->vy = -velocity;
+			this->vy = -0.15;
 		}
 		if (direction == 4) {
 			bulletdirection = 1;
@@ -117,18 +121,19 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 			bulletdirection =2;
 			state = SOPHIA_SMALL_ROCKET_TOP;
 			this->vx = 0.02;
-			this->vy = -velocity;
+			this->vy = -0.15;
 		}
 		if (direction == 6) {
 			bulletdirection = 2;
 			state = SOPHIA_SMALL_ROCKET_DOWN;
 			this->vx = 0.02;
-			this->vy = velocity;
+			this->vy = 0.15;
 		}
 		bulletwidth = 11;
 		bulletheight = 11;
 	}
 	if(type ==5){
+		SoundManager::getInstance()->Play(eSoundId::SOUND_SMALLJASON_FIRING);
 		state = JASON_BULLET;
 		this->vx = vx;
 		this->vy = vy;
@@ -136,6 +141,7 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 		bulletheight = 4;
 	}
 	if (type == 6) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
 		this->bullettype = 6;
 		bulletdirection = direction;
 		state = SOPHIA_SMALL_BULLET_LEFT;
@@ -145,6 +151,76 @@ PLayerBullet::PLayerBullet(float x, float y, float vx, float vy,int type,int dir
 		this->vx = vx;
 		this->vy = vy;
 	}
+
+	BulletManager::getinstance()->addBullet(this);
+}
+PLayerBullet::PLayerBullet(float x, float y, float vx, float vy, int type, int direction, int value) : Bullet(x, y, vx, vy) 
+{
+	bulletdirection = direction;
+	int bulletvalue = value;
+	bulletwidth = 8;
+	bulletheight = 8;
+	surviveTime = new GameTimer(1000);
+	exploTime = new GameTimer(200);
+	TurningTime = new GameTimer(100);
+	TurningTime2 = new GameTimer(200);
+	if (value <= 1) {
+		this->bullettype = 2;
+		surviveTime = new GameTimer(1500);
+		this->HitPoint = 3;
+	}
+	else if (value >= 2 && value <= 4) {
+		this->bullettype = 2;
+		surviveTime = new GameTimer(4000);
+		this->HitPoint = 4;
+	}
+	else if (value > 4) {
+		this->bullettype = 6;
+		surviveTime = new GameTimer(5000);
+		this->HitPoint = 5;
+	}
+	if (bullettype == 2)
+	{
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
+		this->bullettype = 2;
+		if (direction == 1) {
+			state = SOPHIA_SMALL_BULLET_RIGHT;
+			this->vx = 0.25;
+			this->vy = 0;
+			bulletwidth = 8;
+			bulletheight = 6;
+		}
+		if (direction == 2) {
+			state = SOPHIA_SMALL_BULLET_LEFT;
+			this->vx = -0.25;
+			this->vy = 0;
+			bulletwidth = 8;
+			bulletheight = 6;
+		}
+		if (direction == 3) {
+			state = SOPHIA_SMALL_BULLET_UP;
+			this->vx = 0;
+			this->vy = -0.25;
+			bulletwidth = 6;
+			bulletheight = 8;
+		}
+		if (direction == 4) {
+			state = SOPHIA_SMALL_BULLET_DOWN;
+			this->vx = 0;
+			this->vy = 0.25;
+			bulletwidth = 6;
+			bulletheight = 8;
+		}
+	}
+	else if (bullettype == 6) {
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_FIRING);
+		this->bullettype = 6;
+		state = CIRCLE_BULLET;
+		this->y += 10;
+		this->vx = vx;
+		this->vy = vy;
+	}
+	velocity = 0.05;
 
 	BulletManager::getinstance()->addBullet(this);
 }
@@ -160,9 +236,9 @@ void PLayerBullet::render()
 void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	velocity += 0.01;
-
+	if (this->HitPoint > 16) this->HitPoint = 16;
 	 GameObject::update(dt);
-	 if (bullettype == 6) {
+	 if (bullettype == 6 && surviveTime->peekState() != TIMER_ENDED) {
 		 getDxDy(this->dx, this->dy, dt, T);
 	 }
 
@@ -194,29 +270,33 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
 		for (UINT i = 0; i < coEvents.size(); i++) {
-
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (dynamic_cast<Enemy*>(e->obj)) {
 				if (e->ny != 0 || e->nx != 0) {
 					dynamic_cast<Enemy*>(e->obj)->GetHit(HitPoint);
-					if(this->bullettype==1 || this->bullettype ==2)BulletManager::getinstance()->removeBullet(this);
+					if (this->bullettype == 1 || this->bullettype == 2)
+						BulletManager::getinstance()->removeBullet(this);
 					surviveTime->stop(); timestate = TIMER_ENDED;
 					active = -1;
 					break;
 				}
 			}
+
 		}
-		if (bullettype < 3|| bullettype == 5) {
+		if (bullettype < 3 || bullettype == 6) {
 			if (coEventsResult.size() != 0) {
 				for (UINT i = 0; i < coEventsResult.size(); i++)
 				{
 					LPCOLLISIONEVENT e = coEventsResult[i];
-					x += min_tx * dx + nx * 0.4f;
-					y += min_ty * dy + ny * 0.4f;
-					if (ny != 0 || nx != 0) {
-						surviveTime->stop(); timestate = TIMER_ENDED;
-						active = -1;
-						break;
+					if (dynamic_cast<Block*>(e->obj)) {
+					/*	x += min_tx * dx + nx * 0.4f;
+						y += min_ty * dy + ny * 0.4f;*/
+						if (ny != 0 || nx != 0) {
+							dynamic_cast<Block*>(e->obj)->getHitByBullet();
+							surviveTime->stop(); timestate = TIMER_ENDED;
+							active = -1;
+							break;
+						}
 					}
 				}
 			}
@@ -293,7 +373,7 @@ void PLayerBullet::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (timestate == TIMER_INACTIVE) surviveTime->restart();
 	else if (timestate == TIMER_ENDED) {
 		state = BULLET_EXPLO;
-
+		SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_BULLET_EXPLODE);
 		if (vx > 0) { vx += 20; vy += 2; }
 		if (vx < 0) { vx -= 20; vy += 2; }
 		if (vy > 0) { vx += 2; vy += 20; }

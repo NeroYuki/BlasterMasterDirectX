@@ -27,9 +27,13 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (checkSpiked() == 1) {
 		this->PlayerGetHit(1);
 	}
+	if (this->hitpoint > 16) {
+		this->hitpoint = 16;
+	}
 	if (dmgstate == TIMER_INACTIVE) {
 		if (dmgtaken != 0)
 		{
+			SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_HURTING);
 			this->hitpoint -= dmgtaken;
 			dmgtaken = 0;
 			istakingdmg = 0;
@@ -46,6 +50,8 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	if (deadtimerstate == TIMER_INACTIVE) {
 		if (invincible == 1) {
+			SoundManager::getInstance()->Play(eSoundId::SOUND_SOPHIA_DYING);
+			
 			inDeadAniTimer->restart();
 		}
 	}

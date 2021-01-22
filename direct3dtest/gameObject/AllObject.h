@@ -24,3 +24,5 @@
 #include "ScenePortal.h"
 #include "CollectableManager.h"
 #include "Spike.h"
+#include "DestrucableBlock.h"
+#include "BossJoint.h"

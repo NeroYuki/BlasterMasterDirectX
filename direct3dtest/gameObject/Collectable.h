@@ -8,6 +8,7 @@ protected:
 	int value;
 	int type;
 	int isPicked = 0;
+	int glow = 0;
 public:
 	Collectable(float x, float y, int type, int value);
 	void render() ;

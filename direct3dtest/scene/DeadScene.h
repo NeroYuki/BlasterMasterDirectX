@@ -7,7 +7,6 @@ class DeadScene : public Scene {
 private:
 	int choice = 1;
 	int live;
-	int fromintro = 1;
 	CharsetShow* charsets[4];
 	int isupkeydown = 0, isdownkeydown = 0;
 public:

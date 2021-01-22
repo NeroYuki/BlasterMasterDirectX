@@ -20,6 +20,7 @@ protected:
 	DWORD T = 0;
 public:
 	PLayerBullet(float x, float y, float vx, float vy, int type, int direction);
+	PLayerBullet(float x, float y, float vx, float vy, int type, int direction,int value);
 	virtual void render();
 	virtual void update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& top, float& left, float& bottom, float& right);
