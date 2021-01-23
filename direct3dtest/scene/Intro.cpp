@@ -67,5 +67,7 @@ void Intro::onActivate()
 
 void Intro::onDeactivated()
 {
+	changeIntroID(FIRST_INTRO);
+	timerunFirstIntro->restart();
 
 }
