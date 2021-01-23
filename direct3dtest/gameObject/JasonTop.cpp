@@ -140,6 +140,7 @@ void JasonTop::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (this->upgrade > 8) upgrade = 8;
 			}
 			else if (dynamic_cast<Enemy*>(e->obj)) {
+				if(!dynamic_cast<Teleporter*>(e->obj))
 				this->PlayerGetHit(2);
 			}
 			else if (dynamic_cast<Spike*>(e->obj))
@@ -204,8 +205,8 @@ void JasonTop::changeState(int stateId)
 void JasonTop::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y + 19;
-	left = this->x+2;
+	left = this->x+5;
 	bottom = top + BBOX_PLAYER_HEIGHT-2;
-	right = left + BBOX_PLAYER_WIDTH-2;
+	right = left + BBOX_PLAYER_WIDTH-5;
 }
 

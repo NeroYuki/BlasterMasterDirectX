@@ -250,8 +250,8 @@ void ResourceImporter::mapObjImport(LPCSTR filename, Scene* applyingScene)
 				case 6: applyingScene->addObject(new Orb(x, y, 10)); break;
 				case 7: applyingScene->addObject(new Skull(x, y, 10)); break;
 				case 8: applyingScene->addObject(new Mine(x, y, 10)); break;
-				case 9:applyingScene->addObject(new Cannon(x, y, 10)); break;
-				case 10:applyingScene->addObject(new Teleporter(x, y, 10)); break;
+				case 9:applyingScene->addObject(new Teleporter(x, y, 10)); break;
+				case 10:applyingScene->addObject(new Cannon(x, y, 10)); break;
 				case 11:applyingScene->addObject(new Eyeball(x, y, 10)); break;
 				default:
 					break;
