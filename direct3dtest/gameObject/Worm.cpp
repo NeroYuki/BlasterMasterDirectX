@@ -71,7 +71,8 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (nx != 0) { vx = 0; vy -= 0.06; }
 			}
 		}
-
+		x += dx;
+		y += dy;
 	}
 
 	//if (nx != 0 && !ignoreCollision) vx = 0;
