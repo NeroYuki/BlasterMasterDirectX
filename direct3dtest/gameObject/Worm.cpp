@@ -60,7 +60,6 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		// how to push back player if collides with a moving objects, what if player is pushed this way into another object?
 		//if (rdx != 0 && rdx!=dx)
 		//	x += nx*abs(rdx); 
-
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -70,8 +69,11 @@ void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (ny != 0) vy = 0;
 				if (ny < 0) { isOnAir = false; }
 				if (nx != 0) { vx = 0; vy -= 0.06; }
+				break;
 			}
 		}
+		x += dx;
+		y += dy;
 	}
 
 	//if (nx != 0 && !ignoreCollision) vx = 0;
