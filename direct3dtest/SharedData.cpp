@@ -5,7 +5,7 @@ SharedData::SharedData() {
 	x3Missle = 15;
 	lightning = 15;
 	weapon = 1;
-	remaininglive = 1;
+	remaininglive = 3;
 	upgrade =0;
 	color = 255;
 }
