@@ -28,6 +28,9 @@ void OverworldScene::handlingInput()
 {
 	int control_state = 0;
 	if (p_stack->top()->getInvincible() != 1) {
+		if (InputHandler::getInstance()->isKeyDown(DIK_H)) {
+			p_stack->top()->PlayerHeal(16);
+		}
 		if (InputHandler::getInstance()->isKeyDown(DIK_DOWN)) {
 			control_state += DOWN;
 		}

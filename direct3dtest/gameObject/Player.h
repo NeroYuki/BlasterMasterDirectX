@@ -64,7 +64,7 @@ public:
 		float& rdx,
 		float& rdy);
 	void PlayerGetHit(int dmg) { if (dmgtaken == 0) this->dmgtaken = dmg; }
-	void PlayerHeal(int value) { this->hitpoint += value; if (hitpoint > 8)hitpoint = 8; }
+	void PlayerHeal(int value) { this->hitpoint += value; if (hitpoint > 16)hitpoint = 16; }
 	void GetPlayerHitPoint(int& heatlhpoint) { heatlhpoint = this->hitpoint; }
 	void resetPlayer(float x, float y);
 	int checkSpiked();

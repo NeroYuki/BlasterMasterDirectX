@@ -93,11 +93,11 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	followingLadder = isOnLadder(coObjects);
 	if (followingLadder != NULL) { vy = 0; };
-	
+
 	if (controlState & (DOWN)) {
 		if (isCloseToSophia == false) {
 			this->followingScenePortal = isOnScenePortal(coObjects);
-			if (followingScenePortal!=NULL) {
+			if (followingScenePortal != NULL) {
 				int ischangescene = this->followingScenePortal->getIsChangeScene();
 				if (ischangescene == 1) {
 					this->changeSection = 1;
@@ -107,7 +107,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				float tempx, tempy;
 				followingLadder->getPos(tempx, tempy);
 				this->x = tempx + 4;
-				if (this->y < tempy+216) {
+				if (this->y < tempy + 216) {
 					vy = 0.1;
 				}
 				else vy = 0;
@@ -124,16 +124,13 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (controlState & (DOWN) == 0 && isKeyDown == 1) {
-		isKeyDown = 0;
-	}
 	if (controlState & (UP)) {
 		if (isCloseToSophia == false) {
 			if (followingLadder != NULL) {
 				float tempx, tempy;
 				followingLadder->getPos(tempx, tempy);
-				this->x = tempx+4;
-				if (this->y >= tempy+1) {
+				this->x = tempx + 4;
+				if (this->y >= tempy + 1) {
 					vy = -0.1;
 				}
 				else vy = 0;
@@ -144,10 +141,11 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (is_craw == true) {
 					is_craw = false;
 				}
+			}
+
 		}
+
 	}
-
-
 	GameObject::update(dt);
 	bulletDelayTimer->update(dt);
 	std::vector<LPCOLLISIONEVENT> coEvents;
@@ -172,7 +170,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 		// TODO: This is a very ugly designed function!!!! (i dont care as long as it works bruh)
 		FilterCollisionBlock(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		
+
 		for (UINT i = 0; i < coEvents.size(); i++) {
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (dynamic_cast<Enemy*>(e->obj)) {
@@ -212,7 +210,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 		//		foundNearSophia = true;
 		//	}
 		//}
-	
+
 	}
 
 	if (this->followingSophia != NULL) {
@@ -230,42 +228,42 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	//if (foundNearSophia) isCloseToSophia = true;
 	//else isCloseToSophia = false;
-}
 
-Jason::~Jason()
-{
 }
-
-void Jason::changeState(int stateId)
-{
-	switch (stateId) {
-		//case COMMON_PLAYER_IDLE:
-		//	state = stateId;
-		//	break;
-	case JASON_WALK_LEFT:
-		if (is_craw) state = JASON_CRAW_LEFT;
-		else state = JASON_WALK_LEFT;
-		break;
-	case JASON_WALK_RIGHT:
-		if (is_craw) state = JASON_CRAW_RIGHT;
-		else state = JASON_WALK_RIGHT;
-		break;
-	case COMMON_JASON_IDLE:
-		if (state == JASON_WALK_LEFT || state == JASON_CRAW_IDLE_LEFT || state == JASON_CRAW_LEFT) state = JASON_IDLE_LEFT;
-		else if (state == JASON_WALK_RIGHT || state == JASON_CRAW_IDLE_RIGHT || state == JASON_CRAW_RIGHT) state = JASON_IDLE_RIGHT;
-		if (is_craw) {
-			if (state == JASON_WALK_LEFT || state == JASON_IDLE_LEFT || state == JASON_CRAW_LEFT || state == JASON_CRAW_IDLE_LEFT)
-				state = JASON_CRAW_IDLE_LEFT;
-			else if (state == JASON_WALK_RIGHT || state == JASON_IDLE_RIGHT || state == JASON_CRAW_RIGHT || state == JASON_CRAW_IDLE_RIGHT)
-				state = JASON_CRAW_IDLE_RIGHT;
-		}
-		break;
-	//TODO: climb state
-	default:
-		state = stateId;
+	Jason::~Jason()
+	{
 	}
-}
 
+	void Jason::changeState(int stateId)
+	{
+		switch (stateId) {
+			//case COMMON_PLAYER_IDLE:
+			//	state = stateId;
+			//	break;
+		case JASON_WALK_LEFT:
+			if (is_craw) state = JASON_CRAW_LEFT;
+			else state = JASON_WALK_LEFT;
+			break;
+		case JASON_WALK_RIGHT:
+			if (is_craw) state = JASON_CRAW_RIGHT;
+			else state = JASON_WALK_RIGHT;
+			break;
+		case COMMON_JASON_IDLE:
+			if (state == JASON_WALK_LEFT || state == JASON_CRAW_IDLE_LEFT || state == JASON_CRAW_LEFT) state = JASON_IDLE_LEFT;
+			else if (state == JASON_WALK_RIGHT || state == JASON_CRAW_IDLE_RIGHT || state == JASON_CRAW_RIGHT) state = JASON_IDLE_RIGHT;
+			if (is_craw) {
+				if (state == JASON_WALK_LEFT || state == JASON_IDLE_LEFT || state == JASON_CRAW_LEFT || state == JASON_CRAW_IDLE_LEFT)
+					state = JASON_CRAW_IDLE_LEFT;
+				else if (state == JASON_WALK_RIGHT || state == JASON_IDLE_RIGHT || state == JASON_CRAW_RIGHT || state == JASON_CRAW_IDLE_RIGHT)
+					state = JASON_CRAW_IDLE_RIGHT;
+			}
+			break;
+			//TODO: climb state
+		default:
+			state = stateId;
+		}
+	}
+	
 void Jason::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y;

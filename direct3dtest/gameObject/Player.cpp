@@ -165,15 +165,17 @@ void Player::resetPlayer(float x, float y)
 
 int Player::checkSpiked()
 {
+
 	if (this->contactedSpike != NULL) {
 		float x1, x2, y1, y2;
 		float x3, x4, y3, y4;
 		contactedSpike->GetBoundingBox(y1, x1, y2, x2);
-		x1 = (x1 + x2) / 2;
-		y1 = (y1 + y2) / 2;
+		//x1 = (x1 + x2) / 2;
+		//y1 = (y1 + y2) / 2;
 		this->GetBoundingBox(y3, x3, y4, x4);
-		if ((x1 > (x3+8)) && (x1 <( x4+8))) {
-			if ((y1 > (y3 + 8)) && (y1 < (y4 + 8))){
+
+		if ((x1 - x4) < 0 && (x2 - x3) > 0){
+			if ((y1-y4)<0 && (y2-y3)>0){
 				return 1;
 			}
 		}

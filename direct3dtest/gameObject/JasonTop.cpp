@@ -204,8 +204,8 @@ void JasonTop::changeState(int stateId)
 void JasonTop::GetBoundingBox(float& top, float& left, float& bottom, float& right)
 {
 	top = this->y + 19;
-	left = this->x+3;
-	bottom = top + BBOX_PLAYER_HEIGHT-3;
-	right = left + BBOX_PLAYER_WIDTH-3;
+	left = this->x+2;
+	bottom = top + BBOX_PLAYER_HEIGHT-2;
+	right = left + BBOX_PLAYER_WIDTH-2;
 }
 
