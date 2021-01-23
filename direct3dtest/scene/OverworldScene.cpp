@@ -50,6 +50,7 @@ void OverworldScene::handlingInput()
 			if (blockShiftTimer->peekState() != TIMER_ACTIVE) {
 				if (dynamic_cast<Sophia*>(p_stack->top())) {
 					float x, y;
+					p_stack->top()->setInvincible(2);
 					p_stack->top()->getPos(x, y);
 					Jason* new_jason = new Jason(x, y - 4, 1, p_stack->top()->getActiveSection());
 					new_jason->setFollow(p_stack->top());
@@ -66,6 +67,7 @@ void OverworldScene::handlingInput()
 						p_stack->pop();
 						this->removeObject(jason_p);
 						cam->setFollow(p_stack->top());
+						p_stack->top()->setInvincible(0);
 						heatlhbar->setFollow(p_stack->top());
 					}
 					blockShiftTimer->restart();

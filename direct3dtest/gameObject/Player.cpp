@@ -30,22 +30,27 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	if (this->hitpoint > 16) {
 		this->hitpoint = 16;
 	}
-	if (dmgstate == TIMER_INACTIVE) {
-		if (dmgtaken != 0)
-		{
-			SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_HURTING);
-			this->hitpoint -= dmgtaken;
-			dmgtaken = 0;
+	if (invincible == 0) {
+		if (dmgstate == TIMER_INACTIVE) {
+			if (dmgtaken != 0)
+			{
+				SoundManager::getInstance()->Play(eSoundId::SOUND_JASON_HURTING);
+				this->hitpoint -= dmgtaken;
+				dmgtaken = 0;
+				istakingdmg = 0;
+				dameTakenTimer->restart();
+			}
+		}
+		else if (dmgstate == TIMER_ACTIVE) {
+			if (istakingdmg == 1)istakingdmg = 0;
+			else istakingdmg = 1;
+		}
+		else if (dmgstate == TIMER_ENDED) {
 			istakingdmg = 0;
-			dameTakenTimer->restart();
 		}
 	}
-	else if (dmgstate == TIMER_ACTIVE) {
-		if (istakingdmg == 1)istakingdmg = 0;
-		else istakingdmg = 1;
-	}
-	else if (dmgstate == TIMER_ENDED) {
-		istakingdmg = 0;
+	else {
+		this->dmgtaken = 0;
 	}
 
 	if (deadtimerstate == TIMER_INACTIVE) {
@@ -55,6 +60,8 @@ void Player::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			inDeadAniTimer->restart();
 		}
 	}
+
+
 	else if (deadtimerstate == TIMER_STARTED)
 	{
 		this->vx = 0;

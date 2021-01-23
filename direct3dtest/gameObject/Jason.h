@@ -17,6 +17,7 @@ private:
 	Ladder* followingLadder = NULL;
 	int facing = 1;
 	GameTimer* bulletDelayTimer;
+	int isKeyDown = 0;
 public:
 	Jason(float x, float y, int hp, int activeSection = 0);
 	void render();

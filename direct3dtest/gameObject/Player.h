@@ -69,4 +69,5 @@ public:
 	void resetPlayer(float x, float y);
 	int checkSpiked();
 	int getInvincible() { return invincible; };
+	void setInvincible(int i) { this->invincible = i; };
 };

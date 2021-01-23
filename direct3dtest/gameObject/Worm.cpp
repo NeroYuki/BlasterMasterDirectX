@@ -17,7 +17,7 @@ void Worm::render()
 void Worm::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_WORM_MOVING))
-		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_WORM_MOVING);
+		SoundManager::getInstance()->Play(eSoundId::SOUND_WORM_MOVING);
 	Enemy::update(dt, coObjects);
 
 	//x += vx * dt;

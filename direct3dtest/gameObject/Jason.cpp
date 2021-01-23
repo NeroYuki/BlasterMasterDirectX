@@ -93,7 +93,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 
 	followingLadder = isOnLadder(coObjects);
 	if (followingLadder != NULL) { vy = 0; };
-
+	
 	if (controlState & (DOWN)) {
 		if (isCloseToSophia == false) {
 			this->followingScenePortal = isOnScenePortal(coObjects);
@@ -115,9 +115,17 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				else this->state = JASON_CLIMB;
 			}
 			else {
-				is_craw = -is_craw;
+				if (is_craw == false) {
+					is_craw = true;
+				}
+
 			}
+
 		}
+	}
+
+	if (controlState & (DOWN) == 0 && isKeyDown == 1) {
+		isKeyDown = 0;
 	}
 	if (controlState & (UP)) {
 		if (isCloseToSophia == false) {
@@ -132,6 +140,10 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 				if (this->state == JASON_CLIMB) { this->state = JASON_CLIMB_IDLE; }
 				else this->state = JASON_CLIMB;
 			}
+			else {
+				if (is_craw == true) {
+					is_craw = false;
+				}
 		}
 	}
 
@@ -215,6 +227,7 @@ void Jason::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+
 	//if (foundNearSophia) isCloseToSophia = true;
 	//else isCloseToSophia = false;
 }

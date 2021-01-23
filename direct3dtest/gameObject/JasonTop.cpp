@@ -5,8 +5,8 @@ JasonTop::JasonTop(float x, float y, int hp) : Player(x, y, hp)
 	facing = 1;
 	vx = 0; vy = 0;
 	state = TOP_JASON_IDLE_LEFT;
-	bulletDelayTimer = new GameTimer(300);
-	grenadeDelayTimer = new GameTimer(200);
+	bulletDelayTimer = new GameTimer(200);
+	grenadeDelayTimer = new GameTimer(300);
 	deadState = 10009;
 	inDeadAniTimer = new GameTimer(1600);
 }

@@ -20,7 +20,7 @@ void Insect::render()
 void Insect::update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_INSECT_FLYING))
-		SoundManager::getInstance()->PlayLoop(eSoundId::SOUND_INSECT_FLYING);
+		SoundManager::getInstance()->Play(eSoundId::SOUND_INSECT_FLYING);
 	Enemy::update(dt, coObjects);
 	if (this->isDie == 2) {
 		if (SoundManager::getInstance()->IsPlaying(eSoundId::SOUND_MINE_TICKING)) {
